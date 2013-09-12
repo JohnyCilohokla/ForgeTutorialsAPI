@@ -1,0 +1,19 @@
+[
+{
+  "modid": "MES_API",
+  "name": "MultiEntitySystem API",
+  "description": "MultiEntitySystem API",
+  "version": "v1",
+  "url": "forgetutorials.com",
+  "updateUrl": "",
+  "authorList": [
+    "JohnyCilohokla"
+  ],
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  ]
+}
+]
