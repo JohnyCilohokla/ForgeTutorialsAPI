@@ -1,6 +1,7 @@
 package com.forgetutorials.lib.network;
 
 import com.forgetutorials.core.proxy.CommonProxy;
+import com.forgetutorials.lib.ModInfo;
 import com.forgetutorials.lib.registry.DescriptorBlock;
 import com.forgetutorials.lib.registry.MetaMaterial;
 import com.forgetutorials.multientity.InfernosMultiBlock;
@@ -18,15 +19,16 @@ import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.Player;
 
-@Mod(modid = "MES_API", name = "MultiEntitySystem API", version = "v1")
-@NetworkMod(channels = { "MES" }, clientSideRequired = true, serverSideRequired = false, packetHandler = MultiEntitySystem.class)
+@Mod(modid = ModInfo.MOD_ID, name = ModInfo.MOD_NAME, version = ModInfo.VERSION)
+@NetworkMod(channels = { ModInfo.CHANNEL_ID }, clientSideRequired = true, serverSideRequired = false, packetHandler = MultiEntitySystem.class)
 public class MultiEntitySystem implements IPacketHandler {
+
+	@SidedProxy(clientSide = ModInfo.CLIENT_PROXY_CLASS, serverSide = ModInfo.SERVER_PROXY_CLASS)
+	public static CommonProxy proxy;
+
 
 	public static int infernosMultiBlockID = 2888;
 	public static InfernosMultiBlock infernosMultiBlock;
-
-	@SidedProxy(clientSide = "com.forgetutorials.core.proxy.ClientProxy", serverSide = "com.forgetutorials.core.proxy.CommonProxy")
-	public static CommonProxy proxy;
 
 	@Override
 	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {

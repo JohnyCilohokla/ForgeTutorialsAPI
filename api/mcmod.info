@@ -1,9 +1,9 @@
 [
 {
-  "modid": "MES_API",
-  "name": "MultiEntitySystem API",
+  "modid": "ForgeTutorialsAPI",
+  "name": "ForgeTutorialsAPI",
   "description": "MultiEntitySystem API",
-  "version": "v1",
+  "version": "@VERSION@.@PATCH@.@REVISION@",
   "url": "forgetutorials.com",
   "updateUrl": "",
   "authorList": [

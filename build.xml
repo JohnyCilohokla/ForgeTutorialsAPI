@@ -1,0 +1,111 @@
+<?xml version="1.0" ?>
+<project name="MetaTechCraft" default="build">
+	<property file="build.properties"/>
+	<property file="buildConfig.properties"/>
+	<!--<property name="build.number" value="${build.version.number}.${build.patch.number}.${build.revision.number}"/>-->
+		
+	
+	<target name="current-number">
+	 <echo>Current build number: ${build.version.number}.${build.patch.number}.${build.revision.number}</echo>
+	</target>
+		
+	<target name="clean">
+		<delete file="${buildConfig.dir.mcp}\src\minecraft\mcmod.info" />
+		<delete dir="${buildConfig.dir.mcp}\src\minecraft\com\forgetutorials" />
+		<delete dir="${buildConfig.dir.mcp}\reobf\minecraft" />
+	</target>
+	
+	<target name="increment-version">
+	    <propertyfile file="build.properties">
+	            <entry key="build.version.number" type="int" operation="+" value="1" pattern="0"/>
+	            <entry key="build.patch.number" type="int" value="0" pattern="00"/>
+	            <entry key="build.revision.number" type="int" value="0" pattern="0000"/>
+	    </propertyfile>
+	</target>
+	<target name="increment-patch">
+	    <propertyfile file="build.properties">
+	            <entry key="build.patch.number" type="int" operation="+" value="1" pattern="00"/>
+	            <entry key="build.revision.number" type="int" value="0" pattern="0000"/>
+	    </propertyfile>
+	</target>
+	<target name="increment-revision">
+	    <propertyfile file="build.properties">
+	            <entry key="build.revision.number" type="int" operation="+" value="1" pattern="0000"/>
+	    </propertyfile>
+	</target>
+	
+	<target name="prep">
+		<copy todir="${buildConfig.dir.mcp}\src\minecraft">
+			<fileset dir="${buildConfig.dir.development}\api\" />
+		</copy>
+	</target>
+	
+	<target name="replace_tokens">
+		<replace file="${buildConfig.dir.mcp}\src\minecraft\mcmod.info" token="@VERSION@" value="${build.version.number}" />
+		<replace file="${buildConfig.dir.mcp}\src\minecraft\mcmod.info" token="@PATCH@" value="${build.patch.number}" />
+		<replace file="${buildConfig.dir.mcp}\src\minecraft\mcmod.info" token="@REVISION@" value="${build.revision.number}" />
+		<replace file="${buildConfig.dir.mcp}\src\minecraft\com\forgetutorials\lib\ModInfo.java" token="@VERSION@" value="${build.version.number}" />
+		<replace file="${buildConfig.dir.mcp}\src\minecraft\com\forgetutorials\lib\ModInfo.java" token="@PATCH@" value="${build.patch.number}" />
+		<replace file="${buildConfig.dir.mcp}\src\minecraft\com\forgetutorials\lib\ModInfo.java" token="@REVISION@" value="${build.revision.number}" />
+	</target>
+	
+	<target name="recompile">
+		<exec dir="${buildConfig.dir.mcp}" executable="cmd" osfamily="windows">
+			<arg line="/c recompile.bat" />
+		</exec>
+		<exec dir="${buildConfig.dir.mcp}" executable="bash" osfamily="unix">
+			<arg line="recompile.sh" />
+		</exec>
+	</target>
+	
+	<target name="reobfuscate">
+		<exec dir="${buildConfig.dir.mcp}" executable="cmd" osfamily="windows">
+			<arg line="/c reobfuscate_srg.bat" />
+		</exec>
+		<exec dir="${buildConfig.dir.mcp}" executable="bash" osfamily="unix">
+			<arg line="reobfuscate_srg.sh" />
+		</exec>
+	</target>
+		
+	
+	<target name="buildJar">
+		<!-- Build the jar -->
+		<mkdir dir="${buildConfig.dir.release}" />
+		<mkdir dir="${buildConfig.dir.release}\ForgeTutorialsAPI-${build.version.number}.${build.patch.number}" />
+		<jar destfile="${buildConfig.dir.release}\ForgeTutorialsAPI-${build.version.number}.${build.patch.number}\ForgeTutorialsAPI-${build.version.number}.${build.patch.number}.${build.revision.number}-universal.jar">
+		<fileset dir="${buildConfig.dir.mcp}\src\minecraft\" includes="mcmod.info" />
+		<fileset dir="${buildConfig.dir.mcp}\reobf\minecraft" />
+		</jar>
+	</target>
+	
+	<target name="build">
+		<!-- Prep for the build -->
+		<antcall target="clean" />
+		<antcall target="increment-revision" />
+		<antcall target="prep" />
+		<antcall target="replace_tokens" />
+		<antcall target="recompile" />
+		<antcall target="reobfuscate" />
+		
+		<antcall target="buildJar" />
+		
+		<!-- Clean up the MCP source now that we are done -->
+		<antcall target="clean" />
+	</target>
+	
+	<target name="releasePatch">
+		<!-- Prep for the build -->
+		<antcall target="clean" />
+		<antcall target="increment-patch" />
+		<antcall target="current-number" />
+		<antcall target="prep" />
+		<antcall target="replace_tokens" />
+		<antcall target="recompile" />	
+		<antcall target="reobfuscate" />
+		
+		<antcall target="buildJar" />
+		
+		<!-- Clean up the MCP source now that we are done -->
+		<antcall target="clean" />
+	</target>
+</project>

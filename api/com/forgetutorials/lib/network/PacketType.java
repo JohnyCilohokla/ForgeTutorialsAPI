@@ -3,6 +3,8 @@ package com.forgetutorials.lib.network;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 
+import com.forgetutorials.lib.ModInfo;
+
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
 
@@ -54,7 +56,7 @@ public enum PacketType {
 		byte[] data = infernosPacket.populate();
 
 		Packet250CustomPayload packet250 = new Packet250CustomPayload();
-		packet250.channel = "MES";
+		packet250.channel = ModInfo.CHANNEL_ID;
 		packet250.data = data;
 		packet250.length = data.length;
 		packet250.isChunkDataPacket = infernosPacket.isChunkDataPacket;
