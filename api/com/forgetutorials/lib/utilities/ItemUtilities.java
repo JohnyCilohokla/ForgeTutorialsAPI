@@ -58,4 +58,11 @@ public class ItemUtilities {
 		}
 	}
 
+	public static void dropItem(World world, double posX, double posY, double posZ, ItemStack itemStack) {
+		if (!world.isRemote) {
+			EntityItem entityitem = new EntityItem(world, posX, posY, posZ, itemStack);
+			world.spawnEntityInWorld(entityitem);
+		}
+	}
+
 }

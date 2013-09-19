@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.forgetutorials.lib.network.PacketMultiTileEntity;
 import com.forgetutorials.multientity.InfernosMultiEntity;
 
+import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,21 +13,17 @@ import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
-public class InfernosProxyEntityBase {
-	public static final InfernosProxyEntityBase DUMMY = new InfernosProxyEntityBase(null);
+abstract public class InfernosProxyEntityBase {
+	public static final InfernosProxyEntityDummy DUMMY = new InfernosProxyEntityDummy(null);
 	protected InfernosMultiEntity entity;
 
 	public InfernosProxyEntityBase(InfernosMultiEntity entity) {
 		this.entity = entity;
 	}
 
-	public boolean hasInventory() {
-		return false;
-	}
+	abstract public boolean hasInventory();
 
-	public boolean hasLiquids() {
-		return false;
-	}
+	abstract public boolean hasLiquids();
 
 	public int getSizeInventory() {
 		return 0;
@@ -48,7 +45,7 @@ public class InfernosProxyEntityBase {
 	}
 
 	public String getInvName() {
-		return null;
+		return "multientity."+this.getTypeName();
 	}
 
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
@@ -72,7 +69,7 @@ public class InfernosProxyEntityBase {
 	}
 
 	public boolean isInvNameLocalized() {
-		return false;
+		return true;
 	}
 
 	int[] nullArray = new int[] {};
@@ -140,9 +137,9 @@ public class InfernosProxyEntityBase {
 		}
 	}
 
-	public void renderTileEntityAt(double x, double y, double z) {
+	abstract public void renderTileEntityAt(double x, double y, double z);
 
-	}
+	abstract public void renderStaticBlockAt(RenderBlocks renderer, int x, int y, int z);
 
 	public String getTypeName() {
 		return "InternalError!";

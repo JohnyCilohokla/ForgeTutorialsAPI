@@ -1,7 +1,10 @@
 package com.forgetutorials.multientity.renderers;
 
+import com.forgetutorials.multientity.InfernosMultiEntity;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -25,13 +28,14 @@ public class InfernosMultiBlockRenderer implements ISimpleBlockRenderingHandler 
 
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
-		/*Tessellator tessellator = Tessellator.instance;
-		FluidStack fluidstack = new FluidStack(MetaLiquids.metaFluids[1].getFluid(), 200);
-		Icon icon = InfuserRenderer.getFluidTexture(fluidstack, false);
-
-		double size = fluidstack.amount * 0.001;
-
-		FluidTessallator.InfuserTank.addToTessallator(tessellator, x, y, z, icon, size, size);*/
+		TileEntity tileentity = world.getBlockTileEntity(x, y, z);
+		if (tileentity==null){
+			return true;
+		}
+		if (tileentity instanceof InfernosMultiEntity) {
+			InfernosMultiEntity tile = (InfernosMultiEntity) tileentity;
+			tile.renderStaticBlockAt(renderer, x, y, z);
+		}
 		return true;
 	}
 

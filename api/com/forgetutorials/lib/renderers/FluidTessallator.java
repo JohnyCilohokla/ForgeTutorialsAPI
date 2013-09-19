@@ -2,6 +2,8 @@ package com.forgetutorials.lib.renderers;
 
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.client.FMLClientHandler;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -102,6 +104,34 @@ public enum FluidTessallator {
 			icon = ((TextureMap) Minecraft.getMinecraft().func_110434_K().func_110581_b(TextureMap.field_110575_b)).func_110572_b("missingno");
 		}
 		return icon;
+	}
+	
+	
+	
+	public void renderFluidStack(Tessellator tessellator, FluidStack fluidstack, double x, double y, double z) {
+		if ((fluidstack == null) || (fluidstack.amount <= 0)) {
+			return;
+		}
+
+		GL11.glPushMatrix();
+		GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glDisable(GL11.GL_LIGHTING);
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
+		FMLClientHandler.instance().getClient().renderEngine.func_110577_a(TextureMap.field_110575_b);
+		FluidTessallator.setColorForFluidStack(fluidstack);
+		Icon icon = FluidTessallator.getFluidTexture(fluidstack, false);
+
+		double size = fluidstack.amount * 0.001;
+
+		tessellator.startDrawingQuads();
+		this.addToTessallator(tessellator, x, y, z, icon, size, size);
+		tessellator.draw();
+
+		GL11.glPopAttrib();
+		GL11.glPopMatrix();
 	}
 
 }

@@ -7,6 +7,7 @@ import com.forgetutorials.lib.network.PacketType;
 import com.forgetutorials.lib.registry.InfernosRegisteryProxyEntity;
 import com.forgetutorials.multientity.base.InfernosProxyEntityBase;
 
+import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -111,6 +112,10 @@ public class InfernosMultiEntity extends TileEntity {
 		getProxyEntity().renderTileEntityAt(x, y, z);
 	}
 
+	public void renderStaticBlockAt(RenderBlocks renderer, int x, int y, int z) {
+		getProxyEntity().renderStaticBlockAt(renderer, x, y, z);
+	}
+	
 	@Override
 	public void readFromNBT(NBTTagCompound tagCompound) {
 		super.readFromNBT(tagCompound);
