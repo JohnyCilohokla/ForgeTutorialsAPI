@@ -124,9 +124,8 @@ public class InfernosMultiBlock extends Block {
 		ItemStack currentItem = entityplayer.inventory.getCurrentItem();
 
 		InfernosProxyEntityBase proxyEntity = entity.getProxyEntity();
-		if (proxyEntity.hasLiquids()) {
-			if (currentItem != null) {
-
+		if (currentItem != null) {
+			if (proxyEntity.hasLiquids()) {
 				FluidStack liquid = FluidContainerRegistry.getFluidForFilledItem(currentItem);
 
 				if (liquid != null) {
@@ -157,6 +156,8 @@ public class InfernosMultiBlock extends Block {
 					}
 				}
 			}
+		}else{
+			proxyEntity.onBlockActivated(entityplayer,par6,par7,par8,par9);
 		}
 
 		return false;

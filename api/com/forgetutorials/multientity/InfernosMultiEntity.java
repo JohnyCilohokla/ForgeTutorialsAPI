@@ -139,6 +139,11 @@ public class InfernosMultiEntity extends TileEntity {
 		getProxyEntity().addToDescriptionPacket(packet);
 		return PacketType.populatePacket(packet);
 	}
+	
+	@Override
+	public void updateEntity() {
+		getProxyEntity().tick();
+	}
 
 	@Override
 	public void invalidate() {

@@ -158,4 +158,12 @@ abstract public class InfernosProxyEntityBase {
 		return droppedItems;
 	}
 
+	public void onBlockActivated(EntityPlayer entityplayer, int par6, float par7, float par8, float par9) {
+
+	}
+
+	public void tick() {
+		
+	}
+
 }
