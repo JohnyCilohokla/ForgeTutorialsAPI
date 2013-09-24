@@ -41,7 +41,7 @@ public class InfernosMultiBlockRenderer implements ISimpleBlockRenderingHandler 
 
 	@Override
 	public boolean shouldRender3DInInventory() {
-		return false;
+		return true;
 	}
 
 	@Override

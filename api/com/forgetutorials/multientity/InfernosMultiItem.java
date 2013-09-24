@@ -1,8 +1,14 @@
 package com.forgetutorials.multientity;
 
+import java.util.List;
+
+import com.forgetutorials.lib.registry.ForgeTutorialsRegistry;
+import com.forgetutorials.lib.registry.InfernosRegisteryProxyEntity;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -20,21 +26,49 @@ public class InfernosMultiItem extends ItemBlock {
 
 	@Override
 	public String getUnlocalizedName(ItemStack itemStack) {
-		return super.getUnlocalizedName() + ".multi." + itemStack.getItemDamage();
+		return super.getUnlocalizedName() + ".multi." + ((InfernosMultiItem)(itemStack.getItem())).getUnlocalizedEntityName(itemStack);
 
 	}
+	
+	@Override
+	public String getItemDisplayName(ItemStack itemStack) {
+		return itemStack.getTagCompound().toString();
+	}
 
+	private String getUnlocalizedEntityName(ItemStack itemStack) {
+		return ""+itemStack.getItemDamage();
+	}
+	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getIconFromDamage(int par1) {
 		return Block.wood.getIcon(0, par1);
 	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Icon getIconIndex(ItemStack itemStack) {
+		return ((InfernosMultiItem)(itemStack.getItem())).getMultiIcon(itemStack);
+	}
 
+	private Icon getMultiIcon(ItemStack itemStack) {
+		return Block.blocksList[itemStack.stackSize].getIcon(0, 0);
+	}
+	
+	public String getProxyEntity(ItemStack itemStack){
+		return itemStack.getTagCompound()!=null?(itemStack.getTagCompound().getString("MES")):null;
+	}
+	
+	@Override
+	public int getDamage(ItemStack itemStack) {
+		InfernosMultiEntityType type = InfernosRegisteryProxyEntity.INSTANCE.getType(((InfernosMultiItem)(itemStack.getItem())).getProxyEntity(itemStack));
+		return type!=null?type.ordinal():-1;
+	}
+	
 	@Override
 	public int getMetadata(int damageValue) {
 		return damageValue;
 	}
-
 	@Override
 	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10) {
 		int i1 = par3World.getBlockId(par4, par5, par6);
@@ -89,5 +123,23 @@ public class InfernosMultiItem extends ItemBlock {
 		} else {
 			return false;
 		}
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean isFull3D() {
+		return true;
+	}
+	
+	@Override
+	@SuppressWarnings({ "rawtypes" })
+	@SideOnly(Side.CLIENT)
+	public void getSubItems(int id, CreativeTabs creativeTab, List list) {
+			ForgeTutorialsRegistry.INSTANCE.getSubItems(id, creativeTab, list);
+	}
+	
+	@Override
+	public CreativeTabs[] getCreativeTabs() {
+		return ForgeTutorialsRegistry.INSTANCE.getCreativeTabs();
 	}
 }

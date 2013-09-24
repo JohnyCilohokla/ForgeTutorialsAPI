@@ -36,7 +36,7 @@ public class DescriptorFluid extends DescriptorBlock {
 		FluidRegistry.registerFluid(getFluid());
 		this.fluid.setBlockID(getBlock());
 		this.blockID = this.fluid.getBlockID();
-		MetaTechRegistry.INSTANCE.addObject(unlocalizedName, this);
+		ForgeTutorialsRegistry.INSTANCE.addObject(unlocalizedName, this);
 	}
 
 	public Fluid getFluid() {

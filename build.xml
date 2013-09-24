@@ -72,7 +72,7 @@
 		<!-- Build the jar -->
 		<mkdir dir="${buildConfig.dir.release}" />
 		<mkdir dir="${buildConfig.dir.release}\ForgeTutorialsAPI-${build.version.number}.${build.patch.number}" />
-		<jar destfile="${buildConfig.dir.release}\ForgeTutorialsAPI-${build.version.number}.${build.patch.number}\ForgeTutorialsAPI-${build.version.number}.${build.patch.number}.${build.revision.number}-universal.jar">
+		<jar destfile="${buildConfig.dir.release}\ForgeTutorialsAPI-${build.version.number}.${build.patch.number}\ForgeTutorialsAPI-universal-${buildConfig.mc.version}-${build.version.number}.${build.patch.number}.${build.revision.number}.jar">
 		<fileset dir="${buildConfig.dir.mcp}\src\minecraft\" includes="mcmod.info" />
 		<fileset dir="${buildConfig.dir.mcp}\reobf\minecraft" />
 		</jar>

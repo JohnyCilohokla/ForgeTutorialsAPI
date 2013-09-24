@@ -2,6 +2,7 @@ package com.forgetutorials.multientity;
 
 import java.util.ArrayList;
 
+import com.forgetutorials.lib.network.MultiEntitySystem;
 import com.forgetutorials.lib.network.PacketMultiTileEntity;
 import com.forgetutorials.lib.network.PacketType;
 import com.forgetutorials.lib.registry.InfernosRegisteryProxyEntity;
@@ -27,16 +28,38 @@ public class InfernosMultiEntity extends TileEntity {
 	}
 
 	private void setProxyEntity(InfernosProxyEntityBase proxyEntity) {
+		if (proxyEntity == null){
+			this.proxyEntity = proxyEntity;
+			return;
+		}
+		int meta = proxyEntity.validateTileEntity(this);
+		if (meta != -1){
+			System.out.println(">> MES Updating meta! ("+this.getClass().getCanonicalName()+")");
+			worldObj.setBlock(xCoord, yCoord, zCoord, MultiEntitySystem.infernosMultiBlockID, meta, 3);
+			InfernosMultiEntity entity = (InfernosMultiEntity) worldObj.getBlockTileEntity(xCoord, yCoord, zCoord);
+			entity.newEntity(proxyEntity);
+		}
 		this.proxyEntity = proxyEntity;
 	}
 
-	// public void newEntity() {
-	// setProxyEntity(new InfuserTopTileEntity(this));
-	// }
+	private void newEntity(InfernosProxyEntityBase proxyEntity) {
+		try{
+			setProxyEntity(proxyEntity);
+		}catch(Exception e){
+			e.printStackTrace();
+			this.worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+		}
+	}
 
 	public void newEntity(String entityName) {
+		entityName = InfernosRegisteryProxyEntity.INSTANCE.getCompatibleName(entityName);
 		if ((this.proxyEntity == null) || (!this.proxyEntity.getTypeName().equals(entityName))) {
-			setProxyEntity(InfernosRegisteryProxyEntity.INSTANCE.newMultiEntity(entityName, this));
+			try{
+				setProxyEntity(InfernosRegisteryProxyEntity.INSTANCE.newMultiEntity(entityName, this));
+			}catch(Exception e){
+				e.printStackTrace();
+				this.worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+			}
 		}
 	}
 
@@ -151,5 +174,9 @@ public class InfernosMultiEntity extends TileEntity {
 			getProxyEntity().invalidate();
 			setProxyEntity(null);
 		}
+	}
+
+	public boolean hasProxyEntity() {
+		return proxyEntity!=null;
 	}
 }

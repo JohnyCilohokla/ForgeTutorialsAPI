@@ -1,15 +1,22 @@
 package com.forgetutorials.multientity;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import com.forgetutorials.lib.registry.InfernosRegisteryProxyEntity;
 import com.forgetutorials.lib.utilities.ItemUtilities;
 import com.forgetutorials.multientity.base.InfernosProxyEntityBase;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -25,6 +32,7 @@ public class InfernosMultiBlock extends Block {
 		setUnlocalizedName("InfernosMultiBlock");
 		GameRegistry.registerBlock(this, InfernosMultiItem.class, "InfernosMultiBlock");
 		LanguageRegistry.addName(this, "InfernosMultiBlock");
+		setCreativeTab(CreativeTabs.tabBlock);
 	}
 
 	@Override
@@ -39,9 +47,19 @@ public class InfernosMultiBlock extends Block {
 	}
 
 	@Override
+	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack) {
+		super.onBlockPlacedBy(par1World, par2, par3, par4, par5EntityLivingBase, par6ItemStack);
+		String proxyEntityName = ((InfernosMultiItem)(par6ItemStack.getItem())).getProxyEntity(par6ItemStack);
+		InfernosMultiEntity entity = (InfernosMultiEntity) par1World.getBlockTileEntity(par2, par3, par4);
+		entity.newEntity(proxyEntityName);
+	}
+	
+	@Override
 	public void onPostBlockPlaced(World par1World, int par2, int par3, int par4, int par5) {
 		InfernosMultiEntity entity = (InfernosMultiEntity) par1World.getBlockTileEntity(par2, par3, par4);
-		entity.newEntity("InfuserTopTileEntity");
+		if (!entity.hasProxyEntity()){
+			System.out.println(">> MES error block has no proxy entity");
+		}
 	}
 
 	@Override
@@ -161,5 +179,12 @@ public class InfernosMultiBlock extends Block {
 		}
 
 		return false;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister) {
+		InfernosRegisteryProxyEntity.INSTANCE.registerIcons(iconRegister);
+		super.registerIcons(iconRegister);
 	}
 }

@@ -4,11 +4,16 @@ import java.util.ArrayList;
 
 import com.forgetutorials.lib.network.PacketMultiTileEntity;
 import com.forgetutorials.multientity.InfernosMultiEntity;
+import com.forgetutorials.multientity.InfernosMultiEntityInv;
+import com.forgetutorials.multientity.InfernosMultiEntityInvLiq;
+import com.forgetutorials.multientity.InfernosMultiEntityLiq;
+import com.forgetutorials.multientity.InfernosMultiEntityType;
 
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.client.IItemRenderer.ItemRenderType;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -137,6 +142,8 @@ abstract public class InfernosProxyEntityBase {
 		}
 	}
 
+	abstract public void renderItem(ItemRenderType type);
+	
 	abstract public void renderTileEntityAt(double x, double y, double z);
 
 	abstract public void renderStaticBlockAt(RenderBlocks renderer, int x, int y, int z);
@@ -164,6 +171,40 @@ abstract public class InfernosProxyEntityBase {
 
 	public void tick() {
 		
+	}
+	
+	/**
+	 * Returns -1 if entity is valid otherwise meta of entity
+	 * @param infernosMultiEntity
+	 */
+	public int validateTileEntity(InfernosMultiEntity infernosMultiEntity) {
+		boolean entityInv = false;
+		boolean entityLiq = false;
+		if (infernosMultiEntity instanceof InfernosMultiEntityInvLiq){
+			entityInv = true;
+			entityLiq = true;
+		}else if (infernosMultiEntity instanceof InfernosMultiEntityInv){
+			entityInv = true;
+		}else if (infernosMultiEntity instanceof InfernosMultiEntityLiq){
+			entityLiq = true;
+		}
+		int meta = -1;
+		if (this.hasInventory() != entityInv||this.hasLiquids() != entityLiq){
+			if (this.hasInventory()){
+				if (this.hasLiquids()){	
+					meta = InfernosMultiEntityType.BOTH.ordinal();
+				}else{
+					meta = InfernosMultiEntityType.INVENTORY.ordinal();
+				}
+			}else{
+				if (this.hasLiquids()){	
+					meta = InfernosMultiEntityType.LIQUID.ordinal();
+				}else{
+					meta = InfernosMultiEntityType.BASIC.ordinal();
+				}
+			}
+		}
+		return meta;
 	}
 
 }

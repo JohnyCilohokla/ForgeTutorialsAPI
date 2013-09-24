@@ -12,6 +12,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 public enum FluidTessallator {
+	// TODO change into class and move enums to separate enum in MTC
 	InfuserTank(0.1, 0.1, 0.05, 0.95);
 
 	final double distS, distL;
@@ -101,7 +102,7 @@ public enum FluidTessallator {
 		}
 		Icon icon = flowing ? fluid.getFlowingIcon() : fluid.getStillIcon();
 		if (icon == null) {
-			icon = ((TextureMap) Minecraft.getMinecraft().func_110434_K().func_110581_b(TextureMap.field_110575_b)).func_110572_b("missingno");
+			icon = ((TextureMap) Minecraft.getMinecraft().renderEngine.getTexture(TextureMap.locationBlocksTexture)).registerIcon("missingno");
 		}
 		return icon;
 	}
@@ -120,7 +121,7 @@ public enum FluidTessallator {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-		FMLClientHandler.instance().getClient().renderEngine.func_110577_a(TextureMap.field_110575_b);
+		FMLClientHandler.instance().getClient().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
 		FluidTessallator.setColorForFluidStack(fluidstack);
 		Icon icon = FluidTessallator.getFluidTexture(fluidstack, false);
 
