@@ -26,51 +26,53 @@ public class InfernosMultiItem extends ItemBlock {
 
 	@Override
 	public String getUnlocalizedName(ItemStack itemStack) {
-		return super.getUnlocalizedName() + ".multi." + ((InfernosMultiItem)(itemStack.getItem())).getUnlocalizedEntityName(itemStack);
+		return super.getUnlocalizedName() + ".multi." + ((InfernosMultiItem) (itemStack.getItem())).getUnlocalizedEntityName(itemStack);
 
 	}
-	
+
 	@Override
 	public String getItemDisplayName(ItemStack itemStack) {
 		return itemStack.getTagCompound().toString();
 	}
 
 	private String getUnlocalizedEntityName(ItemStack itemStack) {
-		return ""+itemStack.getItemDamage();
+		return "" + itemStack.getItemDamage();
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getIconFromDamage(int par1) {
 		return Block.wood.getIcon(0, par1);
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getIconIndex(ItemStack itemStack) {
-		return ((InfernosMultiItem)(itemStack.getItem())).getMultiIcon(itemStack);
+		return ((InfernosMultiItem) (itemStack.getItem())).getMultiIcon(itemStack);
 	}
 
 	private Icon getMultiIcon(ItemStack itemStack) {
 		return Block.blocksList[itemStack.stackSize].getIcon(0, 0);
 	}
-	
-	public String getProxyEntity(ItemStack itemStack){
-		return itemStack.getTagCompound()!=null?(itemStack.getTagCompound().getString("MES")):null;
+
+	public String getProxyEntity(ItemStack itemStack) {
+		return itemStack.getTagCompound() != null ? (itemStack.getTagCompound().getString("MES")) : null;
 	}
-	
+
 	@Override
 	public int getDamage(ItemStack itemStack) {
-		InfernosMultiEntityType type = InfernosRegisteryProxyEntity.INSTANCE.getType(((InfernosMultiItem)(itemStack.getItem())).getProxyEntity(itemStack));
-		return type!=null?type.ordinal():-1;
+		InfernosMultiEntityType type = InfernosRegisteryProxyEntity.INSTANCE.getType(((InfernosMultiItem) (itemStack.getItem())).getProxyEntity(itemStack));
+		return type != null ? type.ordinal() : -1;
 	}
-	
+
 	@Override
 	public int getMetadata(int damageValue) {
 		return damageValue;
 	}
+
 	@Override
-	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10) {
+	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8,
+			float par9, float par10) {
 		int i1 = par3World.getBlockId(par4, par5, par6);
 
 		if ((i1 == Block.snow.blockID) && ((par3World.getBlockMetadata(par4, par5, par6) & 7) < 1)) {
@@ -115,7 +117,8 @@ public class InfernosMultiItem extends ItemBlock {
 
 			if (placeBlockAt(par1ItemStack, par2EntityPlayer, par3World, par4, par5, par6, par7, par8, par9, par10, k1)) {
 
-				par3World.playSoundEffect(par4 + 0.5F, par5 + 0.5F, par6 + 0.5F, block.stepSound.getPlaceSound(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
+				par3World.playSoundEffect(par4 + 0.5F, par5 + 0.5F, par6 + 0.5F, block.stepSound.getPlaceSound(), (block.stepSound.getVolume() + 1.0F) / 2.0F,
+						block.stepSound.getPitch() * 0.8F);
 				--par1ItemStack.stackSize;
 			}
 
@@ -124,20 +127,20 @@ public class InfernosMultiItem extends ItemBlock {
 			return false;
 		}
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean isFull3D() {
 		return true;
 	}
-	
+
 	@Override
 	@SuppressWarnings({ "rawtypes" })
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(int id, CreativeTabs creativeTab, List list) {
-			ForgeTutorialsRegistry.INSTANCE.getSubItems(id, creativeTab, list);
+		ForgeTutorialsRegistry.INSTANCE.getSubItems(id, creativeTab, list);
 	}
-	
+
 	@Override
 	public CreativeTabs[] getCreativeTabs() {
 		return ForgeTutorialsRegistry.INSTANCE.getCreativeTabs();

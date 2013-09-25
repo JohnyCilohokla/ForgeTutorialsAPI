@@ -1,7 +1,5 @@
 package com.forgetutorials.lib.renderers;
 
-import static org.lwjgl.opengl.GL11.GL_COMPILE;
-
 import org.lwjgl.opengl.GL11;
 
 public class GLDisplayList {
@@ -12,45 +10,45 @@ public class GLDisplayList {
 	}
 
 	public void generate() {
-		if ((displayListID == 0)) {
-			displayListID = GL11.glGenLists(1);
+		if ((this.displayListID == 0)) {
+			this.displayListID = GL11.glGenLists(1);
 		}
 	}
 
 	public void delete() {
-		if ((displayListID != 0)) {
-			GL11.glDeleteLists(displayListID, 1);
+		if ((this.displayListID != 0)) {
+			GL11.glDeleteLists(this.displayListID, 1);
 		}
-		displayListID = 0;
+		this.displayListID = 0;
 	}
 
 	public void bind() {
 		generate();
-		if ((currentDisplayListID != 0)) {
-			System.out.println("DisplayListContainer->bind() error DisplayList already bound! Trying to bind " + displayListID + " over "
-					+ currentDisplayListID);
+		if ((GLDisplayList.currentDisplayListID != 0)) {
+			System.out.println("DisplayListContainer->bind() error DisplayList already bound! Trying to bind " + this.displayListID + " over "
+					+ GLDisplayList.currentDisplayListID);
 		}
-		currentDisplayListID = displayListID;
-		GL11.glNewList(displayListID, GL_COMPILE);
+		GLDisplayList.currentDisplayListID = this.displayListID;
+		GL11.glNewList(this.displayListID, GL11.GL_COMPILE);
 		GL11.glPushMatrix();
 	}
 
 	public boolean isGenerated() {
-		return displayListID != 0;
+		return this.displayListID != 0;
 	}
 
 	public void unbind() {
-		if ((currentDisplayListID == 0) || (currentDisplayListID != displayListID)) {
-			System.out.println("DisplayListContainer->unbind() error " + currentDisplayListID + "!=" + displayListID);
+		if ((GLDisplayList.currentDisplayListID == 0) || (GLDisplayList.currentDisplayListID != this.displayListID)) {
+			System.out.println("DisplayListContainer->unbind() error " + GLDisplayList.currentDisplayListID + "!=" + this.displayListID);
 		}
 		GL11.glPopMatrix();
 		GL11.glEndList();
-		currentDisplayListID = 0;
+		GLDisplayList.currentDisplayListID = 0;
 	}
 
 	public void render() {
-		if ((displayListID != 0)) {
-			GL11.glCallList(displayListID);
+		if ((this.displayListID != 0)) {
+			GL11.glCallList(this.displayListID);
 		}
 	}
 }

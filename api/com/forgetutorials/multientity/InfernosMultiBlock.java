@@ -1,8 +1,6 @@
 package com.forgetutorials.multientity;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import com.forgetutorials.lib.registry.InfernosRegisteryProxyEntity;
 import com.forgetutorials.lib.utilities.ItemUtilities;
 import com.forgetutorials.multientity.base.InfernosProxyEntityBase;
@@ -49,15 +47,15 @@ public class InfernosMultiBlock extends Block {
 	@Override
 	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack) {
 		super.onBlockPlacedBy(par1World, par2, par3, par4, par5EntityLivingBase, par6ItemStack);
-		String proxyEntityName = ((InfernosMultiItem)(par6ItemStack.getItem())).getProxyEntity(par6ItemStack);
+		String proxyEntityName = ((InfernosMultiItem) (par6ItemStack.getItem())).getProxyEntity(par6ItemStack);
 		InfernosMultiEntity entity = (InfernosMultiEntity) par1World.getBlockTileEntity(par2, par3, par4);
 		entity.newEntity(proxyEntityName);
 	}
-	
+
 	@Override
 	public void onPostBlockPlaced(World par1World, int par2, int par3, int par4, int par5) {
 		InfernosMultiEntity entity = (InfernosMultiEntity) par1World.getBlockTileEntity(par2, par3, par4);
-		if (!entity.hasProxyEntity()){
+		if (!entity.hasProxyEntity()) {
 			System.out.println(">> MES error block has no proxy entity");
 		}
 	}
@@ -151,7 +149,8 @@ public class InfernosMultiBlock extends Block {
 					if (qty > 0) {
 						proxyEntity.fill(ForgeDirection.UNKNOWN, liquid, true);
 
-						entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, ItemUtilities.useSingleItemOrDropAndReturn(world, entityplayer, currentItem));
+						entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem,
+								ItemUtilities.useSingleItemOrDropAndReturn(world, entityplayer, currentItem));
 					}
 					return true;
 
@@ -174,13 +173,13 @@ public class InfernosMultiBlock extends Block {
 					}
 				}
 			}
-		}else{
-			proxyEntity.onBlockActivated(entityplayer,par6,par7,par8,par9);
+		} else {
+			proxyEntity.onBlockActivated(entityplayer, par6, par7, par8, par9);
 		}
 
 		return false;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {

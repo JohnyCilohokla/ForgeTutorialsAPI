@@ -25,7 +25,7 @@ public class DescriptorObject {
 		this.unlocalizedName = unlocalizedName;
 		this.name = name;
 		this.registered = true;
-		ForgeTutorialsRegistry.INSTANCE.addObject(unlocalizedName,this);
+		ForgeTutorialsRegistry.INSTANCE.addObject(unlocalizedName, this);
 	}
 
 }

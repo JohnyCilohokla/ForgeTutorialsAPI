@@ -56,7 +56,7 @@ public class OreGenReplace extends OreGenBase {
 				generateReplace(world, random, x, y, z);
 			}
 		} catch (Exception e) {
-			Logger.getLogger("FT_ORE").log(Level.SEVERE, ">> Error: generating ore "+ this.ore.getName() + " (" + this.ore.getUnlocalizedName() + ")");
+			Logger.getLogger("FT_ORE").log(Level.SEVERE, ">> Error: generating ore " + this.ore.getName() + " (" + this.ore.getUnlocalizedName() + ")");
 			e.printStackTrace();
 		}
 	}
@@ -96,8 +96,9 @@ public class OreGenReplace extends OreGenBase {
 								double var45 = ((var44 + 0.5D) - var24) / (var28 / 2.0D);
 
 								int block = par1World.getBlockId(var38, var41, var44);
-								//int meta = par1World.getBlockMetadata(var38, var41, var44);
-								if ((((var39 * var39) + (var42 * var42) + (var45 * var45)) < 1.0D) && block == this.replaceID) {
+								// int meta = par1World.getBlockMetadata(var38,
+								// var41, var44);
+								if ((((var39 * var39) + (var42 * var42) + (var45 * var45)) < 1.0D) && (block == this.replaceID)) {
 									par1World.setBlock(var38, var41, var44, this.ore.oreID, this.ore.oreMeta, 2);
 								}
 							}

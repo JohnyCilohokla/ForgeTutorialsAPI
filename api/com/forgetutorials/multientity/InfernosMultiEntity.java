@@ -28,37 +28,37 @@ public class InfernosMultiEntity extends TileEntity {
 	}
 
 	private void setProxyEntity(InfernosProxyEntityBase proxyEntity) {
-		if (proxyEntity == null){
+		if (proxyEntity == null) {
 			this.proxyEntity = proxyEntity;
 			return;
 		}
 		int meta = proxyEntity.validateTileEntity(this);
-		if (meta != -1){
-			System.out.println(">> MES Updating meta! ("+this.getClass().getCanonicalName()+")");
-			worldObj.setBlock(xCoord, yCoord, zCoord, MultiEntitySystem.infernosMultiBlockID, meta, 3);
-			InfernosMultiEntity entity = (InfernosMultiEntity) worldObj.getBlockTileEntity(xCoord, yCoord, zCoord);
+		if (meta != -1) {
+			System.out.println(">> MES Updating meta! (" + this.getClass().getCanonicalName() + ")");
+			this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, MultiEntitySystem.infernosMultiBlockID, meta, 3);
+			InfernosMultiEntity entity = (InfernosMultiEntity) this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord);
 			entity.newEntity(proxyEntity);
 		}
 		this.proxyEntity = proxyEntity;
 	}
 
 	private void newEntity(InfernosProxyEntityBase proxyEntity) {
-		try{
+		try {
 			setProxyEntity(proxyEntity);
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
-			this.worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+			this.worldObj.setBlockToAir(this.xCoord, this.yCoord, this.zCoord);
 		}
 	}
 
 	public void newEntity(String entityName) {
 		entityName = InfernosRegisteryProxyEntity.INSTANCE.getCompatibleName(entityName);
 		if ((this.proxyEntity == null) || (!this.proxyEntity.getTypeName().equals(entityName))) {
-			try{
+			try {
 				setProxyEntity(InfernosRegisteryProxyEntity.INSTANCE.newMultiEntity(entityName, this));
-			}catch(Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
-				this.worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+				this.worldObj.setBlockToAir(this.xCoord, this.yCoord, this.zCoord);
 			}
 		}
 	}
@@ -138,7 +138,7 @@ public class InfernosMultiEntity extends TileEntity {
 	public void renderStaticBlockAt(RenderBlocks renderer, int x, int y, int z) {
 		getProxyEntity().renderStaticBlockAt(renderer, x, y, z);
 	}
-	
+
 	@Override
 	public void readFromNBT(NBTTagCompound tagCompound) {
 		super.readFromNBT(tagCompound);
@@ -162,7 +162,7 @@ public class InfernosMultiEntity extends TileEntity {
 		getProxyEntity().addToDescriptionPacket(packet);
 		return PacketType.populatePacket(packet);
 	}
-	
+
 	@Override
 	public void updateEntity() {
 		getProxyEntity().tick();
@@ -177,6 +177,6 @@ public class InfernosMultiEntity extends TileEntity {
 	}
 
 	public boolean hasProxyEntity() {
-		return proxyEntity!=null;
+		return this.proxyEntity != null;
 	}
 }

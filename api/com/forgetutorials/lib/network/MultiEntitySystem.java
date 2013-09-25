@@ -26,7 +26,6 @@ public class MultiEntitySystem implements IPacketHandler {
 	@SidedProxy(clientSide = ModInfo.CLIENT_PROXY_CLASS, serverSide = ModInfo.SERVER_PROXY_CLASS)
 	public static CommonProxy proxy;
 
-
 	public static int infernosMultiBlockID = 2888;
 	public static InfernosMultiBlock infernosMultiBlock;
 
@@ -35,15 +34,15 @@ public class MultiEntitySystem implements IPacketHandler {
 		InfernosPacket infernosPacket = PacketType.buildPacket(packet.data);
 		infernosPacket.execute(manager, player);
 	}
-	
+
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		System.out.println(">> MES_API: preInit");
 		MultiEntitySystem.infernosMultiBlock = new InfernosMultiBlock(MultiEntitySystem.infernosMultiBlockID, MetaMaterial.metaMaterial);
-		new DescriptorBlock().setTool("metaHammer", 1).registerBlock("forgetutorials.MultiEntityBlock", MultiEntitySystem.infernosMultiBlock.getLocalizedName(),
-				new ItemStack(MultiEntitySystem.infernosMultiBlock));
+		new DescriptorBlock().setTool("metaHammer", 1).registerBlock("forgetutorials.MultiEntityBlock",
+				MultiEntitySystem.infernosMultiBlock.getLocalizedName(), new ItemStack(MultiEntitySystem.infernosMultiBlock));
 	}
-	
+
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		System.out.println(">> MES_API: init");

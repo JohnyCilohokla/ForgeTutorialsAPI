@@ -62,7 +62,8 @@ public class SingleBiomeChunkManager extends WorldChunkManager {
 
 	@Override
 	public ChunkPosition findBiomePosition(int par1, int par2, int par3, @SuppressWarnings("rawtypes") List biomesList, Random par5Random) {
-		return biomesList.contains(this.biome) ? new ChunkPosition((par1 - par3) + par5Random.nextInt((par3 * 2) + 1), 0, (par2 - par3) + par5Random.nextInt((par3 * 2) + 1)) : null;
+		return biomesList.contains(this.biome) ? new ChunkPosition((par1 - par3) + par5Random.nextInt((par3 * 2) + 1), 0, (par2 - par3)
+				+ par5Random.nextInt((par3 * 2) + 1)) : null;
 	}
 
 	@Override

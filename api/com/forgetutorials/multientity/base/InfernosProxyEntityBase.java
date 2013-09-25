@@ -50,7 +50,7 @@ abstract public class InfernosProxyEntityBase {
 	}
 
 	public String getInvName() {
-		return "multientity."+this.getTypeName();
+		return "multientity." + getTypeName();
 	}
 
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
@@ -143,7 +143,7 @@ abstract public class InfernosProxyEntityBase {
 	}
 
 	abstract public void renderItem(ItemRenderType type);
-	
+
 	abstract public void renderTileEntityAt(double x, double y, double z);
 
 	abstract public void renderStaticBlockAt(RenderBlocks renderer, int x, int y, int z);
@@ -170,36 +170,37 @@ abstract public class InfernosProxyEntityBase {
 	}
 
 	public void tick() {
-		
+
 	}
-	
+
 	/**
 	 * Returns -1 if entity is valid otherwise meta of entity
+	 * 
 	 * @param infernosMultiEntity
 	 */
 	public int validateTileEntity(InfernosMultiEntity infernosMultiEntity) {
 		boolean entityInv = false;
 		boolean entityLiq = false;
-		if (infernosMultiEntity instanceof InfernosMultiEntityInvLiq){
+		if (infernosMultiEntity instanceof InfernosMultiEntityInvLiq) {
 			entityInv = true;
 			entityLiq = true;
-		}else if (infernosMultiEntity instanceof InfernosMultiEntityInv){
+		} else if (infernosMultiEntity instanceof InfernosMultiEntityInv) {
 			entityInv = true;
-		}else if (infernosMultiEntity instanceof InfernosMultiEntityLiq){
+		} else if (infernosMultiEntity instanceof InfernosMultiEntityLiq) {
 			entityLiq = true;
 		}
 		int meta = -1;
-		if (this.hasInventory() != entityInv||this.hasLiquids() != entityLiq){
-			if (this.hasInventory()){
-				if (this.hasLiquids()){	
+		if ((hasInventory() != entityInv) || (hasLiquids() != entityLiq)) {
+			if (hasInventory()) {
+				if (hasLiquids()) {
 					meta = InfernosMultiEntityType.BOTH.ordinal();
-				}else{
+				} else {
 					meta = InfernosMultiEntityType.INVENTORY.ordinal();
 				}
-			}else{
-				if (this.hasLiquids()){	
+			} else {
+				if (hasLiquids()) {
 					meta = InfernosMultiEntityType.LIQUID.ordinal();
-				}else{
+				} else {
 					meta = InfernosMultiEntityType.BASIC.ordinal();
 				}
 			}

@@ -8,8 +8,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 
 import com.forgetutorials.multientity.InfernosMultiEntity;
@@ -49,8 +47,8 @@ public enum InfernosRegisteryProxyEntity {
 		Container container = this.proxyEntities.get(name);
 		return container != null ? container : this.proxyEntities.get("null");
 	}
-	
-	public InfernosMultiEntityType getType(String name){
+
+	public InfernosMultiEntityType getType(String name) {
 		return getProxyContainer(name).type;
 	}
 
@@ -78,8 +76,8 @@ public enum InfernosRegisteryProxyEntity {
 		}
 		Logger.getLogger("MES").log(
 				Level.INFO,
-				"Override ProxyEntity " + name + " from " + getProxyContainer(name)._class.getCanonicalName() + " (" + getProxyContainer(name).type + ") to " + entity.getCanonicalName() + " (" + type
-						+ ")");
+				"Override ProxyEntity " + name + " from " + getProxyContainer(name)._class.getCanonicalName() + " (" + getProxyContainer(name).type + ") to "
+						+ entity.getCanonicalName() + " (" + type + ")");
 		this.proxyEntities.put(name, new Container(entity, null, type));
 		return true;
 	}

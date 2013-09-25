@@ -20,10 +20,11 @@ public class DescriptorBlock extends DescriptorItem {
 	protected void register(String unlocalizedName, String name, ItemStack itemStack) {
 		super.register(unlocalizedName, name, itemStack);
 		this.block = Block.blocksList[itemStack.itemID];
-		if (this.harvestTool!=null){
+		if (this.harvestTool != null) {
 			MinecraftForge.setBlockHarvestLevel(this.block, this.itemStack.getItemDamage(), this.harvestTool, this.harvestLevel);
 		}
-		System.out.println(">> Registery: Register Block "+this.block.getClass().getCanonicalName()+" ["+this.itemStack.getItemDamage()+"] + tool("+this.harvestTool+"@"+this.harvestLevel+")");
+		System.out.println(">> Registery: Register Block " + this.block.getClass().getCanonicalName() + " [" + this.itemStack.getItemDamage() + "] + tool("
+				+ this.harvestTool + "@" + this.harvestLevel + ")");
 	}
 
 	public DescriptorBlock registerBlock(String unlocalizedName, String name, ItemStack itemStack) {

@@ -29,7 +29,7 @@ public class InfernosMultiBlockRenderer implements ISimpleBlockRenderingHandler 
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 		TileEntity tileentity = world.getBlockTileEntity(x, y, z);
-		if (tileentity==null){
+		if (tileentity == null) {
 			return true;
 		}
 		if (tileentity instanceof InfernosMultiEntity) {

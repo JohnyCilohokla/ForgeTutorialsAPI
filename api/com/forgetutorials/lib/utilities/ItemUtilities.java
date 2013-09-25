@@ -10,7 +10,8 @@ import net.minecraftforge.common.FakePlayer;
 
 public class ItemUtilities {
 
-	public static void damageItemOrDestroy(ItemStack item, int itemID, int damage, EntityLivingBase entity, World world, int x, int y, int z, Item onDestroyItem, int itemCount, int itemMeta) {
+	public static void damageItemOrDestroy(ItemStack item, int itemID, int damage, EntityLivingBase entity, World world, int x, int y, int z,
+			Item onDestroyItem, int itemCount, int itemMeta) {
 		if ((onDestroyItem == null) || (((item.getMaxDamage() - item.getItemDamage()) + 1) > (damage))) {
 			item.damageItem((damage), entity);
 		} else {
@@ -65,8 +66,8 @@ public class ItemUtilities {
 		}
 	}
 
-    public static boolean areItemStacksEqualItem(ItemStack stack1, ItemStack stack2)
-    {
-        return stack1.itemID != stack2.itemID ? false : (stack1.getItemDamage() != stack2.getItemDamage() ? false : (stack1.stackSize > stack1.getMaxStackSize() ? false : ItemStack.areItemStackTagsEqual(stack1, stack2)));
-    }
+	public static boolean areItemStacksEqualItem(ItemStack stack1, ItemStack stack2) {
+		return stack1.itemID != stack2.itemID ? false : (stack1.getItemDamage() != stack2.getItemDamage() ? false : (stack1.stackSize > stack1
+				.getMaxStackSize() ? false : ItemStack.areItemStackTagsEqual(stack1, stack2)));
+	}
 }

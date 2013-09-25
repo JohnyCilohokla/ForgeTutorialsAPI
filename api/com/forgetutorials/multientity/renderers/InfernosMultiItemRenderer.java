@@ -14,7 +14,7 @@ public class InfernosMultiItemRenderer implements IItemRenderer {
 	public static void initizeRenderer() {
 		MinecraftForgeClient.registerItemRenderer(MultiEntitySystem.infernosMultiBlockID, new InfernosMultiItemRenderer());
 	}
-	
+
 	@Override
 	public boolean handleRenderType(ItemStack item, ItemRenderType type) {
 		return true;
@@ -27,11 +27,11 @@ public class InfernosMultiItemRenderer implements IItemRenderer {
 
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack itemStack, Object... data) {
-        InfernosProxyEntityBase entity = InfernosRegisteryProxyEntity.INSTANCE.getStaticMultiEntity(((InfernosMultiItem)(itemStack.getItem())).getProxyEntity(itemStack));
-        if (entity!=null){
-        	entity.renderItem(type);
-        }
+		InfernosProxyEntityBase entity = InfernosRegisteryProxyEntity.INSTANCE.getStaticMultiEntity(((InfernosMultiItem) (itemStack.getItem()))
+				.getProxyEntity(itemStack));
+		if (entity != null) {
+			entity.renderItem(type);
+		}
 	}
-
 
 }
