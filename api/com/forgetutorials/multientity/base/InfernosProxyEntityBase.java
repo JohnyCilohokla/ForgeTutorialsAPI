@@ -208,4 +208,8 @@ abstract public class InfernosProxyEntityBase {
 		return meta;
 	}
 
+	public void addHeat(double d) {
+
+	}
+
 }

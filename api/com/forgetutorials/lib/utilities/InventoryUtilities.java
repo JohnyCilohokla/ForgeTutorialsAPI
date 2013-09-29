@@ -14,6 +14,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class InventoryUtilities {
+
 	public static IInventory getInventoryAtLocation(World world, double x, double y, double z) {
 		IInventory iinventory = null;
 		int i = MathHelper.floor_double(x);

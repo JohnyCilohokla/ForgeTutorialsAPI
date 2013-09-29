@@ -129,6 +129,7 @@ public enum FluidTessallator {
 		addToTessallator(tessellator, x, y, z, icon, size, size);
 		tessellator.draw();
 
+		GL11.glColor4f(1, 1, 1, 1);
 		GL11.glPopAttrib();
 		GL11.glPopMatrix();
 	}

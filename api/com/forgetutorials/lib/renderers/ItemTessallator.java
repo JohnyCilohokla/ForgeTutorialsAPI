@@ -31,5 +31,8 @@ public class ItemTessallator {
 
 	public static void renderEntityItem(EntityItem ghostEntityItem) {
 		ItemTessallator.customItemRenderer.doRenderItem(ghostEntityItem, 0, 0, 0, 0, 0);
+		GL11.glColor4f(1, 1, 1, 1);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GL11.glDisable(GL11.GL_BLEND);
 	}
 }

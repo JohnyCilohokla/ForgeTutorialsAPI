@@ -7,6 +7,7 @@ import com.forgetutorials.lib.network.PacketMultiTileEntity;
 import com.forgetutorials.lib.network.PacketType;
 import com.forgetutorials.lib.registry.InfernosRegisteryProxyEntity;
 import com.forgetutorials.multientity.base.InfernosProxyEntityBase;
+import com.forgetutorials.multientity.base.InfernosProxyEntityDummy;
 
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.entity.item.EntityItem;
@@ -25,6 +26,11 @@ public class InfernosMultiEntity extends TileEntity {
 
 	public InfernosProxyEntityBase getProxyEntity() {
 		return (this.proxyEntity != null) ? (this.proxyEntity) : (InfernosProxyEntityBase.DUMMY);
+	}
+
+	public InfernosProxyEntityBase getProxyEntity(boolean allowDummy) {
+		InfernosProxyEntityBase target = getProxyEntity();
+		return ((!(target instanceof InfernosProxyEntityDummy)) || allowDummy) ? (target) : (null);
 	}
 
 	private void setProxyEntity(InfernosProxyEntityBase proxyEntity) {
