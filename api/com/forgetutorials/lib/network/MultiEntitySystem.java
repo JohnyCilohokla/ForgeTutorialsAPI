@@ -4,6 +4,7 @@ import com.forgetutorials.core.proxy.CommonProxy;
 import com.forgetutorials.lib.ModInfo;
 import com.forgetutorials.lib.registry.DescriptorBlock;
 import com.forgetutorials.lib.registry.MetaMaterial;
+import com.forgetutorials.lib.utilities.ForgeRegistryUtilities;
 import com.forgetutorials.multientity.InfernosMultiBlock;
 
 import net.minecraft.item.ItemStack;
@@ -28,6 +29,8 @@ public class MultiEntitySystem implements IPacketHandler {
 
 	public static int infernosMultiBlockID = 2888;
 	public static InfernosMultiBlock infernosMultiBlock;
+
+	public static ForgeRegistryUtilities registry = new ForgeRegistryUtilities("mes");
 
 	@Override
 	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {

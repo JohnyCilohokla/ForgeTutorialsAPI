@@ -2,16 +2,18 @@ package com.forgetutorials.multientity;
 
 import java.util.ArrayList;
 import com.forgetutorials.lib.registry.InfernosRegisteryProxyEntity;
-import com.forgetutorials.lib.utilities.ForgeRegistryUtilities;
 import com.forgetutorials.lib.utilities.ItemUtilities;
 import com.forgetutorials.multientity.base.InfernosProxyEntityBase;
 
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -25,7 +27,10 @@ import net.minecraftforge.fluids.FluidStack;
 public class InfernosMultiBlock extends Block {
 	public InfernosMultiBlock(int par1, Material material) {
 		super(par1, material);
-		ForgeRegistryUtilities.registerBlock(this, "InfernosMultiBlock", "InfernosMultiBlock");
+		setUnlocalizedName("InfernosMultiBlock");
+		GameRegistry.registerBlock(this, InfernosMultiItem.class, "InfernosMultiBlock");
+		LanguageRegistry.addName(this, "InfernosMultiBlock");
+		setCreativeTab(CreativeTabs.tabBlock);
 	}
 
 	@Override

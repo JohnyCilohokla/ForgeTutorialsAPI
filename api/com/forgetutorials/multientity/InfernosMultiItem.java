@@ -133,14 +133,14 @@ public class InfernosMultiItem extends ItemBlock {
 	public boolean isFull3D() {
 		return true;
 	}
-
+	
 	@Override
-	@SuppressWarnings({ "rawtypes" })
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(int id, CreativeTabs creativeTab, List list) {
 		ForgeTutorialsRegistry.INSTANCE.getSubItems(id, creativeTab, list);
 	}
-
+	
 	@Override
 	public CreativeTabs[] getCreativeTabs() {
 		return ForgeTutorialsRegistry.INSTANCE.getCreativeTabs();
