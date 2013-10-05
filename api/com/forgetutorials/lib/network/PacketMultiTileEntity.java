@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 
 public class PacketMultiTileEntity extends InfernosPacket {
 
-	public int x, y, z;
+	public int x, y, z, side;
 	public String entityName;
 	TileEntity tileEntity;
 	private final List<SubPacketTileEntityChild> children;
@@ -27,11 +27,12 @@ public class PacketMultiTileEntity extends InfernosPacket {
 		this.children = new ArrayList<SubPacketTileEntityChild>();
 	}
 
-	public PacketMultiTileEntity(int x, int y, int z, String entityName) {
+	public PacketMultiTileEntity(int x, int y, int z, int side, String entityName) {
 		super(PacketType.MULTIPACKET_TILE_ENTITY, true);
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		this.side = side;
 		this.entityName = entityName;
 		this.children = new ArrayList<SubPacketTileEntityChild>();
 	}
@@ -41,6 +42,7 @@ public class PacketMultiTileEntity extends InfernosPacket {
 		data.writeInt(this.x);
 		data.writeInt(this.y);
 		data.writeInt(this.z);
+		data.writeInt(this.side);
 		data.writeUTF(this.entityName);
 		data.writeInt(this.children.size());
 		for (SubPacketTileEntityChild packet : this.children) {
@@ -55,6 +57,7 @@ public class PacketMultiTileEntity extends InfernosPacket {
 		this.x = data.readInt();
 		this.y = data.readInt();
 		this.z = data.readInt();
+		this.side = data.readInt();
 		this.entityName = data.readUTF();
 		int childrenCount = data.readInt();
 		for (int i = 0; i < childrenCount; i++) {
@@ -75,6 +78,7 @@ public class PacketMultiTileEntity extends InfernosPacket {
 		if (this.tileEntity instanceof InfernosMultiEntity) {
 			InfernosMultiEntity multiEntity = (InfernosMultiEntity) this.tileEntity;
 			multiEntity.newEntity(this.entityName);
+			multiEntity.setSide(side);
 		}
 
 		for (SubPacketTileEntityChild packet : this.children) {

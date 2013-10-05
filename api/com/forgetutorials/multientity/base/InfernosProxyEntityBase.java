@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.Icon;
 import net.minecraftforge.client.IItemRenderer.ItemRenderType;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -206,5 +207,9 @@ abstract public class InfernosProxyEntityBase {
 			}
 		}
 		return meta;
+	}
+
+	public Icon getIconFromSide(int side) {
+		return null;
 	}
 }

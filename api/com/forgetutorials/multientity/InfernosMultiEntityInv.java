@@ -1,6 +1,7 @@
 package com.forgetutorials.multientity;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 
@@ -8,6 +9,7 @@ public class InfernosMultiEntityInv extends InfernosMultiEntity implements ISide
 
 	@Override
 	public int getSizeInventory() {
+		
 		return getProxyEntity().getSizeInventory();
 	}
 

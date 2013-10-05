@@ -26,6 +26,7 @@ public class DescriptorObject {
 		this.name = name;
 		this.registered = true;
 		ForgeTutorialsRegistry.INSTANCE.addObject(unlocalizedName, this);
+		System.out.println(">>Registery(FTA)<< Register object: " + unlocalizedName + " ["+name+"]");
 	}
 
 }

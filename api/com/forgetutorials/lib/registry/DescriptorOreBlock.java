@@ -25,6 +25,8 @@ public class DescriptorOreBlock extends DescriptorBlock {
 		this.oreDictionaryName = oreDictionaryName;
 		this.oreID = this.itemStack.itemID;
 		this.oreMeta = this.itemStack.getItemDamage();
+		System.out.println(">>Registery(FTA)<< Register Ore Block: " + this.block.getClass().getCanonicalName() + " [" + this.oreDictionaryName + "] + ("
+				+ this.oreID + "@" + this.oreMeta + ")");
 		return this;
 	}
 

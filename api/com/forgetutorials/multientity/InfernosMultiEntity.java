@@ -16,9 +16,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Facing;
+import net.minecraft.util.Icon;
 
 public class InfernosMultiEntity extends TileEntity {
 	private InfernosProxyEntityBase proxyEntity;
+	private int side = -1;
 
 	public InfernosMultiEntity() {
 		super();
@@ -150,6 +154,7 @@ public class InfernosMultiEntity extends TileEntity {
 		super.readFromNBT(tagCompound);
 		String mes = tagCompound.getString("MES");
 		newEntity(mes);
+		this.side = tagCompound.getInteger("MES.s");
 		getProxyEntity().readFromNBT(tagCompound);
 	}
 
@@ -158,13 +163,14 @@ public class InfernosMultiEntity extends TileEntity {
 		super.writeToNBT(tagCompound);
 		if (getProxyEntity() != null) {
 			tagCompound.setString("MES", getProxyEntity().getTypeName());
+			tagCompound.setInteger("MES.s", this.side);
 			getProxyEntity().writeToNBT(tagCompound);
 		}
 	}
 
 	@Override
 	public Packet getDescriptionPacket() {
-		PacketMultiTileEntity packet = new PacketMultiTileEntity(this.xCoord, this.yCoord, this.zCoord, getProxyEntity().getTypeName());
+		PacketMultiTileEntity packet = new PacketMultiTileEntity(this.xCoord, this.yCoord, this.zCoord, this.side, getProxyEntity().getTypeName());
 		getProxyEntity().addToDescriptionPacket(packet);
 		return PacketType.populatePacket(packet);
 	}
@@ -184,5 +190,21 @@ public class InfernosMultiEntity extends TileEntity {
 
 	public boolean hasProxyEntity() {
 		return this.proxyEntity != null;
+	}
+
+	public void onBlockPlaced(int side, float hitX, float hitY, float hitZ, int metadata) {
+		this.side = side;
+	}
+
+	public void setSide(int side) {
+		this.side = side;
+	}
+	
+	public int getSide() {
+		return side==-1?-1:Facing.oppositeSide[side];
+	}
+
+	public Icon getIconFromSide(int side) {
+		return getProxyEntity().getIconFromSide(side);
 	}
 }

@@ -1,9 +1,9 @@
-package com.forgetutorials.lib.utilities;
+package com.forgetutorials.lib.renderers;
 
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 
-public class CustomItemRenderer extends RenderItem {
+class CustomItemRenderer extends RenderItem {
 	public CustomItemRenderer() {
 		setRenderManager(RenderManager.instance);
 	}

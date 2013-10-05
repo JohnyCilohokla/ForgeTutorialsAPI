@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import com.forgetutorials.lib.registry.InfernosRegisteryProxyEntity;
 import com.forgetutorials.lib.utilities.ItemUtilities;
 import com.forgetutorials.multientity.base.InfernosProxyEntityBase;
+import com.forgetutorials.multientity.renderers.InfernosMultiBlockRenderer;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -18,7 +19,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -42,6 +45,11 @@ public class InfernosMultiBlock extends Block {
 	public TileEntity createTileEntity(World world, int metadata) {
 		InfernosMultiEntity entity = InfernosMultiEntityType.newMultiEntity(InfernosMultiEntityType.values()[metadata]);
 		return entity;
+	}
+	
+	@Override
+	public int onBlockPlaced(World par1World, int par2, int par3, int par4, int par5, float par6, float par7, float par8, int par9) {
+		return super.onBlockPlaced(par1World, par2, par3, par4, par5, par6, par7, par8, par9);
 	}
 
 	@Override
@@ -120,7 +128,7 @@ public class InfernosMultiBlock extends Block {
 
 	@Override
 	public int getRenderType() {
-		return -1;
+		return InfernosMultiBlockRenderer.multiBlockRendererId;
 	}
 
 	@Override
@@ -131,6 +139,13 @@ public class InfernosMultiBlock extends Block {
 	@Override
 	public boolean isOpaqueCube() {
 		return false;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z, int side) {
+		InfernosMultiEntity entity = (InfernosMultiEntity) blockAccess.getBlockTileEntity(x, y, z);
+		return (entity != null) ? entity.getIconFromSide(side) : null;
 	}
 
 	@Override
