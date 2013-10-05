@@ -4,7 +4,8 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.Icon;
 
 public class BlockTessallator {
-	public static void addToTessallator(Tessellator tessellator, double x, double y, double z, Icon topIcon, Icon bottomIcon, Icon side1Icon, Icon side2Icom, Icon side3Icom, Icon side4Icon) {
+	public static void addToTessallator(Tessellator tessellator, double x, double y, double z, Icon topIcon, Icon bottomIcon, Icon side1Icon, Icon side2Icom,
+			Icon side3Icom, Icon side4Icon) {
 
 		// top
 		tessellator.addVertexWithUV(x, y + 1, z, topIcon.getMinU(), topIcon.getMinV());

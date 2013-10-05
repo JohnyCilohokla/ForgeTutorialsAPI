@@ -78,7 +78,7 @@ public class PacketMultiTileEntity extends InfernosPacket {
 		if (this.tileEntity instanceof InfernosMultiEntity) {
 			InfernosMultiEntity multiEntity = (InfernosMultiEntity) this.tileEntity;
 			multiEntity.newEntity(this.entityName);
-			multiEntity.setSide(side);
+			multiEntity.setSide(this.side);
 		}
 
 		for (SubPacketTileEntityChild packet : this.children) {

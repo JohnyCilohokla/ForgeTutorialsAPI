@@ -18,7 +18,8 @@ public class DescriptorItem extends DescriptorObject {
 		this.itemStack = itemStack;
 		this.item = this.itemStack.getItem();
 		this.meta = this.itemStack.getItemDamage();
-		System.out.println(">>Registery(FTA)<< Register Item: " + this.itemStack.getClass().getCanonicalName() + " [" + this.itemStack.getItem().getUnlocalizedName(itemStack) + "]" );
+		System.out.println(">>Registery(FTA)<< Register Item: " + this.itemStack.getClass().getCanonicalName() + " ["
+				+ this.itemStack.getItem().getUnlocalizedName(itemStack) + "]");
 	}
 
 }

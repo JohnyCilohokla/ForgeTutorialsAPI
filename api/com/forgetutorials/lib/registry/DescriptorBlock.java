@@ -23,8 +23,8 @@ public class DescriptorBlock extends DescriptorItem {
 		if (this.harvestTool != null) {
 			MinecraftForge.setBlockHarvestLevel(this.block, this.itemStack.getItemDamage(), this.harvestTool, this.harvestLevel);
 		}
-		System.out.println(">>Registery(FTA)<< Register Block: " + this.block.getClass().getCanonicalName() + " [" + this.itemStack.getItemDamage() + "] + tool("
-				+ this.harvestTool + "@" + this.harvestLevel + ")");
+		System.out.println(">>Registery(FTA)<< Register Block: " + this.block.getClass().getCanonicalName() + " [" + this.itemStack.getItemDamage()
+				+ "] + tool(" + this.harvestTool + "@" + this.harvestLevel + ")");
 	}
 
 	public DescriptorBlock registerBlock(String unlocalizedName, String name, ItemStack itemStack) {

@@ -16,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Facing;
 import net.minecraft.util.Icon;
 
@@ -199,9 +198,9 @@ public class InfernosMultiEntity extends TileEntity {
 	public void setSide(int side) {
 		this.side = side;
 	}
-	
+
 	public int getSide() {
-		return side==-1?-1:Facing.oppositeSide[side];
+		return this.side == -1 ? -1 : Facing.oppositeSide[this.side];
 	}
 
 	public Icon getIconFromSide(int side) {

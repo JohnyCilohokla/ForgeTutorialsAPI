@@ -46,7 +46,7 @@ public class InfernosMultiBlock extends Block {
 		InfernosMultiEntity entity = InfernosMultiEntityType.newMultiEntity(InfernosMultiEntityType.values()[metadata]);
 		return entity;
 	}
-	
+
 	@Override
 	public int onBlockPlaced(World par1World, int par2, int par3, int par4, int par5, float par6, float par7, float par8, int par9) {
 		return super.onBlockPlaced(par1World, par2, par3, par4, par5, par6, par7, par8, par9);
@@ -140,7 +140,7 @@ public class InfernosMultiBlock extends Block {
 	public boolean isOpaqueCube() {
 		return false;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z, int side) {

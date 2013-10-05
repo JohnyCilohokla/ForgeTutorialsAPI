@@ -7,7 +7,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-
 public class ItemTessallator {
 
 	private static final CustomItemRenderer customItemRenderer = new CustomItemRenderer();
