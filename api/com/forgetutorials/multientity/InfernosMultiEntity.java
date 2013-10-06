@@ -206,4 +206,8 @@ public class InfernosMultiEntity extends TileEntity {
 	public Icon getIconFromSide(int side) {
 		return getProxyEntity().getIconFromSide(side);
 	}
+
+	public int getFacingInt() {
+		return this.side == -1 ? 6 : Facing.oppositeSide[this.side];
+	}
 }

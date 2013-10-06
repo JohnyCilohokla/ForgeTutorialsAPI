@@ -8,8 +8,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 
+import com.forgetutorials.lib.network.MultiEntitySystem;
+import com.forgetutorials.lib.utilities.ItemStackUtilities;
 import com.forgetutorials.multientity.InfernosMultiEntity;
 import com.forgetutorials.multientity.InfernosMultiEntityType;
 import com.forgetutorials.multientity.base.InfernosProxyEntityBase;
@@ -126,5 +130,16 @@ public enum InfernosRegisteryProxyEntity {
 	public String getCompatibleName(String entityName) {
 		String newName = this.compatibilityNames.get(entityName);
 		return (newName != null) ? newName : entityName;
+	}
+	
+	public void addMultiEntity(String typeName, Class<? extends InfernosProxyEntityBase> entity, InfernosMultiEntityType type, CreativeTabs tab) {
+		InfernosRegisteryProxyEntity.INSTANCE.addMultiEntity(typeName, entity, type);
+
+		ItemStack strangeFrameItemStack = new ItemStack(MultiEntitySystem.infernosMultiBlockID, 1, type.ordinal());
+		ItemStackUtilities.addStringTag(strangeFrameItemStack, "MES", typeName);
+
+		new DescriptorBlock().registerBlock("mes." + typeName, typeName, strangeFrameItemStack);
+		ForgeTutorialsRegistry.INSTANCE.addToCreativeTab(tab, strangeFrameItemStack);
+		
 	}
 }
