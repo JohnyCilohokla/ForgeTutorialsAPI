@@ -14,6 +14,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Icon;
+import net.minecraft.world.World;
 import net.minecraftforge.client.IItemRenderer.ItemRenderType;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -166,7 +167,7 @@ abstract public class InfernosProxyEntityBase {
 		return droppedItems;
 	}
 
-	public void onBlockActivated(EntityPlayer entityplayer, int par6, float par7, float par8, float par9) {
+	public void onBlockActivated(EntityPlayer entityplayer, World world, int x, int y, int z, int par1, float par2, float par3, float par4) {
 
 	}
 

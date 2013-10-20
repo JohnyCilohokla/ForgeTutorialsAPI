@@ -189,7 +189,7 @@ public class InfernosMultiBlock extends Block {
 				}
 			}
 		} else {
-			proxyEntity.onBlockActivated(entityplayer, par6, par7, par8, par9);
+			proxyEntity.onBlockActivated(entityplayer, world, x, y, z, par6, par7, par8, par9);
 		}
 
 		return false;
