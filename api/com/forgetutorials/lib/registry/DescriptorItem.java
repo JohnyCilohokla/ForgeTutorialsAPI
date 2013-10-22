@@ -21,13 +21,13 @@ public class DescriptorItem extends DescriptorObject {
 		System.out.println(">>Registery(FTA)<< Register Item: " + this.itemStack.getClass().getCanonicalName() + " ["
 				+ this.itemStack.getItem().getUnlocalizedName(itemStack) + "]");
 	}
-	
+
 	public ItemStack getItemStack() {
-		return itemStack.copy();
+		return this.itemStack.copy();
 	}
-	
+
 	public ItemStack getItemStack(int stackSize) {
-		ItemStack stack = itemStack.copy();
+		ItemStack stack = this.itemStack.copy();
 		stack.stackSize = stackSize;
 		return stack;
 	}

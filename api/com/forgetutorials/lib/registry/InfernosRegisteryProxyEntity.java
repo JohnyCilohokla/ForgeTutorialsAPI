@@ -131,7 +131,7 @@ public enum InfernosRegisteryProxyEntity {
 		String newName = this.compatibilityNames.get(entityName);
 		return (newName != null) ? newName : entityName;
 	}
-	
+
 	public void addMultiEntity(String typeName, Class<? extends InfernosProxyEntityBase> entity, InfernosMultiEntityType type, CreativeTabs tab) {
 		InfernosRegisteryProxyEntity.INSTANCE.addMultiEntity(typeName, entity, type);
 
@@ -140,6 +140,6 @@ public enum InfernosRegisteryProxyEntity {
 
 		new DescriptorBlock().registerBlock("mes." + typeName, typeName, strangeFrameItemStack);
 		ForgeTutorialsRegistry.INSTANCE.addToCreativeTab(tab, strangeFrameItemStack);
-		
+
 	}
 }
