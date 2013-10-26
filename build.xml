@@ -1,20 +1,25 @@
 <?xml version="1.0" ?>
-<project name="MetaTechCraft" default="build">
-	<property file="build.properties"/>
+<project name="ForgeTutorialsAPI" default="build">
 	<property file="buildConfig.properties"/>
-	<!--<property name="build.number" value="${build.version.number}.${build.patch.number}.${build.revision.number}"/>-->
 		
-	
 	<target name="current-number">
+		<property file="build.properties"/>
 	 <echo>Current build number: ${build.version.number}.${build.patch.number}.${build.revision.number}</echo>
 	</target>
 		
 	<target name="clean">
-		<delete file="${buildConfig.dir.mcp}\src\minecraft\mcmod.info" />
-		<delete dir="${buildConfig.dir.mcp}\src\minecraft\com\forgetutorials" />
-		<delete dir="${buildConfig.dir.mcp}\reobf\minecraft" />
+		<!-- ForgeTutorialsAPI files -->
+		<delete file="${buildConfig.dir.mcp}/src/minecraft/mcmod.info" />
+		<delete dir="${buildConfig.dir.mcp}/src/minecraft/com/forgetutorials" />
+
+		<!-- MetaTechCraft files (just in case...) -->
+		<delete file="${buildConfig.dir.mcp}/src/minecraft/dependancies.info" />
+		<delete dir="${buildConfig.dir.mcp}/src/minecraft/com/metatechcraft" />
+
+		<!-- Minecraft files-->
+		<delete dir="${buildConfig.dir.mcp}/reobf/minecraft" />
 	</target>
-	
+
 	<target name="increment-version">
 	    <propertyfile file="build.properties">
 	            <entry key="build.version.number" type="int" operation="+" value="1" pattern="0"/>
@@ -34,19 +39,23 @@
 	    </propertyfile>
 	</target>
 	
+	
+		
+	
 	<target name="prep">
-		<copy todir="${buildConfig.dir.mcp}\src\minecraft">
-			<fileset dir="${buildConfig.dir.development}\api\" />
+		<copy todir="${buildConfig.dir.mcp}/src/minecraft">
+			<fileset dir="${buildConfig.dir.development}/api/" />
 		</copy>
 	</target>
 	
 	<target name="replace_tokens">
-		<replace file="${buildConfig.dir.mcp}\src\minecraft\mcmod.info" token="@VERSION@" value="${build.version.number}" />
-		<replace file="${buildConfig.dir.mcp}\src\minecraft\mcmod.info" token="@PATCH@" value="${build.patch.number}" />
-		<replace file="${buildConfig.dir.mcp}\src\minecraft\mcmod.info" token="@REVISION@" value="${build.revision.number}" />
-		<replace file="${buildConfig.dir.mcp}\src\minecraft\com\forgetutorials\lib\ModInfo.java" token="@VERSION@" value="${build.version.number}" />
-		<replace file="${buildConfig.dir.mcp}\src\minecraft\com\forgetutorials\lib\ModInfo.java" token="@PATCH@" value="${build.patch.number}" />
-		<replace file="${buildConfig.dir.mcp}\src\minecraft\com\forgetutorials\lib\ModInfo.java" token="@REVISION@" value="${build.revision.number}" />
+		<property file="build.properties"/>
+		<replace file="${buildConfig.dir.mcp}/src/minecraft/mcmod.info" token="@VERSION@" value="${build.version.number}" />
+		<replace file="${buildConfig.dir.mcp}/src/minecraft/mcmod.info" token="@PATCH@" value="${build.patch.number}" />
+		<replace file="${buildConfig.dir.mcp}/src/minecraft/mcmod.info" token="@REVISION@" value="${build.revision.number}" />
+		<replace file="${buildConfig.dir.mcp}/src/minecraft/com/forgetutorials/lib/ModInfo.java" token="@VERSION@" value="${build.version.number}" />
+		<replace file="${buildConfig.dir.mcp}/src/minecraft/com/forgetutorials/lib/ModInfo.java" token="@PATCH@" value="${build.patch.number}" />
+		<replace file="${buildConfig.dir.mcp}/src/minecraft/com/forgetutorials/lib/ModInfo.java" token="@REVISION@" value="${build.revision.number}" />
 	</target>
 	
 	<target name="recompile">
@@ -67,17 +76,30 @@
 		</exec>
 	</target>
 		
-	
 	<target name="buildJar">
+		<property file="build.properties"/>
 		<!-- Build the jar -->
 		<mkdir dir="${buildConfig.dir.release}" />
-		<mkdir dir="${buildConfig.dir.release}\ForgeTutorialsAPI-${build.version.number}.${build.patch.number}" />
-		<jar destfile="${buildConfig.dir.release}\ForgeTutorialsAPI-${build.version.number}.${build.patch.number}\ForgeTutorialsAPI-universal-${buildConfig.mc.version}-${build.version.number}.${build.patch.number}.${build.revision.number}.jar">
-		<fileset dir="${buildConfig.dir.mcp}\src\minecraft\" includes="mcmod.info" />
-		<fileset dir="${buildConfig.dir.mcp}\reobf\minecraft" />
+		<mkdir dir="${buildConfig.dir.release}/ForgeTutorialsAPI-${build.version.number}.${build.patch.number}" />
+		<jar destfile="${buildConfig.dir.release}/ForgeTutorialsAPI-${build.version.number}.${build.patch.number}/ForgeTutorialsAPI-universal-${buildConfig.mc.version}-${build.version.number}.${build.patch.number}.${build.revision.number}.jar">
+			<fileset dir="${buildConfig.dir.mcp}/src/minecraft/" includes="mcmod.info" />
+			<fileset dir="${buildConfig.dir.mcp}/reobf/minecraft" />
 		</jar>
 	</target>
-	
+
+	<target name="uploadJar">
+		<property file="build.properties"/>
+		 <echo>Build number: ${build.version.last}</echo>
+		 <echo>Build file: ${buildConfig.dir.release}/ForgeTutorialsAPI-${build.version.number}.${build.patch.number}/ForgeTutorialsAPI-universal-${buildConfig.mc.version}-${build.version.number}.${build.patch.number}.${build.revision.number}.jar</echo>
+	  <ftp server="${buildConfig.ftp.server}"
+	       remotedir="${buildConfig.ftp.dir}"
+	       userid="${buildConfig.ftp.login}"
+	       password="${buildConfig.ftp.password}"
+	  		action="send" verbose="yes">
+	    <fileset file="${buildConfig.dir.release}/ForgeTutorialsAPI-${build.version.number}.${build.patch.number}/ForgeTutorialsAPI-universal-${buildConfig.mc.version}-${build.version.number}.${build.patch.number}.${build.revision.number}.jar"/>
+	  </ftp>
+	</target>
+		
 	<target name="build">
 		<!-- Prep for the build -->
 		<antcall target="clean" />

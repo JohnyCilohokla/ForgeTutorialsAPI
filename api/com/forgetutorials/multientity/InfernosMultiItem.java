@@ -120,7 +120,7 @@ public class InfernosMultiItem extends ItemBlock {
 						block.stepSound.getPitch() * 0.8F);
 				--par1ItemStack.stackSize;
 				InfernosMultiEntity entity = (InfernosMultiEntity) par3World.getBlockTileEntity(par4, par5, par6);
-				entity.onBlockPlaced(par7, par8, par9, par10, k1);
+				entity.onBlockPlaced(par3World, par2EntityPlayer, par7, par4, par5, par6, par8, par9, par10, k1);
 			}
 
 			return true;

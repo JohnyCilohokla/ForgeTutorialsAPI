@@ -213,4 +213,7 @@ abstract public class InfernosProxyEntityBase {
 	public Icon getIconFromSide(int side) {
 		return null;
 	}
+
+	public void onBlockPlaced(World world, EntityPlayer player, int side, int direction, int x, int y, int z, float hitX, float hitY, float hitZ, int metadata) {
+	}
 }

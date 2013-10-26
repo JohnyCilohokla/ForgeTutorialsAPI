@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.forgetutorials.lib.network.MultiEntitySystem;
 import com.forgetutorials.lib.network.PacketMultiTileEntity;
 import com.forgetutorials.lib.network.PacketType;
+import com.forgetutorials.lib.network.SubPacketTileEntityBlockUpdate;
 import com.forgetutorials.lib.registry.InfernosRegisteryProxyEntity;
 import com.forgetutorials.multientity.base.InfernosProxyEntityBase;
 import com.forgetutorials.multientity.base.InfernosProxyEntityDummy;
@@ -18,10 +19,14 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Facing;
 import net.minecraft.util.Icon;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
+import net.minecraftforge.client.model.obj.Face;
 
 public class InfernosMultiEntity extends TileEntity {
 	private InfernosProxyEntityBase proxyEntity;
 	private int side = -1;
+	private boolean requestBlockUpdate = true;
 
 	public InfernosMultiEntity() {
 		super();
@@ -170,6 +175,10 @@ public class InfernosMultiEntity extends TileEntity {
 	@Override
 	public Packet getDescriptionPacket() {
 		PacketMultiTileEntity packet = new PacketMultiTileEntity(this.xCoord, this.yCoord, this.zCoord, this.side, getProxyEntity().getTypeName());
+		if (requestBlockUpdate==true){
+			packet.addPacket(new SubPacketTileEntityBlockUpdate());
+			requestBlockUpdate=false;
+		}
 		getProxyEntity().addToDescriptionPacket(packet);
 		return PacketType.populatePacket(packet);
 	}
@@ -191,8 +200,10 @@ public class InfernosMultiEntity extends TileEntity {
 		return this.proxyEntity != null;
 	}
 
-	public void onBlockPlaced(int side, float hitX, float hitY, float hitZ, int metadata) {
+	public void onBlockPlaced(World world, EntityPlayer player, int side, int x, int y, int z, float hitX, float hitY, float hitZ, int metadata) {
 		this.side = side;
+        int direction = MathHelper.floor_double((double)(player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+		getProxyEntity().onBlockPlaced(world, player, side, direction, x, y, z, hitX, hitY, hitZ, metadata);
 	}
 
 	public void setSide(int side) {
@@ -209,5 +220,12 @@ public class InfernosMultiEntity extends TileEntity {
 
 	public int getFacingInt() {
 		return this.side == -1 ? 6 : Facing.oppositeSide[this.side];
+	}
+
+	public void markRenderUpdate() {
+		this.requestBlockUpdate = true;
+		if (!this.worldObj.isRemote){
+			this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		}
 	}
 }
