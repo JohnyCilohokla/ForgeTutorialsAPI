@@ -17,7 +17,8 @@ import java.io.DataInputStream;
  */
 
 public enum SubPacketTileEntityType {
-	ITEM_UPDATE(SubPacketTileEntitySimpleItemUpdate.class), FLUID_UPDATE(SubPacketTileEntityFluidUpdate.class), BLOCK_UPDATE(SubPacketTileEntityBlockUpdate.class);
+	ITEM_UPDATE(SubPacketTileEntitySimpleItemUpdate.class), FLUID_UPDATE(SubPacketTileEntityFluidUpdate.class), BLOCK_UPDATE(
+			SubPacketTileEntityBlockUpdate.class);
 
 	private Class<? extends SubPacketTileEntityChild> _class;
 

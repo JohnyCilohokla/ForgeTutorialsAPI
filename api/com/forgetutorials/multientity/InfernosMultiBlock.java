@@ -201,4 +201,15 @@ public class InfernosMultiBlock extends Block {
 		InfernosRegisteryProxyEntity.INSTANCE.registerIcons(iconRegister);
 		super.registerIcons(iconRegister);
 	}
+
+	@Override
+	public boolean hasComparatorInputOverride() {
+		return true;
+	}
+
+	@Override
+	public int getComparatorInputOverride(World world, int x, int y, int z, int side) {
+		InfernosMultiEntity entity = (InfernosMultiEntity) world.getBlockTileEntity(x, y, z);
+		return entity.getComparatorInputOverride(side);
+	}
 }

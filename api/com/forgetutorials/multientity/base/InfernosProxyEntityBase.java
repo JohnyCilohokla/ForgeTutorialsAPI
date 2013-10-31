@@ -216,4 +216,8 @@ abstract public class InfernosProxyEntityBase {
 
 	public void onBlockPlaced(World world, EntityPlayer player, int side, int direction, int x, int y, int z, float hitX, float hitY, float hitZ, int metadata) {
 	}
+
+	public int getComparatorInputOverride(int side) {
+		return 0;
+	}
 }

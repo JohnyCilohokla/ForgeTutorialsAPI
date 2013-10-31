@@ -21,7 +21,6 @@ import net.minecraft.util.Facing;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.obj.Face;
 
 public class InfernosMultiEntity extends TileEntity {
 	private InfernosProxyEntityBase proxyEntity;
@@ -175,9 +174,9 @@ public class InfernosMultiEntity extends TileEntity {
 	@Override
 	public Packet getDescriptionPacket() {
 		PacketMultiTileEntity packet = new PacketMultiTileEntity(this.xCoord, this.yCoord, this.zCoord, this.side, getProxyEntity().getTypeName());
-		if (requestBlockUpdate==true){
+		if (this.requestBlockUpdate == true) {
 			packet.addPacket(new SubPacketTileEntityBlockUpdate());
-			requestBlockUpdate=false;
+			this.requestBlockUpdate = false;
 		}
 		getProxyEntity().addToDescriptionPacket(packet);
 		return PacketType.populatePacket(packet);
@@ -202,7 +201,7 @@ public class InfernosMultiEntity extends TileEntity {
 
 	public void onBlockPlaced(World world, EntityPlayer player, int side, int x, int y, int z, float hitX, float hitY, float hitZ, int metadata) {
 		this.side = side;
-        int direction = MathHelper.floor_double((double)(player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+		int direction = MathHelper.floor_double((player.rotationYaw * 4.0F) / 360.0F + 0.5D) & 3;
 		getProxyEntity().onBlockPlaced(world, player, side, direction, x, y, z, hitX, hitY, hitZ, metadata);
 	}
 
@@ -224,8 +223,12 @@ public class InfernosMultiEntity extends TileEntity {
 
 	public void markRenderUpdate() {
 		this.requestBlockUpdate = true;
-		if (!this.worldObj.isRemote){
-			this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		if (!this.worldObj.isRemote) {
+			this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
 		}
+	}
+
+	public int getComparatorInputOverride(int side) {
+		return getProxyEntity().getComparatorInputOverride(side);
 	}
 }

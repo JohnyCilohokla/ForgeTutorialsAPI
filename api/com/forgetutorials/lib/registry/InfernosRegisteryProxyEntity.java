@@ -125,7 +125,7 @@ public enum InfernosRegisteryProxyEntity {
 
 	public Icon getIcon(String path) {
 		Icon icon = this.icons.get(path);
-		if (icon==null){
+		if (icon == null) {
 			System.out.println(">> Error: missing texture (" + path + ")");
 		}
 		return icon;

@@ -4,15 +4,10 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import com.forgetutorials.lib.utilities.IFluidStackProxy;
-
 import cpw.mods.fml.common.network.Player;
 
-import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.fluids.FluidStack;
 
 /**
  * MetaTech Craft
