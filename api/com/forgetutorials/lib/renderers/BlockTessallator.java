@@ -1,5 +1,6 @@
 package com.forgetutorials.lib.renderers;
 
+import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.Icon;
 
@@ -43,5 +44,100 @@ public class BlockTessallator {
 
 	public static void addToTessallator(Tessellator tessellator, double x, double y, double z, Icon icon) {
 		BlockTessallator.addToTessallator(tessellator, x, y, z, icon, icon, icon, icon, icon, icon);
+	}
+
+	public static void addToRenderer(VertexRenderer v, RenderBlocks blockRenderer, int x, int y, int z, Icon icon, Icon icon2) {
+		// top
+		v.addQuadUVSTColor(x, y + 1, z, icon.getMinU(), icon.getMaxV(), icon2.getMinU(), icon2.getMaxV(),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),//
+				x, y + 1, z + 1, icon.getMinU(), icon.getMinV(), icon2.getMinU(), icon2.getMinV(), (int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),//
+				x + 1, y + 1, z + 1, icon.getMaxU(), icon.getMinV(), icon2.getMaxU(), icon2.getMinV(), (int) (Math.random() * 255),
+				(int) (Math.random() * 255), (int) (Math.random() * 255),
+				(int) (Math.random() * 255),//
+				x + 1, y + 1, z, icon.getMaxU(), icon.getMaxV(), icon2.getMaxU(), icon2.getMaxV(), (int) (Math.random() * 255), (int) (Math.random() * 255),
+				(int) (Math.random() * 255), (int) (Math.random() * 255));//
+
+		// bottom
+		v.addQuadUVSTColor(x, y, z + 1, icon.getMinU(), icon.getMaxV(), icon2.getMinU(), icon2.getMaxV(),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),//
+				x, y, z, icon.getMinU(), icon.getMinV(), icon2.getMinU(), icon2.getMinV(), (int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),//
+				x + 1, y, z, icon.getMaxU(), icon.getMinV(), icon2.getMaxU(), icon2.getMinV(), (int) (Math.random() * 255), (int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),//
+				x + 1, y, z + 1, icon.getMaxU(), icon.getMaxV(), icon2.getMaxU(), icon2.getMaxV(), (int) (Math.random() * 255), (int) (Math.random() * 255),
+				(int) (Math.random() * 255), (int) (Math.random() * 255));//
+
+		// sides
+		v.addQuadUVSTColor(x, y, z, icon.getMinU(), icon.getMaxV(), icon2.getMinU(), icon2.getMaxV(),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),//
+				x, y + 1, z, icon.getMinU(), icon.getMinV(), icon2.getMinU(), icon2.getMinV(), (int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),//
+				x + 1, y + 1, z, icon.getMaxU(), icon.getMinV(), icon2.getMaxU(), icon2.getMinV(), (int) (Math.random() * 255), (int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),//
+				x + 1, y, z, icon.getMaxU(), icon.getMaxV(), icon2.getMaxU(), icon2.getMaxV(), (int) (Math.random() * 255), (int) (Math.random() * 255),
+				(int) (Math.random() * 255), (int) (Math.random() * 255));//
+
+		v.addQuadUVSTColor(x + 1, y, z + 1, icon.getMinU(), icon.getMaxV(), icon2.getMinU(), icon2.getMaxV(),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),//
+				x + 1, y + 1, z + 1, icon.getMinU(), icon.getMinV(), icon2.getMinU(), icon2.getMinV(), (int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),//
+				x, y + 1, z + 1, icon.getMaxU(), icon.getMinV(), icon2.getMaxU(), icon2.getMinV(), (int) (Math.random() * 255), (int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),//
+				x, y, z + 1, icon.getMaxU(), icon.getMaxV(), icon2.getMaxU(), icon2.getMaxV(), (int) (Math.random() * 255), (int) (Math.random() * 255),
+				(int) (Math.random() * 255), (int) (Math.random() * 255));//
+
+		v.addQuadUVSTColor(x + 1, y, z, icon.getMinU(), icon.getMaxV(), icon2.getMinU(), icon2.getMaxV(),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),//
+				x + 1, y + 1, z, icon.getMinU(), icon.getMinV(), icon2.getMinU(), icon2.getMinV(), (int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),//
+				x + 1, y + 1, z + 1, icon.getMaxU(), icon.getMinV(), icon2.getMaxU(), icon2.getMinV(), (int) (Math.random() * 255),
+				(int) (Math.random() * 255), (int) (Math.random() * 255),
+				(int) (Math.random() * 255),//
+				x + 1, y, z + 1, icon.getMaxU(), icon.getMaxV(), icon2.getMaxU(), icon2.getMaxV(), (int) (Math.random() * 255), (int) (Math.random() * 255),
+				(int) (Math.random() * 255), (int) (Math.random() * 255));//
+
+		v.addQuadUVSTColor(x, y, z + 1, icon.getMinU(), icon.getMaxV(), icon2.getMinU(), icon2.getMaxV(),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),//
+				x, y + 1, z + 1, icon.getMinU(), icon.getMinV(), icon2.getMinU(), icon2.getMinV(), (int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),//
+				x, y + 1, z, icon.getMaxU(), icon.getMinV(), icon2.getMaxU(), icon2.getMinV(), (int) (Math.random() * 255), (int) (Math.random() * 255),
+				(int) (Math.random() * 255),
+				(int) (Math.random() * 255),//
+				x, y, z, icon.getMaxU(), icon.getMaxV(), icon2.getMaxU(), icon2.getMaxV(), (int) (Math.random() * 255), (int) (Math.random() * 255),
+				(int) (Math.random() * 255), (int) (Math.random() * 255));//
 	}
 }

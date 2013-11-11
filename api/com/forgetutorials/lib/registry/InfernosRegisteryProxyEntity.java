@@ -12,7 +12,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 
-import com.forgetutorials.lib.network.MultiEntitySystem;
+import com.forgetutorials.lib.FTA;
 import com.forgetutorials.lib.utilities.ItemStackUtilities;
 import com.forgetutorials.multientity.InfernosMultiEntity;
 import com.forgetutorials.multientity.InfernosMultiEntityType;
@@ -139,7 +139,7 @@ public enum InfernosRegisteryProxyEntity {
 	public void addMultiEntity(String typeName, Class<? extends InfernosProxyEntityBase> entity, InfernosMultiEntityType type, CreativeTabs tab) {
 		InfernosRegisteryProxyEntity.INSTANCE.addMultiEntity(typeName, entity, type);
 
-		ItemStack strangeFrameItemStack = new ItemStack(MultiEntitySystem.infernosMultiBlockID, 1, type.ordinal());
+		ItemStack strangeFrameItemStack = new ItemStack(FTA.infernosMultiBlockID, 1, type.ordinal());
 		ItemStackUtilities.addStringTag(strangeFrameItemStack, "MES", typeName);
 
 		new DescriptorBlock().registerBlock("mes." + typeName, typeName, strangeFrameItemStack);

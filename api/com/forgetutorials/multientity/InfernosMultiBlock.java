@@ -43,7 +43,9 @@ public class InfernosMultiBlock extends Block {
 
 	@Override
 	public TileEntity createTileEntity(World world, int metadata) {
-		InfernosMultiEntity entity = InfernosMultiEntityType.newMultiEntity(InfernosMultiEntityType.values()[metadata]);
+		// FIXME hax?
+		InfernosMultiEntity entity = InfernosMultiEntityType
+				.newMultiEntity(InfernosMultiEntityType.values()[metadata % InfernosMultiEntityType.values().length]);
 		return entity;
 	}
 

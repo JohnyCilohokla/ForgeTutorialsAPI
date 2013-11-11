@@ -2,7 +2,7 @@ package com.forgetutorials.multientity;
 
 import java.util.ArrayList;
 
-import com.forgetutorials.lib.network.MultiEntitySystem;
+import com.forgetutorials.lib.FTA;
 import com.forgetutorials.lib.network.PacketMultiTileEntity;
 import com.forgetutorials.lib.network.PacketType;
 import com.forgetutorials.lib.network.SubPacketTileEntityBlockUpdate;
@@ -48,7 +48,7 @@ public class InfernosMultiEntity extends TileEntity {
 		int meta = proxyEntity.validateTileEntity(this);
 		if (meta != -1) {
 			System.out.println(">> MES Updating meta! (" + this.getClass().getCanonicalName() + ")");
-			this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, MultiEntitySystem.infernosMultiBlockID, meta, 3);
+			this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, FTA.infernosMultiBlockID, meta, 3);
 			InfernosMultiEntity entity = (InfernosMultiEntity) this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord);
 			entity.newEntity(proxyEntity);
 		}
@@ -201,7 +201,7 @@ public class InfernosMultiEntity extends TileEntity {
 
 	public void onBlockPlaced(World world, EntityPlayer player, int side, int x, int y, int z, float hitX, float hitY, float hitZ, int metadata) {
 		this.side = side;
-		int direction = MathHelper.floor_double((player.rotationYaw * 4.0F) / 360.0F + 0.5D) & 3;
+		int direction = MathHelper.floor_double(((player.rotationYaw * 4.0F) / 360.0F) + 0.5D) & 3;
 		getProxyEntity().onBlockPlaced(world, player, side, direction, x, y, z, hitX, hitY, hitZ, metadata);
 	}
 

@@ -1,7 +1,8 @@
-package com.forgetutorials.lib.network;
+package com.forgetutorials.lib;
 
 import com.forgetutorials.core.proxy.CommonProxy;
-import com.forgetutorials.lib.ModInfo;
+import com.forgetutorials.lib.network.InfernosPacket;
+import com.forgetutorials.lib.network.PacketType;
 import com.forgetutorials.lib.registry.DescriptorBlock;
 import com.forgetutorials.lib.registry.MetaMaterial;
 import com.forgetutorials.lib.utilities.ForgeRegistryUtilities;
@@ -21,8 +22,8 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.Player;
 
 @Mod(modid = ModInfo.MOD_ID, name = ModInfo.MOD_NAME, version = ModInfo.VERSION)
-@NetworkMod(channels = { ModInfo.CHANNEL_ID }, clientSideRequired = true, serverSideRequired = false, packetHandler = MultiEntitySystem.class)
-public class MultiEntitySystem implements IPacketHandler {
+@NetworkMod(channels = { ModInfo.CHANNEL_ID }, clientSideRequired = true, serverSideRequired = false, packetHandler = FTA.class)
+public class FTA implements IPacketHandler {
 
 	@SidedProxy(clientSide = ModInfo.CLIENT_PROXY_CLASS, serverSide = ModInfo.SERVER_PROXY_CLASS)
 	public static CommonProxy proxy;
@@ -41,20 +42,20 @@ public class MultiEntitySystem implements IPacketHandler {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		System.out.println(">> MES_API: preInit");
-		MultiEntitySystem.infernosMultiBlock = new InfernosMultiBlock(MultiEntitySystem.infernosMultiBlockID, MetaMaterial.metaMaterial);
-		new DescriptorBlock().setTool("metaHammer", 1).registerBlock("forgetutorials.MultiEntityBlock",
-				MultiEntitySystem.infernosMultiBlock.getLocalizedName(), new ItemStack(MultiEntitySystem.infernosMultiBlock));
+		FTA.infernosMultiBlock = new InfernosMultiBlock(FTA.infernosMultiBlockID, MetaMaterial.metaMaterial);
+		new DescriptorBlock().setTool("metaHammer", 1).registerBlock("forgetutorials.MultiEntityBlock", FTA.infernosMultiBlock.getLocalizedName(),
+				new ItemStack(FTA.infernosMultiBlock));
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		System.out.println(">> MES_API: init");
-		MultiEntitySystem.proxy.initizeRendering();
+		FTA.proxy.initizeRendering();
 	}
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		System.out.println(">> MES_API: postInit");
-		MultiEntitySystem.proxy.registerTileEntities();
+		FTA.proxy.registerTileEntities();
 	}
 }

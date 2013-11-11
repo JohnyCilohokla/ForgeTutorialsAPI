@@ -1,6 +1,6 @@
 package com.forgetutorials.multientity.renderers;
 
-import com.forgetutorials.lib.network.MultiEntitySystem;
+import com.forgetutorials.lib.FTA;
 import com.forgetutorials.lib.registry.InfernosRegisteryProxyEntity;
 import com.forgetutorials.multientity.InfernosMultiItem;
 import com.forgetutorials.multientity.base.InfernosProxyEntityBase;
@@ -12,7 +12,7 @@ import net.minecraftforge.client.MinecraftForgeClient;
 public class InfernosMultiItemRenderer implements IItemRenderer {
 
 	public static void initizeRenderer() {
-		MinecraftForgeClient.registerItemRenderer(MultiEntitySystem.infernosMultiBlockID, new InfernosMultiItemRenderer());
+		MinecraftForgeClient.registerItemRenderer(FTA.infernosMultiBlockID, new InfernosMultiItemRenderer());
 	}
 
 	@Override

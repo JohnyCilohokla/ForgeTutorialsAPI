@@ -25,6 +25,10 @@ public class ProxyEntityUtils {
 	}
 
 	public static InfernosProxyEntityBase getToDirection(TileEntity tileEntity, EnumFacing direction) {
+		if (tileEntity == null) {
+			System.out.println(">> MES getToDirection() tileEntity == null!!! ");
+			return null;
+		}
 		TileEntity taget = tileEntity.worldObj.getBlockTileEntity(tileEntity.xCoord + direction.getFrontOffsetX(),
 				tileEntity.yCoord + direction.getFrontOffsetY(), tileEntity.zCoord + direction.getFrontOffsetZ());
 		return (taget instanceof InfernosMultiEntity) ? ((InfernosMultiEntity) taget).getProxyEntity(false) : null;
