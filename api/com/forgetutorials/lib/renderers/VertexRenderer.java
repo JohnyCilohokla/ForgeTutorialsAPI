@@ -35,10 +35,10 @@ public class VertexRenderer {
 
 	// @formatter:off
 	public void addQuadUVSTColorLight(
-			float X1, float Y1, float Z1, float U1, float V1, float S1, float T1, int LS1, int LB1, int R1, int G1, int B1, int A1,
-			float X2, float Y2, float Z2, float U2, float V2, float S2, float T2, int LS2, int LB2, int R2, int G2, int B2, int A2,
-			float X3, float Y3, float Z3, float U3, float V3, float S3, float T3, int LS3, int LB3, int R3, int G3, int B3, int A3,
-			float X4, float Y4, float Z4, float U4, float V4, float S4, float T4, int LS4, int LB4, int R4, int G4, int B4, int A4
+			double X1, double Y1, double Z1, float U1, float V1, float S1, float T1, int LS1, int LB1, int R1, int G1, int B1, int A1,
+			double X2, double Y2, double Z2, float U2, float V2, float S2, float T2, int LS2, int LB2, int R2, int G2, int B2, int A2,
+			double X3, double Y3, double Z3, float U3, float V3, float S3, float T3, int LS3, int LB3, int R3, int G3, int B3, int A3,
+			double X4, double Y4, double Z4, float U4, float V4, float S4, float T4, int LS4, int LB4, int R4, int G4, int B4, int A4
 			) {
 	// @formatter:on
 		addVertexUVSTColorLight(X1, Y1, Z1, U1, V1, S1, T1, LS1, LB1, R1, G1, B1, A1);
@@ -53,10 +53,10 @@ public class VertexRenderer {
 
 	// @formatter:off
 	public void addQuadUVSTColor(
-			float X1, float Y1, float Z1, float U1, float V1, float S1, float T1, int R1, int G1, int B1, int A1,
-			float X2, float Y2, float Z2, float U2, float V2, float S2, float T2, int R2, int G2, int B2, int A2,
-			float X3, float Y3, float Z3, float U3, float V3, float S3, float T3, int R3, int G3, int B3, int A3,
-			float X4, float Y4, float Z4, float U4, float V4, float S4, float T4, int R4, int G4, int B4, int A4
+			double X1, double Y1, double Z1, float U1, float V1, float S1, float T1, int R1, int G1, int B1, int A1,
+			double X2, double Y2, double Z2, float U2, float V2, float S2, float T2, int R2, int G2, int B2, int A2,
+			double X3, double Y3, double Z3, float U3, float V3, float S3, float T3, int R3, int G3, int B3, int A3,
+			double X4, double Y4, double Z4, float U4, float V4, float S4, float T4, int R4, int G4, int B4, int A4
 			) {
 	// @formatter:on
 
@@ -72,11 +72,11 @@ public class VertexRenderer {
 
 	}
 
-	private void addVertexUVSTColorLight(float X, float Y, float Z, float U, float V, float S, float T, int Q, int P, int R, int G, int B, int A) {
+	private void addVertexUVSTColorLight(double X, double Y, double Z, float U, float V, float S, float T, int Q, int P, int R, int G, int B, int A) {
 		this.intBuffer.position(this.vertexCount * VertexRenderer.INTS);
-		this.intBuffer.put(Float.floatToRawIntBits(X));
-		this.intBuffer.put(Float.floatToRawIntBits(Y));
-		this.intBuffer.put(Float.floatToRawIntBits(Z));
+		this.intBuffer.put(Float.floatToRawIntBits((float) X));
+		this.intBuffer.put(Float.floatToRawIntBits((float) Y));
+		this.intBuffer.put(Float.floatToRawIntBits((float) Z));
 
 		this.intBuffer.put(Float.floatToRawIntBits(U));
 		this.intBuffer.put(Float.floatToRawIntBits(V));

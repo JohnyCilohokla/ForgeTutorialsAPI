@@ -31,7 +31,7 @@ public class FTA implements IPacketHandler {
 	public static int infernosMultiBlockID = 2888;
 	public static InfernosMultiBlock infernosMultiBlock;
 
-	public static ForgeRegistryUtilities registry = new ForgeRegistryUtilities("mes");
+	public static ForgeRegistryUtilities registry = new ForgeRegistryUtilities("mes", ModInfo.MOD_ID);
 
 	@Override
 	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
