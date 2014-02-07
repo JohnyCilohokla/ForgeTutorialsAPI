@@ -116,10 +116,6 @@ public class VertexRenderer {
 		this.floatBuffer.rewind();
 		this.shortBuffer.rewind();
 		this.byteBuffer.rewind();
-		// vertexBuffer.rewind();
-		// colorBuffer.rewind();
-		// uvBuffer.rewind();
-		// stBuffer.rewind();
 		GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
 		this.floatBuffer.position(0); // 0 +12
 		GL11.glVertexPointer(3, VertexRenderer.STRIDE, this.floatBuffer);
