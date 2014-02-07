@@ -144,7 +144,7 @@ abstract public class InfernosProxyEntityBase {
 		}
 	}
 
-	abstract public void renderItem(ItemRenderType type);
+	abstract public void renderItem(ItemRenderType type, Object[] data);
 
 	abstract public void renderTileEntityAt(double x, double y, double z);
 

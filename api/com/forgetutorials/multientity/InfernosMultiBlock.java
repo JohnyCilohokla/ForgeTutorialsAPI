@@ -140,7 +140,7 @@ public class InfernosMultiBlock extends Block {
 
 	@Override
 	public boolean isOpaqueCube() {
-		return false;
+		return true;
 	}
 
 	@Override

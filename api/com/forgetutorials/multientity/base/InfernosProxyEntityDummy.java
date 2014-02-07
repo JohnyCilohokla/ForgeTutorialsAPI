@@ -32,7 +32,7 @@ public class InfernosProxyEntityDummy extends InfernosProxyEntityBase {
 	}
 
 	@Override
-	public void renderItem(ItemRenderType type) {
+	public void renderItem(ItemRenderType type, Object[] data) {
 	}
 
 }
