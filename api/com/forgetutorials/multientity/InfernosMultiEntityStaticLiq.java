@@ -8,7 +8,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
-public class InfernosMultiEntityLiq extends InfernosMultiEntity implements IFluidHandler, IFluidStackProxy {
+public class InfernosMultiEntityStaticLiq extends InfernosMultiEntityStatic implements IFluidHandler, IFluidStackProxy {
 
 	@Override
 	public FluidStack getFluid(ForgeDirection direction) {

@@ -2,13 +2,14 @@ package com.forgetutorials.multientity.base;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer.ItemRenderType;
 
-import com.forgetutorials.multientity.InfernosMultiEntity;
+import com.forgetutorials.multientity.InfernosMultiEntityStatic;
 
 public class InfernosProxyEntityDummy extends InfernosProxyEntityBase {
 
-	public InfernosProxyEntityDummy(InfernosMultiEntity entity) {
+	public InfernosProxyEntityDummy(InfernosMultiEntityStatic entity) {
 		super(entity);
 	}
 
@@ -23,6 +24,16 @@ public class InfernosProxyEntityDummy extends InfernosProxyEntityBase {
 	}
 
 	@Override
+	public boolean isDynamiclyRendered() {
+		return false;
+	}
+
+	@Override
+	public ItemStack getSilkTouchItemStack() {
+		return null;
+	}
+
+	@Override
 	public void renderTileEntityAt(double x, double y, double z) {
 	}
 
@@ -32,7 +43,7 @@ public class InfernosProxyEntityDummy extends InfernosProxyEntityBase {
 	}
 
 	@Override
-	public void renderItem(ItemRenderType type, Object[] data) {
+	public void renderItem(ItemRenderType type, ItemStack stack, Object[] data) {
 	}
 
 }

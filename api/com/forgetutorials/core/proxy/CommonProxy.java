@@ -1,9 +1,6 @@
 package com.forgetutorials.core.proxy;
 
-import com.forgetutorials.multientity.InfernosMultiEntity;
-import com.forgetutorials.multientity.InfernosMultiEntityInv;
-import com.forgetutorials.multientity.InfernosMultiEntityInvLiq;
-import com.forgetutorials.multientity.InfernosMultiEntityLiq;
+import com.forgetutorials.multientity.*;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -15,9 +12,13 @@ public class CommonProxy {
 
 	public void registerTileEntities() {
 
-		GameRegistry.registerTileEntity(InfernosMultiEntity.class, "tile.infernosMultiEntity");
-		GameRegistry.registerTileEntity(InfernosMultiEntityInv.class, "tile.infernosMultiEntity.Inv");
-		GameRegistry.registerTileEntity(InfernosMultiEntityInvLiq.class, "tile.infernosMultiEntity.InvLiq");
-		GameRegistry.registerTileEntity(InfernosMultiEntityLiq.class, "tile.infernosMultiEntity.Liq");
+		GameRegistry.registerTileEntity(InfernosMultiEntityStatic.class, "tile.MES.Static");
+		GameRegistry.registerTileEntity(InfernosMultiEntityStaticInv.class, "tile.MES.Static.Inv");
+		GameRegistry.registerTileEntity(InfernosMultiEntityStaticInvLiq.class, "tile.MES.Static.InvLiq");
+		GameRegistry.registerTileEntity(InfernosMultiEntityStaticLiq.class, "tile.MES.Static.Liq");
+		GameRegistry.registerTileEntity(InfernosMultiEntityDynamic.class, "tile.MES.Dynamic");
+		GameRegistry.registerTileEntity(InfernosMultiEntityDynamicInv.class, "tile.MES.Dynamic.Inv");
+		GameRegistry.registerTileEntity(InfernosMultiEntityDynamicInvLiq.class, "tile.MES.Dynamic.InvLiq");
+		GameRegistry.registerTileEntity(InfernosMultiEntityDynamicLiq.class, "tile.MES.Dynamic.Liq");
 	}
 }

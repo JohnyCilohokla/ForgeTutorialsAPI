@@ -2,6 +2,8 @@ package com.forgetutorials.lib.renderers;
 
 import org.lwjgl.opengl.GL11;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -9,10 +11,19 @@ import net.minecraft.world.World;
 
 public class ItemTessallator {
 
-	private static final CustomItemRenderer customItemRenderer = new CustomItemRenderer();
+	private static CustomItemRenderer customItemRenderer;
 
 	public static void renderItemStack(World world, ItemStack ghostStack) {
+		if (RenderManager.instance.renderEngine==null){
+			return; // rendering engine is still not initized!
+		}
+		if (customItemRenderer==null){
+			customItemRenderer = new CustomItemRenderer();
+		}
 		if (ghostStack != null) {
+			if (world==null){
+				world = Minecraft.getMinecraft().theWorld;
+			}
 			EntityItem ghostEntityItem = new EntityItem(world);
 			ghostEntityItem.hoverStart = 0.0F;
 			ghostEntityItem.setEntityItemStack(ghostStack);
@@ -28,7 +39,11 @@ public class ItemTessallator {
 	}
 
 	public static void renderEntityItem(EntityItem ghostEntityItem) {
-		ItemTessallator.customItemRenderer.doRenderItem(ghostEntityItem, 0, 0, 0, 0, 0);
+		//if (gui){
+		//	ItemTessallator.customItemRenderer.renderItemIntoGUI(Minecraft.getMinecraft().fontRenderer, Minecraft.getMinecraft().renderEngine, ghostEntityItem.getEntityItem(), 0, 0);
+		//}else{
+			ItemTessallator.customItemRenderer.doRenderItem(ghostEntityItem, 0, 0, 0, 0, 0);
+		//}
 		GL11.glColor4f(1, 1, 1, 1);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glDisable(GL11.GL_BLEND);

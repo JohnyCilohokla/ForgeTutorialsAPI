@@ -2,7 +2,6 @@ package com.forgetutorials.multientity;
 
 import java.util.ArrayList;
 
-import com.forgetutorials.lib.FTA;
 import com.forgetutorials.lib.network.PacketMultiTileEntity;
 import com.forgetutorials.lib.network.PacketType;
 import com.forgetutorials.lib.network.SubPacketTileEntityBlockUpdate;
@@ -22,12 +21,12 @@ import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class InfernosMultiEntity extends TileEntity {
+public class InfernosMultiEntityStatic extends TileEntity {
 	private InfernosProxyEntityBase proxyEntity;
 	private int side = -1;
 	private boolean requestBlockUpdate = true;
 
-	public InfernosMultiEntity() {
+	public InfernosMultiEntityStatic() {
 		super();
 	}
 
@@ -48,8 +47,8 @@ public class InfernosMultiEntity extends TileEntity {
 		int meta = proxyEntity.validateTileEntity(this);
 		if (meta != -1) {
 			System.out.println(">> MES Updating meta! (" + this.getClass().getCanonicalName() + ")");
-			this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, FTA.infernosMultiBlockID, meta, 3);
-			InfernosMultiEntity entity = (InfernosMultiEntity) this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord);
+			this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, getBlockType().blockID, meta, 3);
+			InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord);
 			entity.newEntity(proxyEntity);
 		}
 		this.proxyEntity = proxyEntity;
@@ -201,7 +200,8 @@ public class InfernosMultiEntity extends TileEntity {
 
 	public void onBlockPlaced(World world, EntityPlayer player, int side, int x, int y, int z, float hitX, float hitY, float hitZ, int metadata) {
 		this.side = side;
-		int direction = MathHelper.floor_double(((player.rotationYaw * 4.0F) / 360.0F) + 0.5D) & 3;
+
+		int direction = player != null ? (MathHelper.floor_double(((player.rotationYaw * 4.0F) / 360.0F) + 0.5D) & 3) : -1;
 		getProxyEntity().onBlockPlaced(world, player, side, direction, x, y, z, hitX, hitY, hitZ, metadata);
 	}
 
@@ -230,5 +230,9 @@ public class InfernosMultiEntity extends TileEntity {
 
 	public int getComparatorInputOverride(int side) {
 		return getProxyEntity().getComparatorInputOverride(side);
+	}
+
+	public int getLightValue() {
+		return 0;
 	}
 }

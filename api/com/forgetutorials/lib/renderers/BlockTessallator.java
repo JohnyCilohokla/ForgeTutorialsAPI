@@ -1,8 +1,14 @@
 package com.forgetutorials.lib.renderers;
 
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
+
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.Icon;
 
 public class BlockTessallator {
@@ -46,10 +52,53 @@ public class BlockTessallator {
 	public static void addToTessallator(Tessellator tessellator, double x, double y, double z, Icon icon) {
 		BlockTessallator.addToTessallator(tessellator, x, y, z, icon, icon, icon, icon, icon, icon);
 	}
-	
-	public static void addToRenderer(Block block, VertexRenderer v, RenderBlocks blockRenderer, double x, double y, double z, Icon icon, Icon icon2, int trueX, int trueY, int trueZ) {
-		
-		
-		v.renderBlockInWorld(block, blockRenderer, (int)trueX, (int)trueY, (int)trueZ, icon, icon2, x, y, z, 1, 1, 1);
+
+	public static void addToRenderer(Block block, VertexRenderer v, RenderBlocks blockRenderer, double x, double y, double z, Icon icon, Icon icon2, int trueX,
+			int trueY, int trueZ) {
+		v.renderBlockInWorld(block, blockRenderer, trueX, trueY, trueZ, icon, icon2, x, y, z, 1, 1, 1);
 	}
+
+	static boolean SWITCH = false;
+
+	public static void enableOverlay() {
+		OpenGlHelper.setActiveTexture(33986);
+		if (!BlockTessallator.SWITCH) {
+			BlockTessallator.SWITCH = true;
+			GL11.glMatrixMode(GL11.GL_MODELVIEW);
+			Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
+
+			GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL13.GL_COMBINE);
+			GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, GL13.GL_COMBINE_RGB, GL13.GL_INTERPOLATE);
+
+			GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, GL13.GL_SOURCE0_RGB, GL13.GL_PREVIOUS);
+			GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, GL13.GL_OPERAND0_RGB, GL11.GL_SRC_COLOR);
+
+			GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, GL13.GL_SOURCE1_RGB, GL11.GL_TEXTURE);
+			GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, GL13.GL_OPERAND1_RGB, GL11.GL_SRC_COLOR);
+
+			GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, GL13.GL_SOURCE2_RGB, GL13.GL_PREVIOUS);
+			GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, GL13.GL_COMBINE_ALPHA, GL11.GL_ADD);
+			GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, GL13.GL_SOURCE0_ALPHA, GL11.GL_TEXTURE);
+			GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, GL13.GL_OPERAND0_ALPHA, GL11.GL_SRC_ALPHA);
+		}
+
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+
+		OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
+
+	}
+
+	public static void disableOverlay() {
+		OpenGlHelper.setActiveTexture(33986);
+
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
+
+		OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
+	}
+
 }

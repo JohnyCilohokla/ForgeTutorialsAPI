@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.forgetutorials.multientity.InfernosMultiEntity;
+import com.forgetutorials.multientity.InfernosMultiEntityStatic;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.Player;
@@ -75,8 +75,8 @@ public class PacketMultiTileEntity extends InfernosPacket {
 	public void execute(INetworkManager manager, Player player) {
 		World world = FMLClientHandler.instance().getClient().theWorld;
 		this.tileEntity = world.getBlockTileEntity(this.x, this.y, this.z);
-		if (this.tileEntity instanceof InfernosMultiEntity) {
-			InfernosMultiEntity multiEntity = (InfernosMultiEntity) this.tileEntity;
+		if (this.tileEntity instanceof InfernosMultiEntityStatic) {
+			InfernosMultiEntityStatic multiEntity = (InfernosMultiEntityStatic) this.tileEntity;
 			multiEntity.newEntity(this.entityName);
 			multiEntity.setSide(this.side);
 		}

@@ -190,12 +190,12 @@ public class VertexRenderer {
 
 	public RenderBlocks getValidRenderBlocks(RenderBlocks blockRenderer) {
 		if (blockRenderer == null) {
-			if (blankRenderBlocks == null) {
-				blankRenderBlocks = new RenderBlocks();
-				blankRenderBlocks.renderAllFaces = true;
-				blankRenderBlocks.blockAccess = new FakeBlockAccess();
+			if (VertexRenderer.blankRenderBlocks == null) {
+				VertexRenderer.blankRenderBlocks = new RenderBlocks();
+				VertexRenderer.blankRenderBlocks.renderAllFaces = true;
+				VertexRenderer.blankRenderBlocks.blockAccess = new FakeBlockAccess();
 			}
-			blockRenderer = blankRenderBlocks;
+			blockRenderer = VertexRenderer.blankRenderBlocks;
 		}
 		return blockRenderer;
 	}
@@ -204,7 +204,7 @@ public class VertexRenderer {
 			double z, float r, float g, float b) {
 
 		blockRenderer = getValidRenderBlocks(blockRenderer);
-		
+
 		blockRenderer.renderMinX = 0.0D;
 		blockRenderer.renderMinY = 0.0D;
 		blockRenderer.renderMinZ = 0.0D;
@@ -306,7 +306,7 @@ public class VertexRenderer {
 
 		i1 = brightness;
 
-		if (blockRenderer.renderMaxX >= 1.0D || !blockRenderer.blockAccess.isBlockOpaqueCube(trueX + 1, trueY, trueZ)) {
+		if ((blockRenderer.renderMaxX >= 1.0D) || !blockRenderer.blockAccess.isBlockOpaqueCube(trueX + 1, trueY, trueZ)) {
 			i1 = block.getMixedBrightnessForBlock(blockRenderer.blockAccess, trueX + 1, trueY, trueZ);
 		}
 
@@ -342,7 +342,7 @@ public class VertexRenderer {
 		blockRenderer.colorBlueTopRight *= f6;
 
 		// @formatter:off
-		this.addQuadUVSTColor(
+		addQuadUVSTColor(
 				x + 1, y, z, icon.getMaxU(), icon.getMaxV(), icon2.getMinU(), icon2.getMaxV(),
 				blockRenderer.brightnessBottomLeft,
 				(int) (blockRenderer.colorRedBottomLeft * 255), (int) (blockRenderer.colorGreenBottomLeft * 255), (int) (blockRenderer.colorBlueBottomLeft * 255), (int) (1.00 * 255),
@@ -429,7 +429,7 @@ public class VertexRenderer {
 
 		i1 = brightness;
 
-		if (blockRenderer.renderMinX <= 0.0D || !blockRenderer.blockAccess.isBlockOpaqueCube(trueX - 1, trueY, trueZ)) {
+		if ((blockRenderer.renderMinX <= 0.0D) || !blockRenderer.blockAccess.isBlockOpaqueCube(trueX - 1, trueY, trueZ)) {
 			i1 = block.getMixedBrightnessForBlock(blockRenderer.blockAccess, trueX - 1, trueY, trueZ);
 		}
 
@@ -465,7 +465,7 @@ public class VertexRenderer {
 		blockRenderer.colorBlueTopRight *= f6;
 
 		// @formatter:off
-		this.addQuadUVSTColor(
+		addQuadUVSTColor(
 				x, y, z + 1, icon.getMaxU(), icon.getMaxV(), icon2.getMinU(), icon2.getMaxV(),
 				blockRenderer.brightnessTopRight,
 				(int) (blockRenderer.colorRedTopRight * 255), (int) (blockRenderer.colorGreenTopRight * 255), (int) (blockRenderer.colorBlueTopRight * 255), (int) (1.00 * 255),
@@ -497,7 +497,7 @@ public class VertexRenderer {
 		float f6;
 		float f7;
 		int i1;
-		
+
 		if (blockRenderer.renderMaxZ >= 1.0D) {
 			++trueZ;
 		}
@@ -554,7 +554,7 @@ public class VertexRenderer {
 
 		i1 = brightness;
 
-		if (blockRenderer.renderMaxZ >= 1.0D || !blockRenderer.blockAccess.isBlockOpaqueCube(trueX, trueY, trueZ + 1)) {
+		if ((blockRenderer.renderMaxZ >= 1.0D) || !blockRenderer.blockAccess.isBlockOpaqueCube(trueX, trueY, trueZ + 1)) {
 			i1 = block.getMixedBrightnessForBlock(blockRenderer.blockAccess, trueX, trueY, trueZ + 1);
 		}
 
@@ -590,7 +590,7 @@ public class VertexRenderer {
 		blockRenderer.colorBlueTopRight *= f6;
 
 		// @formatter:off
-		this.addQuadUVSTColor(
+		addQuadUVSTColor(
 				x + 1, y, z + 1, icon.getMaxU(), icon.getMaxV(), icon2.getMinU(), icon2.getMaxV(),
 				blockRenderer.brightnessBottomRight,
 				(int) (blockRenderer.colorRedBottomRight * 255),(int) (blockRenderer.colorGreenBottomRight * 255),(int) (blockRenderer.colorBlueBottomRight * 255),(int) (1.00 * 255),
@@ -678,7 +678,7 @@ public class VertexRenderer {
 
 		i1 = brightness;
 
-		if (blockRenderer.renderMinZ <= 0.0D || !blockRenderer.blockAccess.isBlockOpaqueCube(trueX, trueY, trueZ - 1)) {
+		if ((blockRenderer.renderMinZ <= 0.0D) || !blockRenderer.blockAccess.isBlockOpaqueCube(trueX, trueY, trueZ - 1)) {
 			i1 = block.getMixedBrightnessForBlock(blockRenderer.blockAccess, trueX, trueY, trueZ - 1);
 		}
 
@@ -715,12 +715,12 @@ public class VertexRenderer {
 
 		i1 = brightness;
 
-		if (blockRenderer.renderMinZ <= 0.0D || !blockRenderer.blockAccess.isBlockOpaqueCube(trueX, trueY, trueZ - 1)) {
+		if ((blockRenderer.renderMinZ <= 0.0D) || !blockRenderer.blockAccess.isBlockOpaqueCube(trueX, trueY, trueZ - 1)) {
 			i1 = block.getMixedBrightnessForBlock(blockRenderer.blockAccess, trueX, trueY, trueZ - 1);
 		}
 
 		// @formatter:off
-		this.addQuadUVSTColor(x, y, z, icon.getMinU(), icon.getMaxV(), icon2.getMinU(), icon2.getMaxV(),
+		addQuadUVSTColor(x, y, z, icon.getMinU(), icon.getMaxV(), icon2.getMinU(), icon2.getMaxV(),
 				blockRenderer.brightnessTopRight,
 				(int) (blockRenderer.colorRedTopRight * 255), (int) (blockRenderer.colorGreenTopRight * 255), (int) (blockRenderer.colorBlueTopRight * 255), (int) (1.00 * 255),
 				
@@ -807,7 +807,7 @@ public class VertexRenderer {
 
 		i1 = brightness;
 
-		if (blockRenderer.renderMaxY >= 1.0D || !blockRenderer.blockAccess.isBlockOpaqueCube(trueX, trueY + 1, trueZ)) {
+		if ((blockRenderer.renderMaxY >= 1.0D) || !blockRenderer.blockAccess.isBlockOpaqueCube(trueX, trueY + 1, trueZ)) {
 			i1 = block.getMixedBrightnessForBlock(blockRenderer.blockAccess, trueX, trueY + 1, trueZ);
 		}
 
@@ -843,7 +843,7 @@ public class VertexRenderer {
 		blockRenderer.colorBlueTopRight *= f6;
 
 		// @formatter:off
-		this.addQuadUVSTColor(
+		addQuadUVSTColor(
 				x, y + 1, z, icon.getMinU(), icon.getMinV(), icon2.getMinU(), icon2.getMaxV(),
 				blockRenderer.brightnessBottomRight,
 				(int) (blockRenderer.colorRedBottomRight * 255),(int) (blockRenderer.colorGreenBottomRight * 255),(int) (blockRenderer.colorBlueBottomRight * 255),(int) (1.00 * 255),
@@ -931,7 +931,7 @@ public class VertexRenderer {
 
 		i1 = brightness;
 
-		if (blockRenderer.renderMinY <= 0.0D || !blockRenderer.blockAccess.isBlockOpaqueCube(trueX, trueY - 1, trueZ)) {
+		if ((blockRenderer.renderMinY <= 0.0D) || !blockRenderer.blockAccess.isBlockOpaqueCube(trueX, trueY - 1, trueZ)) {
 			i1 = block.getMixedBrightnessForBlock(blockRenderer.blockAccess, trueX, trueY - 1, trueZ);
 		}
 
@@ -967,7 +967,7 @@ public class VertexRenderer {
 		blockRenderer.colorBlueTopRight *= f6;
 
 		// @formatter:off
-		this.addQuadUVSTColor(
+		addQuadUVSTColor(
 				x, y, z + 1, icon.getMinU(), icon.getMaxV(), icon2.getMinU(), icon2.getMaxV(),
 				blockRenderer.brightnessTopLeft,
 				(int) (blockRenderer.colorRedTopLeft * 255), (int) (blockRenderer.colorGreenTopLeft * 255), (int) (blockRenderer.colorBlueTopLeft * 255), (int) (1.00 * 255),

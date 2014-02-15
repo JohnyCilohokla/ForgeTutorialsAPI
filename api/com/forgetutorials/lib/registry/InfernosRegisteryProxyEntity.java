@@ -14,7 +14,7 @@ import net.minecraft.util.Icon;
 
 import com.forgetutorials.lib.FTA;
 import com.forgetutorials.lib.utilities.ItemStackUtilities;
-import com.forgetutorials.multientity.InfernosMultiEntity;
+import com.forgetutorials.multientity.InfernosMultiEntityStatic;
 import com.forgetutorials.multientity.InfernosMultiEntityType;
 import com.forgetutorials.multientity.base.InfernosProxyEntityBase;
 
@@ -86,12 +86,12 @@ public enum InfernosRegisteryProxyEntity {
 		return true;
 	}
 
-	public InfernosProxyEntityBase newMultiEntity(String name, InfernosMultiEntity infernosMultiEntity) throws Exception {
+	public InfernosProxyEntityBase newMultiEntity(String name, InfernosMultiEntityStatic infernosMultiEntity) throws Exception {
 		name = getCompatibleName(name);
 		InfernosProxyEntityBase entity = null;
 		try {
 			Class<? extends InfernosProxyEntityBase> _class = getProxyContainer(name)._class;
-			Constructor<? extends InfernosProxyEntityBase> constructor = _class.getConstructor(InfernosMultiEntity.class);
+			Constructor<? extends InfernosProxyEntityBase> constructor = _class.getConstructor(InfernosMultiEntityStatic.class);
 			entity = constructor.newInstance(infernosMultiEntity);
 		} catch (Exception e) {
 			System.out.println(">> DEBUG: newMultiEntity(" + name + ", " + infernosMultiEntity.getClass().getCanonicalName() + ")");
@@ -101,11 +101,14 @@ public enum InfernosRegisteryProxyEntity {
 	}
 
 	public InfernosProxyEntityBase getStaticMultiEntity(String name) {
+		if (name == null) {
+			return null;
+		}
 		name = getCompatibleName(name);
 		InfernosProxyEntityBase entity = getProxyContainer(name).instance;
 		if (entity == null) {
 			try {
-				entity = newMultiEntity(name, new InfernosMultiEntity());
+				entity = newMultiEntity(name, new InfernosMultiEntityStatic());
 			} catch (Exception e) {
 			}
 			getProxyContainer(name).instance = entity;
@@ -136,11 +139,17 @@ public enum InfernosRegisteryProxyEntity {
 		return (newName != null) ? newName : entityName;
 	}
 
-	public void addMultiEntity(String typeName, Class<? extends InfernosProxyEntityBase> entity, InfernosMultiEntityType type, CreativeTabs tab) {
+	public void addMultiEntity(String typeName, Class<? extends InfernosProxyEntityBase> entity, InfernosMultiEntityType type, CreativeTabs tab, boolean opaque) {
 		InfernosRegisteryProxyEntity.INSTANCE.addMultiEntity(typeName, entity, type);
 
-		ItemStack strangeFrameItemStack = new ItemStack(FTA.infernosMultiBlockID, 1, type.ordinal());
-		ItemStackUtilities.addStringTag(strangeFrameItemStack, "MES", typeName);
+		ItemStack strangeFrameItemStack;
+		if (opaque) {
+			strangeFrameItemStack = new ItemStack(FTA.infernosMultiBlockOpaque, 1, type.ordinal());
+			ItemStackUtilities.addStringTag(strangeFrameItemStack, "MES", typeName);
+		} else {
+			strangeFrameItemStack = new ItemStack(FTA.infernosMultiBlock, 1, type.ordinal());
+			ItemStackUtilities.addStringTag(strangeFrameItemStack, "MES", typeName);
+		}
 
 		new DescriptorBlock().registerBlock("mes." + typeName, typeName, strangeFrameItemStack);
 		ForgeTutorialsRegistry.INSTANCE.addToCreativeTab(tab, strangeFrameItemStack);

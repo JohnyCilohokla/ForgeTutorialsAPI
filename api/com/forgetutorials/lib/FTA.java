@@ -6,7 +6,8 @@ import com.forgetutorials.lib.network.PacketType;
 import com.forgetutorials.lib.registry.DescriptorBlock;
 import com.forgetutorials.lib.registry.MetaMaterial;
 import com.forgetutorials.lib.utilities.ForgeRegistryUtilities;
-import com.forgetutorials.multientity.InfernosMultiBlock;
+import com.forgetutorials.multientity.InfernosMultiBlockOpaque;
+import com.forgetutorials.multientity.InfernosMultiBlockTranslucent;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.INetworkManager;
@@ -28,8 +29,10 @@ public class FTA implements IPacketHandler {
 	@SidedProxy(clientSide = ModInfo.CLIENT_PROXY_CLASS, serverSide = ModInfo.SERVER_PROXY_CLASS)
 	public static CommonProxy proxy;
 
-	public static int infernosMultiBlockID = 2888;
-	public static InfernosMultiBlock infernosMultiBlock;
+	private static int infernosMultiBlockID = 2888;
+	private static int infernosMultiBlockOpaqueID = 2889;
+	public static InfernosMultiBlockTranslucent infernosMultiBlock;
+	public static InfernosMultiBlockOpaque infernosMultiBlockOpaque;
 
 	public static ForgeRegistryUtilities registry = new ForgeRegistryUtilities("mes", ModInfo.MOD_ID);
 
@@ -42,7 +45,8 @@ public class FTA implements IPacketHandler {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		System.out.println(">> MES_API: preInit");
-		FTA.infernosMultiBlock = new InfernosMultiBlock(FTA.infernosMultiBlockID, MetaMaterial.metaMaterial);
+		FTA.infernosMultiBlock = new InfernosMultiBlockTranslucent(FTA.infernosMultiBlockID, MetaMaterial.metaMaterial);
+		FTA.infernosMultiBlockOpaque = new InfernosMultiBlockOpaque(FTA.infernosMultiBlockOpaqueID, MetaMaterial.metaMaterial);
 		new DescriptorBlock().setTool("metaHammer", 1).registerBlock("forgetutorials.MultiEntityBlock", FTA.infernosMultiBlock.getLocalizedName(),
 				new ItemStack(FTA.infernosMultiBlock));
 	}

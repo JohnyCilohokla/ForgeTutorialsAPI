@@ -1,9 +1,6 @@
 package com.forgetutorials.multientity.renderers;
 
-import com.forgetutorials.multientity.InfernosMultiEntity;
-import com.forgetutorials.multientity.InfernosMultiEntityInv;
-import com.forgetutorials.multientity.InfernosMultiEntityInvLiq;
-import com.forgetutorials.multientity.InfernosMultiEntityLiq;
+import com.forgetutorials.multientity.*;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
 
@@ -19,16 +16,16 @@ public class InfernosMultiEntityRenderer extends TileEntitySpecialRenderer {
 			return;
 		}
 		InfernosMultiEntityRenderer.infernosMultiRenderer = new InfernosMultiEntityRenderer();
-		ClientRegistry.bindTileEntitySpecialRenderer(InfernosMultiEntity.class, InfernosMultiEntityRenderer.infernosMultiRenderer);
-		ClientRegistry.bindTileEntitySpecialRenderer(InfernosMultiEntityInv.class, InfernosMultiEntityRenderer.infernosMultiRenderer);
-		ClientRegistry.bindTileEntitySpecialRenderer(InfernosMultiEntityInvLiq.class, InfernosMultiEntityRenderer.infernosMultiRenderer);
-		ClientRegistry.bindTileEntitySpecialRenderer(InfernosMultiEntityLiq.class, InfernosMultiEntityRenderer.infernosMultiRenderer);
+		ClientRegistry.bindTileEntitySpecialRenderer(InfernosMultiEntityDynamic.class, InfernosMultiEntityRenderer.infernosMultiRenderer);
+		ClientRegistry.bindTileEntitySpecialRenderer(InfernosMultiEntityDynamicInv.class, InfernosMultiEntityRenderer.infernosMultiRenderer);
+		ClientRegistry.bindTileEntitySpecialRenderer(InfernosMultiEntityDynamicInvLiq.class, InfernosMultiEntityRenderer.infernosMultiRenderer);
+		ClientRegistry.bindTileEntitySpecialRenderer(InfernosMultiEntityDynamicLiq.class, InfernosMultiEntityRenderer.infernosMultiRenderer);
 	}
 
 	@Override
 	public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
-		if (tileentity instanceof InfernosMultiEntity) {
-			InfernosMultiEntity tile = (InfernosMultiEntity) tileentity;
+		if (tileentity instanceof InfernosMultiEntityStatic) {
+			InfernosMultiEntityStatic tile = (InfernosMultiEntityStatic) tileentity;
 			tile.renderTileEntityAt(x, y, z);
 		}
 	}

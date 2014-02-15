@@ -3,10 +3,11 @@ package com.forgetutorials.multientity.base;
 import java.util.ArrayList;
 
 import com.forgetutorials.lib.network.PacketMultiTileEntity;
-import com.forgetutorials.multientity.InfernosMultiEntity;
-import com.forgetutorials.multientity.InfernosMultiEntityInv;
-import com.forgetutorials.multientity.InfernosMultiEntityInvLiq;
-import com.forgetutorials.multientity.InfernosMultiEntityLiq;
+import com.forgetutorials.lib.utilities.ItemStackUtilities;
+import com.forgetutorials.multientity.InfernosMultiEntityStatic;
+import com.forgetutorials.multientity.InfernosMultiEntityStaticInv;
+import com.forgetutorials.multientity.InfernosMultiEntityStaticInvLiq;
+import com.forgetutorials.multientity.InfernosMultiEntityStaticLiq;
 import com.forgetutorials.multientity.InfernosMultiEntityType;
 
 import net.minecraft.client.renderer.RenderBlocks;
@@ -22,15 +23,17 @@ import net.minecraftforge.fluids.FluidStack;
 
 abstract public class InfernosProxyEntityBase {
 	public static final InfernosProxyEntityDummy DUMMY = new InfernosProxyEntityDummy(null);
-	protected InfernosMultiEntity entity;
+	protected InfernosMultiEntityStatic entity;
 
-	public InfernosProxyEntityBase(InfernosMultiEntity entity) {
+	public InfernosProxyEntityBase(InfernosMultiEntityStatic entity) {
 		this.entity = entity;
 	}
 
 	abstract public boolean hasInventory();
 
 	abstract public boolean hasLiquids();
+
+	abstract public boolean isDynamiclyRendered();
 
 	public int getSizeInventory() {
 		return 0;
@@ -144,7 +147,7 @@ abstract public class InfernosProxyEntityBase {
 		}
 	}
 
-	abstract public void renderItem(ItemRenderType type, Object[] data);
+	abstract public void renderItem(ItemRenderType type, ItemStack stack, Object[] data);
 
 	abstract public void renderTileEntityAt(double x, double y, double z);
 
@@ -159,7 +162,10 @@ abstract public class InfernosProxyEntityBase {
 	}
 
 	public ItemStack getSilkTouchItemStack() {
-		return null;
+		ItemStack stack = new ItemStack(this.entity.getBlockType(), 1, 3);
+		ItemStackUtilities.addStringTag(stack, "MES", getTypeName());
+		writeToNBT(stack.getTagCompound());
+		return stack;
 	}
 
 	public ArrayList<ItemStack> getBlockDropped(int fortune) {
@@ -180,30 +186,46 @@ abstract public class InfernosProxyEntityBase {
 	 * 
 	 * @param infernosMultiEntity
 	 */
-	public int validateTileEntity(InfernosMultiEntity infernosMultiEntity) {
+	public int validateTileEntity(InfernosMultiEntityStatic infernosMultiEntity) {
 		boolean entityInv = false;
 		boolean entityLiq = false;
-		if (infernosMultiEntity instanceof InfernosMultiEntityInvLiq) {
+		if (infernosMultiEntity instanceof InfernosMultiEntityStaticInvLiq) {
 			entityInv = true;
 			entityLiq = true;
-		} else if (infernosMultiEntity instanceof InfernosMultiEntityInv) {
+		} else if (infernosMultiEntity instanceof InfernosMultiEntityStaticInv) {
 			entityInv = true;
-		} else if (infernosMultiEntity instanceof InfernosMultiEntityLiq) {
+		} else if (infernosMultiEntity instanceof InfernosMultiEntityStaticLiq) {
 			entityLiq = true;
 		}
 		int meta = -1;
 		if ((hasInventory() != entityInv) || (hasLiquids() != entityLiq)) {
-			if (hasInventory()) {
-				if (hasLiquids()) {
-					meta = InfernosMultiEntityType.BOTH.ordinal();
+			if (isDynamiclyRendered()) {
+				if (hasInventory()) {
+					if (hasLiquids()) {
+						meta = InfernosMultiEntityType.DYNAMIC_BOTH.ordinal();
+					} else {
+						meta = InfernosMultiEntityType.DYNAMIC_INVENTORY.ordinal();
+					}
 				} else {
-					meta = InfernosMultiEntityType.INVENTORY.ordinal();
+					if (hasLiquids()) {
+						meta = InfernosMultiEntityType.DYNAMIC_LIQUID.ordinal();
+					} else {
+						meta = InfernosMultiEntityType.DYNAMIC_BASIC.ordinal();
+					}
 				}
 			} else {
-				if (hasLiquids()) {
-					meta = InfernosMultiEntityType.LIQUID.ordinal();
+				if (hasInventory()) {
+					if (hasLiquids()) {
+						meta = InfernosMultiEntityType.STATIC_BOTH.ordinal();
+					} else {
+						meta = InfernosMultiEntityType.STATIC_INVENTORY.ordinal();
+					}
 				} else {
-					meta = InfernosMultiEntityType.BASIC.ordinal();
+					if (hasLiquids()) {
+						meta = InfernosMultiEntityType.STATIC_LIQUID.ordinal();
+					} else {
+						meta = InfernosMultiEntityType.STATIC_BASIC.ordinal();
+					}
 				}
 			}
 		}

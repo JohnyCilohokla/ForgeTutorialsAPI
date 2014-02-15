@@ -11,7 +11,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
-public class InfernosMultiEntityInvLiq extends InfernosMultiEntity implements ISidedInventory, IFluidHandler, IFluidStackProxy {
+public class InfernosMultiEntityStaticInvLiq extends InfernosMultiEntityStatic implements ISidedInventory, IFluidHandler, IFluidStackProxy {
 
 	@Override
 	public int getSizeInventory() {

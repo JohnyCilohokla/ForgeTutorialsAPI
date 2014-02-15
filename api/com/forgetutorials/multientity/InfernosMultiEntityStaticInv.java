@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 
-public class InfernosMultiEntityInv extends InfernosMultiEntity implements ISidedInventory {
+public class InfernosMultiEntityStaticInv extends InfernosMultiEntityStatic implements ISidedInventory {
 
 	@Override
 	public int getSizeInventory() {

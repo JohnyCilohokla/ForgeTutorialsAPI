@@ -3,10 +3,10 @@ package com.forgetutorials.lib.renderers;
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.client.FMLClientHandler;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Icon;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -17,6 +17,10 @@ public enum FluidTessallator {
 
 	final double distS, distL;
 	final double spaceS, spaceL;
+	//centered x,z
+	final double distCS, distCL;
+	final double spaceCS, spaceCL;
+	//
 	final double yStart, yEnd;
 
 	FluidTessallator(double distance, double space, double yStart, double yEnd) {
@@ -28,6 +32,12 @@ public enum FluidTessallator {
 
 		this.yStart = yStart;
 		this.yEnd = yEnd;
+		
+		this.distCS = -0.5 + distance;
+		this.distCL = 0.5 - distance;
+
+		this.spaceCS = -0.5 + space;
+		this.spaceCL = 0.5 - space;
 	}
 
 	public static double interpolateU(Icon icon, double inter) {
@@ -76,6 +86,50 @@ public enum FluidTessallator {
 		tessellator.addVertexWithUV(x + this.distS, y + amount, z + this.spaceS, icon.getMaxU(), FluidTessallator.interpolateV(icon, size));
 		tessellator.addVertexWithUV(x + this.distS, y + this.yStart, z + this.spaceS, icon.getMaxU(), icon.getMinV());
 	}
+	
+	/**
+	 * Centered x,z!
+	 * @param tessellator
+	 * @param icon
+	 * @param amount
+	 * @param size
+	 */
+	public void addToTessallator(Tessellator tessellator, Icon icon, double amount, double size) {
+		amount = this.yStart + ((this.yEnd - this.yStart) * amount);
+
+		// top
+		tessellator.addVertexWithUV(this.distCS, amount, this.distCS, icon.getMinU(), icon.getMinV());
+		tessellator.addVertexWithUV(this.distCS, amount, this.distCL, icon.getMinU(), icon.getMaxV());
+		tessellator.addVertexWithUV(this.distCL, amount, this.distCL, icon.getMaxU(), icon.getMaxV());
+		tessellator.addVertexWithUV(this.distCL, amount, this.distCS, icon.getMaxU(), icon.getMinV());
+
+		// bottom
+		tessellator.addVertexWithUV(this.distCS, this.yStart, this.distCL, icon.getMinU(), icon.getMinV());
+		tessellator.addVertexWithUV(this.distCS, this.yStart, this.distCS, icon.getMinU(), icon.getMaxV());
+		tessellator.addVertexWithUV(this.distCL, this.yStart, this.distCS, icon.getMaxU(), icon.getMaxV());
+		tessellator.addVertexWithUV(this.distCL, this.yStart, this.distCL, icon.getMaxU(), icon.getMinV());
+
+		// sides
+		tessellator.addVertexWithUV(this.spaceCS, this.yStart, this.distCS, icon.getMinU(), icon.getMinV());
+		tessellator.addVertexWithUV(this.spaceCS, amount, this.distCS, icon.getMinU(), FluidTessallator.interpolateV(icon, size));
+		tessellator.addVertexWithUV(this.spaceCL, amount, this.distCS, icon.getMaxU(), FluidTessallator.interpolateV(icon, size));
+		tessellator.addVertexWithUV(this.spaceCL, this.yStart, this.distCS, icon.getMaxU(), icon.getMinV());
+
+		tessellator.addVertexWithUV(this.spaceCL, this.yStart, this.distCL, icon.getMinU(), icon.getMinV());
+		tessellator.addVertexWithUV(this.spaceCL, amount, this.distCL, icon.getMinU(), FluidTessallator.interpolateV(icon, size));
+		tessellator.addVertexWithUV(this.spaceCS, amount, this.distCL, icon.getMaxU(), FluidTessallator.interpolateV(icon, size));
+		tessellator.addVertexWithUV(this.spaceCS, this.yStart, this.distCL, icon.getMaxU(), icon.getMinV());
+
+		tessellator.addVertexWithUV(this.distCL, this.yStart, this.spaceCS, icon.getMinU(), icon.getMinV());
+		tessellator.addVertexWithUV(this.distCL, amount, this.spaceCS, icon.getMinU(), FluidTessallator.interpolateV(icon, size));
+		tessellator.addVertexWithUV(this.distCL, amount, this.spaceCL, icon.getMaxU(), FluidTessallator.interpolateV(icon, size));
+		tessellator.addVertexWithUV(this.distCL, this.yStart, this.spaceCL, icon.getMaxU(), icon.getMinV());
+
+		tessellator.addVertexWithUV(this.distCS, this.yStart, this.spaceCL, icon.getMinU(), icon.getMinV());
+		tessellator.addVertexWithUV(this.distCS, amount, this.spaceCL, icon.getMinU(), FluidTessallator.interpolateV(icon, size));
+		tessellator.addVertexWithUV(this.distCS, amount, this.spaceCS, icon.getMaxU(), FluidTessallator.interpolateV(icon, size));
+		tessellator.addVertexWithUV(this.distCS, this.yStart, this.spaceCS, icon.getMaxU(), icon.getMinV());
+	}
 
 	public static void setColorForFluidStack(FluidStack fluidstack) {
 		if (fluidstack == null) {
@@ -106,8 +160,14 @@ public enum FluidTessallator {
 		}
 		return icon;
 	}
-
 	public void renderFluidStack(Tessellator tessellator, FluidStack fluidstack, double x, double y, double z) {
+		renderFluidStack(tessellator, fluidstack, x, y, z, null);
+	}
+	public void renderFluidStack(Tessellator tessellator, FluidStack fluidstack, double x, double y, double z, int facing) {
+		renderFluidStack(tessellator, fluidstack, x, y, z, EnumFacing.getFront(facing));
+	}
+
+	public void renderFluidStack(Tessellator tessellator, FluidStack fluidstack, double x, double y, double z, EnumFacing facing) {
 		if ((fluidstack == null) || (fluidstack.amount <= 0)) {
 			return;
 		}
@@ -124,9 +184,10 @@ public enum FluidTessallator {
 		Icon icon = FluidTessallator.getFluidTexture(fluidstack, false);
 
 		double size = fluidstack.amount * 0.001;
-
+		GL11.glTranslated(x, y, z);
+		FTAOpenGL.glRotate(facing);
 		tessellator.startDrawingQuads();
-		addToTessallator(tessellator, x, y, z, icon, size, size);
+		addToTessallator(tessellator, icon, size, size);
 		tessellator.draw();
 
 		GL11.glColor4f(1, 1, 1, 1);

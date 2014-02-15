@@ -1,6 +1,6 @@
 package com.forgetutorials.multientity.renderers;
 
-import com.forgetutorials.multientity.InfernosMultiEntity;
+import com.forgetutorials.multientity.InfernosMultiEntityStatic;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -32,8 +32,8 @@ public class InfernosMultiBlockRenderer implements ISimpleBlockRenderingHandler 
 		if (tileentity == null) {
 			return true;
 		}
-		if (tileentity instanceof InfernosMultiEntity) {
-			InfernosMultiEntity tile = (InfernosMultiEntity) tileentity;
+		if (tileentity instanceof InfernosMultiEntityStatic) {
+			InfernosMultiEntityStatic tile = (InfernosMultiEntityStatic) tileentity;
 			tile.renderStaticBlockAt(renderer, x, y, z);
 		}
 		return true;
