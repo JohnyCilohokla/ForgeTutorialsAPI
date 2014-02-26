@@ -1,0 +1,84 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.1-SNAPSHOT'
+    }
+}
+
+apply plugin: 'forge'
+
+
+ext.buildProps = file ("S:/minecraft/sources/ForgeTutorialsAPI/build.properties")
+
+buildProps.withReader {
+    def prop = new Properties()
+    prop.load(it)
+    ext.config = new ConfigSlurper().parse prop
+}
+
+version = "${config.build.version.number}.${config.build.patch.number}.${config.build.revision.number}"
+group= "FTA" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "ForgeTutorialsAPI"
+
+sourceSets.main{
+    java{
+		srcDirs 'S:/minecraft/sources/ForgeTutorialsAPI/common'//set the source folder as the /src subfolder
+	}
+	resources{
+		srcDirs 'S:/minecraft/sources/ForgeTutorialsAPI/resources'//set the resources folder as the /resources subfolder
+	}
+}
+
+
+ext.buildProps = file ("build.properties")
+
+buildProps.withReader {
+    def prop = new Properties()
+    prop.load(it)
+    ext.config = new ConfigSlurper().parse prop
+}
+version = "${config.build.version.number}.${config.build.patch.number}.${config.build.revision.number}"
+
+minecraft {
+    version = "1.7.2-10.12.0.1029"
+    assetDir = "eclipse/assets"
+	
+    versionMC = "1.7.2"
+    versionForge = "10.12.0.1029"
+	
+    replaceIn "com/forgetutorials/lib/FTA.java"
+	replace "@MCVERSION@", minecraft.versionMC
+	replace "@FORGEVERSION@", minecraft.versionForge
+	replace "@VERSION@", config.build.version.number
+	replace "@PATCH@", config.build.patch.number
+	replace "@REVISION@", config.build.revision.number
+}
+
+processResources
+{
+    from(sourceSets.main.resources.srcDirs) {
+		include '**/*.lang'
+        include '**/*.info'
+		filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: [
+		MCVERSION: minecraft.versionMC,
+		FORGEVERSION: minecraft.versionForge,
+		VERSION: config.build.version.number,
+		PATCH: config.build.patch.number,
+		REVISION: config.build.revision.number
+		])
+	}
+	from(sourceSets.main.resources.srcDirs) {
+        exclude '**/*.lang'
+        exclude '**/*.info'
+    }
+}
