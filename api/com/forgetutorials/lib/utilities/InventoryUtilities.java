@@ -2,13 +2,10 @@ package com.forgetutorials.lib.utilities;
 
 import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockChest;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -20,19 +17,10 @@ public class InventoryUtilities {
 		int i = MathHelper.floor_double(x);
 		int j = MathHelper.floor_double(y);
 		int k = MathHelper.floor_double(z);
-		TileEntity tileentity = world.getBlockTileEntity(i, j, k);
+		TileEntity tileentity = world.getTileEntity(i, j, k);
 
 		if ((tileentity != null) && (tileentity instanceof IInventory)) {
 			iinventory = (IInventory) tileentity;
-
-			if (iinventory instanceof TileEntityChest) {
-				int l = world.getBlockId(i, j, k);
-				Block block = Block.blocksList[l];
-
-				if (block instanceof BlockChest) {
-					iinventory = ((BlockChest) block).getInventory(world, i, j, k);
-				}
-			}
 		}
 
 		if (iinventory == null) {

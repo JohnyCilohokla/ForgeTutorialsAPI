@@ -33,13 +33,8 @@ public class InfernosMultiEntityStaticInv extends InfernosMultiEntityStatic impl
 	}
 
 	@Override
-	public String getInvName() {
-		return getProxyEntity().getInvName();
-	}
-
-	@Override
-	public boolean isInvNameLocalized() {
-		return getProxyEntity().isInvNameLocalized();
+	public String getInventoryName() {
+		return getProxyEntity().getInventoryName();
 	}
 
 	@Override
@@ -53,13 +48,13 @@ public class InfernosMultiEntityStaticInv extends InfernosMultiEntityStatic impl
 	}
 
 	@Override
-	public void openChest() {
-		getProxyEntity().openChest();
+	public void openInventory() {
+		getProxyEntity().openInventory();
 	}
 
 	@Override
-	public void closeChest() {
-		getProxyEntity().closeChest();
+	public void closeInventory() {
+		getProxyEntity().closeInventory();
 	}
 
 	@Override
@@ -83,8 +78,13 @@ public class InfernosMultiEntityStaticInv extends InfernosMultiEntityStatic impl
 	}
 
 	@Override
-	public void onInventoryChanged() {
-		super.onInventoryChanged();
+	public void markDirty() {
+		super.markDirty();
 		getProxyEntity().onInventoryChanged();
+	}
+
+	@Override
+	public boolean hasCustomInventoryName() {
+		return getProxyEntity().hasCustomInventoryName();
 	}
 }

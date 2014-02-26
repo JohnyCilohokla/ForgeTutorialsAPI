@@ -1,12 +1,10 @@
 package com.forgetutorials.lib.network;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import io.netty.buffer.ByteBuf;
+
 import java.io.IOException;
 
-import cpw.mods.fml.common.network.Player;
-
-import net.minecraft.network.INetworkManager;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 
 /**
@@ -29,19 +27,19 @@ public class SubPacketTileEntityBlockUpdate extends SubPacketTileEntityChild {
 	}
 
 	@Override
-	public void writeData(DataOutputStream data) throws IOException {
+	public void writeData(ByteBuf data) throws IOException {
 	}
 
 	@Override
-	public void readData(DataInputStream data) throws IOException {
+	public void readData(ByteBuf data) throws IOException {
 	}
 
 	@Override
-	public void execute(INetworkManager manager, Player player) {
+	public void execute(PacketMultiTileEntity manager, EntityPlayer player) {
 		TileEntity tileEntity = this.parent.tileEntity;
 
 		if (tileEntity != null) {
-			tileEntity.worldObj.markBlockForRenderUpdate(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
+			tileEntity.getWorldObj().markBlockForUpdate(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
 		}
 	}
 }

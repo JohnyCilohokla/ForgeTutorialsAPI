@@ -1,16 +1,14 @@
 package com.forgetutorials.lib.network;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import io.netty.buffer.ByteBuf;
+
 import java.io.IOException;
 
 import com.forgetutorials.lib.utilities.IFluidStackProxy;
 
-import cpw.mods.fml.common.network.Player;
-
-import net.minecraft.nbt.NBTBase;
+import cpw.mods.fml.common.network.ByteBufUtils;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.INetworkManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -44,7 +42,7 @@ public class SubPacketTileEntityFluidUpdate extends SubPacketTileEntityChild {
 	}
 
 	@Override
-	public void writeData(DataOutputStream data) throws IOException {
+	public void writeData(ByteBuf data) throws IOException {
 		data.writeInt(this.position);
 		NBTTagCompound tag = new NBTTagCompound();
 		if (this.fluid != null) {
@@ -53,13 +51,13 @@ public class SubPacketTileEntityFluidUpdate extends SubPacketTileEntityChild {
 		} else {
 			tag.setBoolean("null", true);
 		}
-		NBTBase.writeNamedTag(tag, data);
+		ByteBufUtils.writeTag(data, tag);
 	}
 
 	@Override
-	public void readData(DataInputStream data) throws IOException {
+	public void readData(ByteBuf data) throws IOException {
 		this.position = data.readInt();
-		NBTTagCompound fluidTag = (NBTTagCompound) NBTBase.readNamedTag(data);
+		NBTTagCompound fluidTag = ByteBufUtils.readTag(data);
 		if (fluidTag.getBoolean("null")) {
 			this.fluid = null;
 		} else {
@@ -68,7 +66,7 @@ public class SubPacketTileEntityFluidUpdate extends SubPacketTileEntityChild {
 	}
 
 	@Override
-	public void execute(INetworkManager manager, Player player) {
+	public void execute(PacketMultiTileEntity manager, EntityPlayer player) {
 		TileEntity tileEntity = this.parent.tileEntity;
 
 		if (tileEntity != null) {

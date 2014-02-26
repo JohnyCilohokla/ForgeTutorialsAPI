@@ -2,22 +2,23 @@ package com.forgetutorials.multientity;
 
 import java.util.ArrayList;
 
+import com.forgetutorials.lib.FTA;
 import com.forgetutorials.lib.network.PacketMultiTileEntity;
-import com.forgetutorials.lib.network.PacketType;
 import com.forgetutorials.lib.network.SubPacketTileEntityBlockUpdate;
 import com.forgetutorials.lib.registry.InfernosRegisteryProxyEntity;
 import com.forgetutorials.multientity.base.InfernosProxyEntityBase;
 import com.forgetutorials.multientity.base.InfernosProxyEntityDummy;
 
+import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.packet.Packet;
+import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Facing;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -47,8 +48,8 @@ public class InfernosMultiEntityStatic extends TileEntity {
 		int meta = proxyEntity.validateTileEntity(this);
 		if (meta != -1) {
 			System.out.println(">> MES Updating meta! (" + this.getClass().getCanonicalName() + ")");
-			this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, getBlockType().blockID, meta, 3);
-			InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord);
+			this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, getBlockType(), meta, 3);
+			InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord);
 			entity.newEntity(proxyEntity);
 		}
 		this.proxyEntity = proxyEntity;
@@ -172,13 +173,26 @@ public class InfernosMultiEntityStatic extends TileEntity {
 
 	@Override
 	public Packet getDescriptionPacket() {
+		FTA.packetHandler.sendToAllAround(newPacket(true, true), new TargetPoint(this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, 1000));
+		return null /*PacketType.populatePacket(packet)*/;
+	}
+	
+	/**
+	 * 
+	 * @param def = true will generate the default packet for the block (including block update), otherwise just the location/side/type packet
+	 * @param proxy = true allow the proxy handler to input into the packet
+	 * @return
+	 */
+	public PacketMultiTileEntity newPacket(boolean def, boolean proxy) {
 		PacketMultiTileEntity packet = new PacketMultiTileEntity(this.xCoord, this.yCoord, this.zCoord, this.side, getProxyEntity().getTypeName());
-		if (this.requestBlockUpdate == true) {
+		if (this.requestBlockUpdate == true && def) {
 			packet.addPacket(new SubPacketTileEntityBlockUpdate());
 			this.requestBlockUpdate = false;
 		}
-		getProxyEntity().addToDescriptionPacket(packet);
-		return PacketType.populatePacket(packet);
+		if (proxy){
+			getProxyEntity().addToDescriptionPacket(packet);
+		}
+		return packet;
 	}
 
 	@Override
@@ -213,7 +227,7 @@ public class InfernosMultiEntityStatic extends TileEntity {
 		return this.side == -1 ? -1 : Facing.oppositeSide[this.side];
 	}
 
-	public Icon getIconFromSide(int side) {
+	public IIcon getIconFromSide(int side) {
 		return getProxyEntity().getIconFromSide(side);
 	}
 

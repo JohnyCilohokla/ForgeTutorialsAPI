@@ -1,17 +1,15 @@
 package com.forgetutorials.lib.network;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandlerContext;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import com.forgetutorials.multientity.InfernosMultiEntityStatic;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.network.Player;
-
-import net.minecraft.network.INetworkManager;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
@@ -23,12 +21,12 @@ public class PacketMultiTileEntity extends InfernosPacket {
 	private final List<SubPacketTileEntityChild> children;
 
 	public PacketMultiTileEntity() {
-		super(PacketType.MULTIPACKET_TILE_ENTITY, true);
+		super();
 		this.children = new ArrayList<SubPacketTileEntityChild>();
 	}
 
 	public PacketMultiTileEntity(int x, int y, int z, int side, String entityName) {
-		super(PacketType.MULTIPACKET_TILE_ENTITY, true);
+		super();
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -37,44 +35,54 @@ public class PacketMultiTileEntity extends InfernosPacket {
 		this.children = new ArrayList<SubPacketTileEntityChild>();
 	}
 
+	public void addPacket(SubPacketTileEntityChild packet) {
+		this.children.add(packet);
+	}
+
 	@Override
-	public void writeData(DataOutputStream data) throws IOException {
-		data.writeInt(this.x);
-		data.writeInt(this.y);
-		data.writeInt(this.z);
-		data.writeInt(this.side);
-		data.writeUTF(this.entityName);
-		data.writeInt(this.children.size());
+	public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
+		buffer.writeInt(this.x);
+		buffer.writeInt(this.y);
+		buffer.writeInt(this.z);
+		buffer.writeInt(this.side);
+		byte[] nameBytes = this.entityName.getBytes();
+		int nameLenght = nameBytes.length;
+		buffer.writeInt(nameLenght);
+		buffer.writeBytes(nameBytes);
+		buffer.writeInt(this.children.size());
 		for (SubPacketTileEntityChild packet : this.children) {
-			byte[] bytes = packet.populate();
-			data.writeInt(bytes.length);
-			data.write(bytes);
+			ByteBuf bytes = packet.populate();
+			buffer.writeInt(bytes.writerIndex());
+			buffer.writeBytes(bytes,0,bytes.writerIndex());
 		}
 	}
 
 	@Override
-	public void readData(DataInputStream data) throws IOException {
-		this.x = data.readInt();
-		this.y = data.readInt();
-		this.z = data.readInt();
-		this.side = data.readInt();
-		this.entityName = data.readUTF();
-		int childrenCount = data.readInt();
+	public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
+		this.x = buffer.readInt();
+		this.y = buffer.readInt();
+		this.z = buffer.readInt();
+		this.side = buffer.readInt();
+		int nameLenght = buffer.readInt();
+		byte[] nameBytes = new byte[nameLenght];
+		buffer.readBytes(nameBytes);
+		this.entityName = new String(nameBytes);
+		int childrenCount = buffer.readInt();
 		for (int i = 0; i < childrenCount; i++) {
-			int childLenght = data.readInt();
-			byte[] bytes = new byte[childLenght];
-			data.read(bytes);
-			SubPacketTileEntityChild child = SubPacketTileEntityType.buildPacket(bytes);
+			int childLenght = buffer.readInt();
+			
+			ByteBuf buf = Unpooled.buffer(childLenght);
+			buffer.readBytes(buf, childLenght);
+			SubPacketTileEntityChild child = SubPacketTileEntityType.buildPacket(buf);
 			child.parent = this;
 			addPacket(child);
 		}
-
 	}
 
 	@Override
-	public void execute(INetworkManager manager, Player player) {
-		World world = FMLClientHandler.instance().getClient().theWorld;
-		this.tileEntity = world.getBlockTileEntity(this.x, this.y, this.z);
+	public void handleClientSide(EntityPlayer player) {
+		World world = player.worldObj;
+		this.tileEntity = world.getTileEntity(this.x, this.y, this.z);
 		if (this.tileEntity instanceof InfernosMultiEntityStatic) {
 			InfernosMultiEntityStatic multiEntity = (InfernosMultiEntityStatic) this.tileEntity;
 			multiEntity.newEntity(this.entityName);
@@ -82,11 +90,11 @@ public class PacketMultiTileEntity extends InfernosPacket {
 		}
 
 		for (SubPacketTileEntityChild packet : this.children) {
-			packet.execute(manager, player);
+			packet.execute(this, player);
 		}
 	}
 
-	public void addPacket(SubPacketTileEntityChild packet) {
-		this.children.add(packet);
+	@Override
+	public void handleServerSide(EntityPlayer player) {
 	}
 }

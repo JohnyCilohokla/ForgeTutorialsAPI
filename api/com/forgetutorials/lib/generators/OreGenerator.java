@@ -24,7 +24,7 @@ public class OreGenerator implements IWorldGenerator {
 	 */
 	public static void addOre(OreGenBase data) {
 		if (!OreGenerator.isInitiated) {
-			GameRegistry.registerWorldGenerator(new OreGenerator());
+			GameRegistry.registerWorldGenerator(new OreGenerator(), 100);
 		}
 
 		OreGenerator.ORES_TO_GENERATE.add(data);

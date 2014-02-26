@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 
 import com.forgetutorials.lib.FTA;
 import com.forgetutorials.lib.utilities.ItemStackUtilities;
@@ -36,14 +36,14 @@ public enum InfernosRegisteryProxyEntity {
 
 	private HashMap<String, Container> proxyEntities;
 	private HashMap<String, String> compatibilityNames;
-	private HashMap<String, Icon> icons;
+	private HashMap<String, IIcon> icons;
 	private List<String> iconsToRegister;
 
 	InfernosRegisteryProxyEntity() {
 		this.proxyEntities = new HashMap<String, Container>();
 		this.proxyEntities.put("null", new Container(null, null, null));
 		this.compatibilityNames = new HashMap<String, String>();
-		this.icons = new HashMap<String, Icon>();
+		this.icons = new HashMap<String, IIcon>();
 		this.iconsToRegister = new ArrayList<String>();
 	}
 
@@ -116,7 +116,7 @@ public enum InfernosRegisteryProxyEntity {
 		return entity;
 	}
 
-	public void registerIcons(IconRegister iconRegister) {
+	public void registerIcons(IIconRegister iconRegister) {
 		for (String iconPath : this.iconsToRegister) {
 			this.icons.put(iconPath, iconRegister.registerIcon(iconPath));
 		}
@@ -126,8 +126,8 @@ public enum InfernosRegisteryProxyEntity {
 		this.iconsToRegister.add(path);
 	}
 
-	public Icon getIcon(String path) {
-		Icon icon = this.icons.get(path);
+	public IIcon getIcon(String path) {
+		IIcon icon = this.icons.get(path);
 		if (icon == null) {
 			System.out.println(">> Error: missing texture (" + path + ")");
 		}
@@ -139,15 +139,17 @@ public enum InfernosRegisteryProxyEntity {
 		return (newName != null) ? newName : entityName;
 	}
 
-	public void addMultiEntity(String typeName, Class<? extends InfernosProxyEntityBase> entity, InfernosMultiEntityType type, CreativeTabs tab, boolean opaque) {
+	public void addMultiEntity(String typeName, Class<? extends InfernosProxyEntityBase> entity, InfernosMultiEntityType type, CreativeTabs tab) {
 		InfernosRegisteryProxyEntity.INSTANCE.addMultiEntity(typeName, entity, type);
+		
+		InfernosProxyEntityBase staticEntity = InfernosRegisteryProxyEntity.INSTANCE.getStaticMultiEntity(typeName);
 
 		ItemStack strangeFrameItemStack;
-		if (opaque) {
+		if (staticEntity.isOpaque()) {
 			strangeFrameItemStack = new ItemStack(FTA.infernosMultiBlockOpaque, 1, type.ordinal());
 			ItemStackUtilities.addStringTag(strangeFrameItemStack, "MES", typeName);
 		} else {
-			strangeFrameItemStack = new ItemStack(FTA.infernosMultiBlock, 1, type.ordinal());
+			strangeFrameItemStack = new ItemStack(FTA.infernosMultiBlockTranslucent, 1, type.ordinal());
 			ItemStackUtilities.addStringTag(strangeFrameItemStack, "MES", typeName);
 		}
 

@@ -28,7 +28,7 @@ public class InfernosMultiBlockRenderer implements ISimpleBlockRenderingHandler 
 
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
-		TileEntity tileentity = world.getBlockTileEntity(x, y, z);
+		TileEntity tileentity = world.getTileEntity(x, y, z);
 		if (tileentity == null) {
 			return true;
 		}
@@ -40,13 +40,13 @@ public class InfernosMultiBlockRenderer implements ISimpleBlockRenderingHandler 
 	}
 
 	@Override
-	public boolean shouldRender3DInInventory() {
-		return true;
+	public int getRenderId() {
+		return InfernosMultiBlockRenderer.multiBlockRendererId;
 	}
 
 	@Override
-	public int getRenderId() {
-		return InfernosMultiBlockRenderer.multiBlockRendererId;
+	public boolean shouldRender3DInInventory(int modelId) {
+		return true;
 	}
 
 }

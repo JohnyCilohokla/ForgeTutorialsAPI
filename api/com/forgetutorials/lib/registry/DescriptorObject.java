@@ -1,12 +1,17 @@
 package com.forgetutorials.lib.registry;
 
+import java.util.HashMap;
+
 public class DescriptorObject {
 	protected boolean registered;
 	private String unlocalizedName;
 	private String name;
+	
+	private HashMap<String, Object> custom;
 
 	public DescriptorObject() {
 		this.registered = false;
+		custom = new HashMap<String, Object>();
 	}
 
 	public String getName() {
@@ -29,4 +34,18 @@ public class DescriptorObject {
 		System.out.println(">>Registery(FTA)<< Register object: " + unlocalizedName + " [" + name + "]");
 	}
 
+	public void setCustom(String string, Object object) {
+		custom.put(string, object);
+	}
+
+	public Object getCustom(String string) {
+		return custom.get(string);
+	}
+
+	public int getCustomInt(String string, int def) {
+		return custom.containsKey(string)?(Integer) getCustom(string):def;
+	}
+	public int getCustomInt(String string) {
+		return custom.containsKey(string)?(Integer) getCustom(string):-1;
+	}
 }

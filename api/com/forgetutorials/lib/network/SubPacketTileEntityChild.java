@@ -1,12 +1,11 @@
 package com.forgetutorials.lib.network;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+
 import java.io.IOException;
 
-import net.minecraft.network.INetworkManager;
-import cpw.mods.fml.common.network.Player;
+import net.minecraft.entity.player.EntityPlayer;
 
 /**
  * MetaTech Craft
@@ -30,22 +29,20 @@ public abstract class SubPacketTileEntityChild {
 		this.packetType = type;
 	}
 
-	public byte[] populate() {
+	public ByteBuf populate() {
 
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		DataOutputStream dos = new DataOutputStream(bos);
-
+		ByteBuf buf = Unpooled.buffer();
 		try {
-			dos.writeByte(this.packetType.ordinal());
-			writeData(dos);
+			buf.writeByte(this.packetType.ordinal());
+			writeData(buf);
 		} catch (IOException e) {
 			e.printStackTrace(System.err);
 		}
 
-		return bos.toByteArray();
+		return buf;
 	}
 
-	public void readPopulate(DataInputStream data) {
+	public void readPopulate(ByteBuf data) {
 
 		try {
 			readData(data);
@@ -54,9 +51,9 @@ public abstract class SubPacketTileEntityChild {
 		}
 	}
 
-	public abstract void readData(DataInputStream data) throws IOException;
+	public abstract void readData(ByteBuf data) throws IOException;
 
-	public abstract void writeData(DataOutputStream dos) throws IOException;
+	public abstract void writeData(ByteBuf dos) throws IOException;
 
-	public abstract void execute(INetworkManager network, Player player);
+	public abstract void execute(PacketMultiTileEntity network, EntityPlayer player);
 }

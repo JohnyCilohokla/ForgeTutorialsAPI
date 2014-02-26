@@ -5,7 +5,7 @@ import com.forgetutorials.lib.utilities.IFluidStackProxy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
@@ -13,8 +13,10 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public class InfernosMultiEntityStaticInvLiq extends InfernosMultiEntityStatic implements ISidedInventory, IFluidHandler, IFluidStackProxy {
 
+
 	@Override
 	public int getSizeInventory() {
+
 		return getProxyEntity().getSizeInventory();
 	}
 
@@ -39,13 +41,8 @@ public class InfernosMultiEntityStaticInvLiq extends InfernosMultiEntityStatic i
 	}
 
 	@Override
-	public String getInvName() {
-		return getProxyEntity().getInvName();
-	}
-
-	@Override
-	public boolean isInvNameLocalized() {
-		return getProxyEntity().isInvNameLocalized();
+	public String getInventoryName() {
+		return getProxyEntity().getInventoryName();
 	}
 
 	@Override
@@ -59,13 +56,13 @@ public class InfernosMultiEntityStaticInvLiq extends InfernosMultiEntityStatic i
 	}
 
 	@Override
-	public void openChest() {
-		getProxyEntity().openChest();
+	public void openInventory() {
+		getProxyEntity().openInventory();
 	}
 
 	@Override
-	public void closeChest() {
-		getProxyEntity().closeChest();
+	public void closeInventory() {
+		getProxyEntity().closeInventory();
 	}
 
 	@Override
@@ -89,9 +86,14 @@ public class InfernosMultiEntityStaticInvLiq extends InfernosMultiEntityStatic i
 	}
 
 	@Override
-	public void onInventoryChanged() {
-		super.onInventoryChanged();
+	public void markDirty() {
+		super.markDirty();
 		getProxyEntity().onInventoryChanged();
+	}
+
+	@Override
+	public boolean hasCustomInventoryName() {
+		return getProxyEntity().hasCustomInventoryName();
 	}
 
 	@Override
@@ -148,4 +150,5 @@ public class InfernosMultiEntityStaticInvLiq extends InfernosMultiEntityStatic i
 		FluidStack tmpFluid = getFluid(from);
 		return new FluidTankInfo[] { new FluidTankInfo(tmpFluid, (tmpFluid != null ? tmpFluid.amount : 0)) };
 	}
+
 }

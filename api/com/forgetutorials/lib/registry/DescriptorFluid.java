@@ -1,5 +1,6 @@
 package com.forgetutorials.lib.registry;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -8,7 +9,7 @@ public class DescriptorFluid extends DescriptorBlock {
 	int meltingPoint;
 	int boilingPoint;
 	Fluid fluid;
-	public int blockID;
+	public Block block;
 
 	public DescriptorFluid(Fluid fluid) {
 		this.fluid = fluid;
@@ -34,8 +35,8 @@ public class DescriptorFluid extends DescriptorBlock {
 	protected void register(String unlocalizedName, String name, ItemStack blockLiquidStack) {
 		super.register(unlocalizedName, name, blockLiquidStack);
 		FluidRegistry.registerFluid(getFluid());
-		this.fluid.setBlockID(getBlock());
-		this.blockID = this.fluid.getBlockID();
+		this.fluid.setBlock(getBlock());
+		this.block = this.fluid.getBlock();
 		ForgeTutorialsRegistry.INSTANCE.addObject(unlocalizedName, this);
 		System.out.println(">>Registery(FTA)<< Register Fluid: " + this.block.getClass().getCanonicalName() + " [" + this.fluid.getName() + "]");
 	}

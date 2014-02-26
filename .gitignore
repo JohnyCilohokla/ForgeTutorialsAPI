@@ -1,1 +1,6 @@
 buildConfig.properties
+/build/
+/.gradle/
+/gradle/
+/eclipse/
+setup.bat

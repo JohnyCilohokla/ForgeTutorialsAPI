@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public enum ForgeTutorialsRegistry {
@@ -20,7 +21,7 @@ public enum ForgeTutorialsRegistry {
 		this.objects.put(name, object);
 	}
 
-	public void getSubItems(int id, CreativeTabs creativeTab, List<ItemStack> list) {
+	public void getSubItems(Item item, CreativeTabs creativeTab, List<ItemStack> list) {
 		if (this.tabsList.containsKey(creativeTab)) {
 			for (ItemStack itemStack : this.tabsList.get(creativeTab)) {
 				list.add(itemStack);

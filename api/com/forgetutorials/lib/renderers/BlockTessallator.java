@@ -9,11 +9,11 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 
 public class BlockTessallator {
-	public static void addToTessallator(Tessellator tessellator, double x, double y, double z, Icon topIcon, Icon bottomIcon, Icon side1Icon, Icon side2Icom,
-			Icon side3Icom, Icon side4Icon) {
+	public static void addToTessallator(Tessellator tessellator, double x, double y, double z, IIcon topIcon, IIcon bottomIcon, IIcon side1Icon, IIcon side2Icom,
+			IIcon side3Icom, IIcon side4Icon) {
 
 		// top
 		tessellator.addVertexWithUV(x, y + 1, z, topIcon.getMinU(), topIcon.getMaxV());
@@ -49,13 +49,16 @@ public class BlockTessallator {
 		tessellator.addVertexWithUV(x, y, z, side4Icon.getMaxU(), side4Icon.getMaxV());
 	}
 
-	public static void addToTessallator(Tessellator tessellator, double x, double y, double z, Icon icon) {
+	public static void addToTessallator(Tessellator tessellator, double x, double y, double z, IIcon icon) {
 		BlockTessallator.addToTessallator(tessellator, x, y, z, icon, icon, icon, icon, icon, icon);
 	}
 
-	public static void addToRenderer(Block block, VertexRenderer v, RenderBlocks blockRenderer, double x, double y, double z, Icon icon, Icon icon2, int trueX,
+	public static void addToRenderer(Block block, VertexRenderer v, RenderBlocks blockRenderer, double x, double y, double z, IIcon icon, IIcon icon2, int trueX,
 			int trueY, int trueZ) {
 		v.renderBlockInWorld(block, blockRenderer, trueX, trueY, trueZ, icon, icon2, x, y, z, 1, 1, 1);
+	}
+	public static void renderBlockAsItem(Block block, VertexRenderer v, IIcon icon, IIcon icon2, float r, float g, float b, int brightness) {
+		v.renderBlockAsItem(block, icon, icon2, r, g, b, brightness);
 	}
 
 	static boolean SWITCH = false;

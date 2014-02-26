@@ -20,14 +20,14 @@ public enum InfernosMultiEntityType {
 
 	public static InfernosMultiEntityStatic newMultiEntity(InfernosMultiEntityType type) {
 
-		InfernosMultiEntityStatic packet = null;
+		InfernosMultiEntityStatic entity = null;
 
 		try {
-			packet = InfernosMultiEntityType.values()[type.ordinal()]._class.newInstance();
+			entity = InfernosMultiEntityType.values()[type.ordinal()]._class.newInstance();
 		} catch (Exception e) {
 			e.printStackTrace(System.err);
 		}
 
-		return packet;
+		return entity;
 	}
 }

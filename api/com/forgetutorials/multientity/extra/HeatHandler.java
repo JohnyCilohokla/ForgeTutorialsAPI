@@ -1,19 +1,20 @@
 package com.forgetutorials.multientity.extra;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 public class HeatHandler {
 	public static double getEnvHeat(World world, int x, int y, int z) {
-		int blockID = world.getBlockId(x, y, z);
+		Block block = world.getBlock(x, y, z);
 		double heat = world.getBiomeGenForCoords(x, z).temperature * 30;
-		if (blockID == Block.lavaStill.blockID) {
+		if (block == Blocks.lava) {
 			heat += 2000;
-		} else if (blockID == Block.lavaMoving.blockID) {
+		} else if (block == Blocks.lava) {
 			heat += 1500;
-		} else if (blockID == Block.waterStill.blockID) {
+		} else if (block == Blocks.water) {
 			heat -= 15;
-		} else if (blockID == Block.waterMoving.blockID) {
+		} else if (block == Blocks.water) {
 			heat -= 30;
 		}
 		return heat;

@@ -7,7 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -40,17 +40,17 @@ public enum FluidTessallator {
 		this.spaceCL = 0.5 - space;
 	}
 
-	public static double interpolateU(Icon icon, double inter) {
+	public static double interpolateU(IIcon icon, double inter) {
 		double min = icon.getMinU();
 		return min + ((icon.getMaxU() - min) * inter);
 	}
 
-	public static double interpolateV(Icon icon, double inter) {
+	public static double interpolateV(IIcon icon, double inter) {
 		double min = icon.getMinV();
 		return min + ((icon.getMaxV() - min) * inter);
 	}
 
-	public void addToTessallator(Tessellator tessellator, double x, double y, double z, Icon icon, double amount, double size) {
+	public void addToTessallator(Tessellator tessellator, double x, double y, double z, IIcon icon, double amount, double size) {
 		amount = this.yStart + ((this.yEnd - this.yStart) * amount);
 
 		// top
@@ -94,7 +94,7 @@ public enum FluidTessallator {
 	 * @param amount
 	 * @param size
 	 */
-	public void addToTessallator(Tessellator tessellator, Icon icon, double amount, double size) {
+	public void addToTessallator(Tessellator tessellator, IIcon icon, double amount, double size) {
 		amount = this.yStart + ((this.yEnd - this.yStart) * amount);
 
 		// top
@@ -143,18 +143,18 @@ public enum FluidTessallator {
 		GL11.glColor4f(red, green, blue, 0.6f);
 	}
 
-	public static Icon getFluidTexture(FluidStack fluidStack, boolean flowing) {
+	public static IIcon getFluidTexture(FluidStack fluidStack, boolean flowing) {
 		if (fluidStack == null) {
 			return null;
 		}
 		return FluidTessallator.getFluidTexture(fluidStack.getFluid(), flowing);
 	}
 
-	public static Icon getFluidTexture(Fluid fluid, boolean flowing) {
+	public static IIcon getFluidTexture(Fluid fluid, boolean flowing) {
 		if (fluid == null) {
 			return null;
 		}
-		Icon icon = flowing ? fluid.getFlowingIcon() : fluid.getStillIcon();
+		IIcon icon = flowing ? fluid.getFlowingIcon() : fluid.getStillIcon();
 		if (icon == null) {
 			icon = ((TextureMap) Minecraft.getMinecraft().renderEngine.getTexture(TextureMap.locationBlocksTexture)).registerIcon("missingno");
 		}
@@ -181,7 +181,7 @@ public enum FluidTessallator {
 
 		FMLClientHandler.instance().getClient().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
 		FluidTessallator.setColorForFluidStack(fluidstack);
-		Icon icon = FluidTessallator.getFluidTexture(fluidstack, false);
+		IIcon icon = FluidTessallator.getFluidTexture(fluidstack, false);
 
 		double size = fluidstack.amount * 0.001;
 		GL11.glTranslated(x, y, z);

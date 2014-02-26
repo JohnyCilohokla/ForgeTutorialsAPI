@@ -2,8 +2,10 @@ package com.forgetutorials.multientity.base;
 
 import java.util.ArrayList;
 
+import com.forgetutorials.lib.FTA;
 import com.forgetutorials.lib.network.PacketMultiTileEntity;
 import com.forgetutorials.lib.utilities.ItemStackUtilities;
+import com.forgetutorials.multientity.InfernosMultiBlock;
 import com.forgetutorials.multientity.InfernosMultiEntityStatic;
 import com.forgetutorials.multientity.InfernosMultiEntityStaticInv;
 import com.forgetutorials.multientity.InfernosMultiEntityStaticInvLiq;
@@ -14,10 +16,10 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.client.IItemRenderer.ItemRenderType;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -34,6 +36,13 @@ abstract public class InfernosProxyEntityBase {
 	abstract public boolean hasLiquids();
 
 	abstract public boolean isDynamiclyRendered();
+
+	abstract public boolean isOpaque();
+	
+	
+	public InfernosMultiBlock getBlock(){
+		return this.isOpaque()?FTA.infernosMultiBlockOpaque:FTA.infernosMultiBlockTranslucent;
+	}
 
 	public int getSizeInventory() {
 		return 0;
@@ -54,19 +63,23 @@ abstract public class InfernosProxyEntityBase {
 	public void setInventorySlotContents(int i, ItemStack itemstack) {
 	}
 
-	public String getInvName() {
+	public String getInventoryName() {
 		return "multientity." + getTypeName();
+	}
+	
+	public String getItemStackDisplayName(ItemStack itemStack) {
+		return itemStack.getTagCompound().toString();
 	}
 
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 		return false;
 	}
 
-	public void closeChest() {
+	public void closeInventory() {
 
 	}
 
-	public void openChest() {
+	public void openInventory() {
 
 	}
 
@@ -78,7 +91,7 @@ abstract public class InfernosProxyEntityBase {
 		return 0;
 	}
 
-	public boolean isInvNameLocalized() {
+	public boolean hasCustomInventoryName() {
 		return true;
 	}
 
@@ -142,8 +155,8 @@ abstract public class InfernosProxyEntityBase {
 	}
 
 	public void onInventoryChanged() {
-		if (!this.entity.worldObj.isRemote) {
-			this.entity.worldObj.markBlockForUpdate(this.entity.xCoord, this.entity.yCoord, this.entity.zCoord);
+		if (!this.entity.getWorldObj().isRemote) {
+			this.entity.getWorldObj().markBlockForUpdate(this.entity.xCoord, this.entity.yCoord, this.entity.zCoord);
 		}
 	}
 
@@ -232,7 +245,7 @@ abstract public class InfernosProxyEntityBase {
 		return meta;
 	}
 
-	public Icon getIconFromSide(int side) {
+	public IIcon getIconFromSide(int side) {
 		return null;
 	}
 

@@ -13,7 +13,7 @@ public class ItemTessallator {
 
 	private static CustomItemRenderer customItemRenderer;
 
-	public static void renderItemStack(World world, ItemStack ghostStack) {
+	public static void renderItemStack(World world, ItemStack ghostStack, double x, double y, double z) {
 		if (RenderManager.instance.renderEngine==null){
 			return; // rendering engine is still not initized!
 		}
@@ -24,7 +24,7 @@ public class ItemTessallator {
 			if (world==null){
 				world = Minecraft.getMinecraft().theWorld;
 			}
-			EntityItem ghostEntityItem = new EntityItem(world);
+			EntityItem ghostEntityItem = new EntityItem(world,x,y,z);
 			ghostEntityItem.hoverStart = 0.0F;
 			ghostEntityItem.setEntityItemStack(ghostStack);
 			float scale = 1.0f;
@@ -42,7 +42,7 @@ public class ItemTessallator {
 		//if (gui){
 		//	ItemTessallator.customItemRenderer.renderItemIntoGUI(Minecraft.getMinecraft().fontRenderer, Minecraft.getMinecraft().renderEngine, ghostEntityItem.getEntityItem(), 0, 0);
 		//}else{
-			ItemTessallator.customItemRenderer.doRenderItem(ghostEntityItem, 0, 0, 0, 0, 0);
+			ItemTessallator.customItemRenderer.doRender(ghostEntityItem, 0, 0, 0, 0, 0);
 		//}
 		GL11.glColor4f(1, 1, 1, 1);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);

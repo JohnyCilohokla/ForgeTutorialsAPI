@@ -6,8 +6,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class DescriptorOreBlock extends DescriptorBlock {
 	// public String name;
 	public String oreDictionaryName;
-	// public ItemStack oreStack;
-	public int oreID;
+	public ItemStack oreStack;
 	public int oreMeta;
 
 	@Override
@@ -23,10 +22,10 @@ public class DescriptorOreBlock extends DescriptorBlock {
 	public DescriptorBlock registerOreBlock(String unlocalizedName, String oreDictionaryName, String name, ItemStack itemStack) {
 		register(unlocalizedName, name, itemStack);
 		this.oreDictionaryName = oreDictionaryName;
-		this.oreID = this.itemStack.itemID;
+		this.oreStack = this.itemStack;
 		this.oreMeta = this.itemStack.getItemDamage();
 		System.out.println(">>Registery(FTA)<< Register Ore Block: " + this.block.getClass().getCanonicalName() + " [" + this.oreDictionaryName + "] + ("
-				+ this.oreID + "@" + this.oreMeta + ")");
+				+ this.itemStack + "@" + this.oreMeta + ")");
 		return this;
 	}
 

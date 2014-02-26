@@ -1,7 +1,6 @@
 package com.forgetutorials.lib.network;
 
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
+import io.netty.buffer.ByteBuf;
 
 /**
  * MetaTech Craft
@@ -26,11 +25,9 @@ public enum SubPacketTileEntityType {
 		this._class = _class;
 	}
 
-	public static SubPacketTileEntityChild buildPacket(byte[] data) {
+	public static SubPacketTileEntityChild buildPacket(ByteBuf data) {
 
-		ByteArrayInputStream bis = new ByteArrayInputStream(data);
-		int selector = bis.read();
-		DataInputStream dis = new DataInputStream(bis);
+		int selector = data.readByte();
 
 		SubPacketTileEntityChild packet = null;
 
@@ -40,20 +37,7 @@ public enum SubPacketTileEntityType {
 			e.printStackTrace(System.err);
 		}
 
-		packet.readPopulate(dis);
-
-		return packet;
-	}
-
-	public static SubPacketTileEntityChild newPacket(PacketType type) {
-
-		SubPacketTileEntityChild packet = null;
-
-		try {
-			packet = SubPacketTileEntityType.values()[type.ordinal()]._class.newInstance();
-		} catch (Exception e) {
-			e.printStackTrace(System.err);
-		}
+		packet.readPopulate(data);
 
 		return packet;
 	}

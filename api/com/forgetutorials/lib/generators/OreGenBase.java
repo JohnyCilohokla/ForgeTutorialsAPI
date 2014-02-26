@@ -6,7 +6,7 @@ import com.forgetutorials.lib.registry.DescriptorOreBlock;
 
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.FMLLog;
 
 /**

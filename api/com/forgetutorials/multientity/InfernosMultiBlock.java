@@ -11,23 +11,27 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 abstract public class InfernosMultiBlock extends Block {
 
 	public InfernosMultiBlock(int par1, Material material) {
-		super(par1, material);
+		super(material);
+	}
+
+	Block getBlockType(){
+		return null;
 	}
 
 	@Override
@@ -52,13 +56,13 @@ abstract public class InfernosMultiBlock extends Block {
 	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack) {
 		super.onBlockPlacedBy(par1World, par2, par3, par4, par5EntityLivingBase, par6ItemStack);
 		String proxyEntityName = ((InfernosMultiItem) (par6ItemStack.getItem())).getProxyEntity(par6ItemStack);
-		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) par1World.getBlockTileEntity(par2, par3, par4);
+		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) par1World.getTileEntity(par2, par3, par4);
 		entity.newEntity(proxyEntityName);
 	}
 
 	@Override
 	public void onPostBlockPlaced(World par1World, int par2, int par3, int par4, int par5) {
-		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) par1World.getBlockTileEntity(par2, par3, par4);
+		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) par1World.getTileEntity(par2, par3, par4);
 		if (!entity.hasProxyEntity()) {
 			System.out.println(">> MES error block has no proxy entity");
 		}
@@ -66,7 +70,7 @@ abstract public class InfernosMultiBlock extends Block {
 
 	@Override
 	public float getBlockHardness(World world, int x, int y, int z) {
-		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) world.getBlockTileEntity(x, y, z);
+		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) world.getTileEntity(x, y, z);
 		return (entity != null) ? entity.getBlockHardness() : 0;
 	}
 
@@ -76,33 +80,33 @@ abstract public class InfernosMultiBlock extends Block {
 	}
 
 	@Override
-	public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6) {
+	public void breakBlock(World par1World, int par2, int par3, int par4, Block par5, int par6) {
 		super.breakBlock(par1World, par2, par3, par4, par5, par6);
-		par1World.removeBlockTileEntity(par2, par3, par4);
+		par1World.removeTileEntity(par2, par3, par4);
 	}
 
 	@Override
 	public boolean onBlockEventReceived(World par1World, int par2, int par3, int par4, int par5, int par6) {
 		super.onBlockEventReceived(par1World, par2, par3, par4, par5, par6);
-		TileEntity tileentity = par1World.getBlockTileEntity(par2, par3, par4);
+		TileEntity tileentity = par1World.getTileEntity(par2, par3, par4);
 		return tileentity != null ? tileentity.receiveClientEvent(par5, par6) : false;
 	}
 
 	@Override
 	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
-		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) world.getBlockTileEntity(x, y, z);
+		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) world.getTileEntity(x, y, z);
 		return (entity != null) ? entity.getSilkTouchItemStack() : null;
 	}
 	
 	@Override
 	public int getLightValue(IBlockAccess world, int x, int y, int z) {
-		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) world.getBlockTileEntity(x, y, z);
+		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) world.getTileEntity(x, y, z);
 		return (entity != null) ? entity.getLightValue() : 0;
 	}
 
 	@Override
 	public boolean canSilkHarvest(World world, EntityPlayer player, int x, int y, int z, int metadata) {
-		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) world.getBlockTileEntity(x, y, z);
+		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) world.getTileEntity(x, y, z);
 		return (entity != null) ? entity.canSilkHarvest(player) : false;
 	}
 
@@ -115,16 +119,16 @@ abstract public class InfernosMultiBlock extends Block {
 	public void onBlockHarvested(World world, int x, int y, int z, int par5, EntityPlayer player) {
 		// break the block here instead
 		if (!world.isRemote) {
-			InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) world.getBlockTileEntity(x, y, z);
+			InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) world.getTileEntity(x, y, z);
 			if (entity != null) {
 				entity.harvestBlock(player);
 			}
 		}
 	}
-
+	
 	@Override
-	public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
-		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) world.getBlockTileEntity(x, y, z);
+	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
+		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) world.getTileEntity(x, y, z);
 		return (entity != null) ? entity.getBlockDropped(fortune) : null;
 	}
 
@@ -145,15 +149,15 @@ abstract public class InfernosMultiBlock extends Block {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z, int side) {
-		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) blockAccess.getBlockTileEntity(x, y, z);
+	public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side) {
+		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) blockAccess.getTileEntity(x, y, z);
 		return (entity != null) ? entity.getIconFromSide(side) : null;
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityplayer, int par6, float par7, float par8, float par9) {
 
-		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) world.getBlockTileEntity(x, y, z);
+		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) world.getTileEntity(x, y, z);
 		ItemStack currentItem = entityplayer.inventory.getCurrentItem();
 
 		InfernosProxyEntityBase proxyEntity = entity.getProxyEntity();
@@ -162,9 +166,9 @@ abstract public class InfernosMultiBlock extends Block {
 				FluidStack liquid = FluidContainerRegistry.getFluidForFilledItem(currentItem);
 
 				if (liquid != null) {
-					int qty = proxyEntity.fill(ForgeDirection.UNKNOWN, liquid, false);
+					int qty = proxyEntity.fill(net.minecraftforge.common.util.ForgeDirection.UNKNOWN, liquid, false);
 					if (qty > 0) {
-						proxyEntity.fill(ForgeDirection.UNKNOWN, liquid, true);
+						proxyEntity.fill(net.minecraftforge.common.util.ForgeDirection.UNKNOWN, liquid, true);
 
 						entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem,
 								ItemUtilities.useSingleItemOrDropAndReturn(world, entityplayer, currentItem));
@@ -199,9 +203,10 @@ abstract public class InfernosMultiBlock extends Block {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister iconRegister) {
+	public void registerBlockIcons(IIconRegister iconRegister) {
 		InfernosRegisteryProxyEntity.INSTANCE.registerIcons(iconRegister);
-		super.registerIcons(iconRegister);
+		super.registerBlockIcons(iconRegister);
+		this.blockIcon = iconRegister.registerIcon("MetaTechCraft".toLowerCase() + ":" + "strangeObsidian");
 	}
 
 	@Override
@@ -211,7 +216,7 @@ abstract public class InfernosMultiBlock extends Block {
 
 	@Override
 	public int getComparatorInputOverride(World world, int x, int y, int z, int side) {
-		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) world.getBlockTileEntity(x, y, z);
+		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) world.getTileEntity(x, y, z);
 		return entity.getComparatorInputOverride(side);
 	}
 }

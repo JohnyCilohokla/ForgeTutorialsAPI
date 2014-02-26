@@ -1,17 +1,29 @@
 package com.forgetutorials.lib.utilities;
 
-import net.minecraft.block.material.Material;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Vec3Pool;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class FakeBlockAccess implements IBlockAccess {
+	int x;
+	int y;
+	int z;
+	Block block;
 
-	@Override
-	public boolean isBlockSolidOnSide(int x, int y, int z, ForgeDirection side, boolean _default) {
-		return false;
+	public FakeBlockAccess(int x, int y, int z, Block block) {
+		super();
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.block = block;
+	}
+
+	public Block blockOrAir(int x,int y,int z) {
+		return (this.x==x&&this.y==y&&this.z==z)?block:Blocks.air;
 	}
 
 	@Override
@@ -20,18 +32,8 @@ public class FakeBlockAccess implements IBlockAccess {
 	}
 
 	@Override
-	public boolean isBlockOpaqueCube(int i, int j, int k) {
-		return false;
-	}
-
-	@Override
-	public boolean isBlockNormalCube(int i, int j, int k) {
-		return false;
-	}
-
-	@Override
 	public boolean isAirBlock(int i, int j, int k) {
-		return true;
+		return blockOrAir(i,j,k)==Blocks.air;
 	}
 
 	@Override
@@ -45,37 +47,12 @@ public class FakeBlockAccess implements IBlockAccess {
 	}
 
 	@Override
-	public float getLightBrightness(int i, int j, int k) {
-		return 1;
-	}
-
-	@Override
 	public int getHeight() {
 		return 0;
 	}
 
 	@Override
-	public float getBrightness(int i, int j, int k, int l) {
-		return 1;
-	}
-
-	@Override
-	public TileEntity getBlockTileEntity(int i, int j, int k) {
-		return null;
-	}
-
-	@Override
 	public int getBlockMetadata(int i, int j, int k) {
-		return 0;
-	}
-
-	@Override
-	public Material getBlockMaterial(int i, int j, int k) {
-		return Material.air;
-	}
-
-	@Override
-	public int getBlockId(int i, int j, int k) {
 		return 0;
 	}
 
@@ -90,7 +67,17 @@ public class FakeBlockAccess implements IBlockAccess {
 	}
 
 	@Override
-	public boolean doesBlockHaveSolidTopSurface(int i, int j, int k) {
-		return false;
+	public Block getBlock(int var1, int var2, int var3) {
+		return blockOrAir(var1,var2,var3);
+	}
+
+	@Override
+	public TileEntity getTileEntity(int var1, int var2, int var3) {
+		return null;
+	}
+
+	@Override
+	public boolean isSideSolid(int x, int y, int z, ForgeDirection side, boolean _default) {
+		return blockOrAir(x,y,z).isSideSolid(this, x, y, z, side);
 	}
 }

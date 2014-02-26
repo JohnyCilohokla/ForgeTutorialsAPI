@@ -2,7 +2,7 @@ package com.forgetutorials.lib.utilities;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-
+import net.minecraft.item.ItemBlock;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -17,8 +17,13 @@ public class ForgeRegistryUtilities {
 	}
 
 	public void registerBlock(Block block, String unlocalizedName, String name) {
-		block.setUnlocalizedName(this.prefix + "." + unlocalizedName);
-		GameRegistry.registerBlock(block, this.prefix + "." + unlocalizedName);
+		block.setBlockName(this.prefix + "." + unlocalizedName);
+		GameRegistry.registerBlock(block, ItemBlockWithInfo.class, this.prefix + "." + unlocalizedName, this.modID);
+		LanguageRegistry.addName(block, name);
+	}
+	public void registerBlock(Block block, String unlocalizedName, String name, Class<? extends ItemBlock> itemClass) {
+		block.setBlockName(this.prefix + "." + unlocalizedName);
+		GameRegistry.registerBlock(block, itemClass, this.prefix + "." + unlocalizedName, this.modID);
 		LanguageRegistry.addName(block, name);
 	}
 
@@ -27,4 +32,5 @@ public class ForgeRegistryUtilities {
 		LanguageRegistry.addName(item, name);
 		GameRegistry.registerItem(item, item.getUnlocalizedName(), this.modID);
 	}
+
 }

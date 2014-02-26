@@ -1,16 +1,14 @@
 package com.forgetutorials.lib.network;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import io.netty.buffer.ByteBuf;
+
 import java.io.IOException;
 
-import cpw.mods.fml.common.network.Player;
-
+import cpw.mods.fml.common.network.ByteBufUtils;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.INetworkManager;
 import net.minecraft.tileentity.TileEntity;
 
 /**
@@ -42,41 +40,20 @@ public class SubPacketTileEntitySimpleItemUpdate extends SubPacketTileEntityChil
 	}
 
 	@Override
-	public void writeData(DataOutputStream data) throws IOException {
+	public void writeData(ByteBuf data) throws IOException {
 		data.writeInt(this.position);
-		/*if (this.item == null) {
-			data.writeInt(-1);
-			data.writeInt(-1);
-			data.writeInt(-1);
-		} else {
-			data.writeInt(this.item.itemID);
-			data.writeInt(this.item.getItemDamage());
-			data.writeInt(this.item.stackSize);
-		}*/
-		NBTTagCompound tag = new NBTTagCompound();
-		if (this.item != null) {
-			this.item.writeToNBT(tag);
-			tag.setBoolean("null", false);
-		} else {
-			tag.setBoolean("null", true);
-		}
-		NBTBase.writeNamedTag(tag, data);
+		ByteBufUtils.writeItemStack(data, this.item);
 	}
 
 	@Override
-	public void readData(DataInputStream data) throws IOException {
+	public void readData(ByteBuf data) throws IOException {
 
 		this.position = data.readInt();
-		NBTTagCompound fluidTag = (NBTTagCompound) NBTBase.readNamedTag(data);
-		if (fluidTag.getBoolean("null")) {
-			this.item = null;
-		} else {
-			this.item = ItemStack.loadItemStackFromNBT(fluidTag);
-		}
+		this.item = ByteBufUtils.readItemStack(data);
 	}
 
 	@Override
-	public void execute(INetworkManager manager, Player player) {
+	public void execute(PacketMultiTileEntity manager, EntityPlayer player) {
 		TileEntity tileEntity = this.parent.tileEntity;
 
 		if (tileEntity != null) {

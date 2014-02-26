@@ -1,5 +1,6 @@
 package com.forgetutorials.core.proxy;
 
+import com.forgetutorials.lib.FTA;
 import com.forgetutorials.multientity.*;
 
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -20,5 +21,9 @@ public class CommonProxy {
 		GameRegistry.registerTileEntity(InfernosMultiEntityDynamicInv.class, "tile.MES.Dynamic.Inv");
 		GameRegistry.registerTileEntity(InfernosMultiEntityDynamicInvLiq.class, "tile.MES.Dynamic.InvLiq");
 		GameRegistry.registerTileEntity(InfernosMultiEntityDynamicLiq.class, "tile.MES.Dynamic.Liq");
+	}
+
+	public void initize() {
+		FTA.packetHandler.initalise();
 	}
 }

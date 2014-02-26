@@ -2,7 +2,7 @@ package com.forgetutorials.multientity;
 
 import com.forgetutorials.lib.utilities.IFluidStackProxy;
 
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;

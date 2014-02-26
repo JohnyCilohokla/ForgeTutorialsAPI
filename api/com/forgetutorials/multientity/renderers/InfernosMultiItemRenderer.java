@@ -9,17 +9,19 @@ import com.forgetutorials.multientity.base.InfernosProxyEntityBase;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 public class InfernosMultiItemRenderer implements IItemRenderer {
-
+	
 	private static EntityRenderer entityRenderer = null;
 
 	public static void initizeRenderer() {
-		MinecraftForgeClient.registerItemRenderer(FTA.infernosMultiBlock.blockID, new InfernosMultiItemRenderer());
-		MinecraftForgeClient.registerItemRenderer(FTA.infernosMultiBlockOpaque.blockID, new InfernosMultiItemRenderer());
+		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(FTA.infernosMultiBlockTranslucent), new InfernosMultiItemRenderer());
+		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(FTA.infernosMultiBlockOpaque), new InfernosMultiItemRenderer());
 		InfernosMultiItemRenderer.entityRenderer = Minecraft.getMinecraft().entityRenderer;
 	}
 
@@ -41,7 +43,9 @@ public class InfernosMultiItemRenderer implements IItemRenderer {
 	 * Enable lightmap in secondary texture unit
 	 */
 	public static void enableLightmap() {
-		InfernosMultiItemRenderer.entityRenderer.enableLightmap(0);
+        OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import com.forgetutorials.lib.registry.DescriptorOreBlock;
 
+import net.minecraft.block.Block;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -28,7 +29,7 @@ public class OreGenReplace extends OreGenBase {
 	public int maxGenerateLevel;
 	public int amountPerChunk;
 	public int amountPerBranch;
-	public int replaceID;
+	public Block replaceBlock;
 
 	/**
 	 * Dimensions to ignore ore generation
@@ -37,13 +38,13 @@ public class OreGenReplace extends OreGenBase {
 	public boolean ignoreNether = true;
 	public boolean ignoreEnd = true;
 
-	public OreGenReplace(DescriptorOreBlock ore, int replaceID, int minGenerateLevel, int maxGenerateLevel, int amountPerChunk, int amountPerBranch) {
+	public OreGenReplace(DescriptorOreBlock ore, Block replaceBlock, int minGenerateLevel, int maxGenerateLevel, int amountPerChunk, int amountPerBranch) {
 		super(ore);
 		this.minGenerateLevel = minGenerateLevel;
 		this.maxGenerateLevel = maxGenerateLevel;
 		this.amountPerChunk = amountPerChunk;
 		this.amountPerBranch = amountPerBranch;
-		this.replaceID = replaceID;
+		this.replaceBlock = replaceBlock;
 	}
 
 	@Override
@@ -95,11 +96,11 @@ public class OreGenReplace extends OreGenBase {
 							for (int var44 = var34; var44 <= var37; ++var44) {
 								double var45 = ((var44 + 0.5D) - var24) / (var28 / 2.0D);
 
-								int block = par1World.getBlockId(var38, var41, var44);
+								Block block = par1World.getBlock(var38, var41, var44);
 								// int meta = par1World.getBlockMetadata(var38,
 								// var41, var44);
-								if ((((var39 * var39) + (var42 * var42) + (var45 * var45)) < 1.0D) && (block == this.replaceID)) {
-									par1World.setBlock(var38, var41, var44, this.ore.oreID, this.ore.oreMeta, 2);
+								if ((((var39 * var39) + (var42 * var42) + (var45 * var45)) < 1.0D) && (block == this.replaceBlock)) {
+									par1World.setBlock(var38, var41, var44, this.ore.getBlock(), this.ore.oreMeta, 2);
 								}
 							}
 						}
