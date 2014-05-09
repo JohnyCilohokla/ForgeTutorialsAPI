@@ -11,12 +11,10 @@ import net.minecraft.world.biome.WorldChunkManager;
 public class SingleBiomeChunkManager extends WorldChunkManager {
 
 	private final BiomeGenBase biome;
-	private final float temperature;
 	private final float metaWorldRainfall;
 
 	public SingleBiomeChunkManager(BiomeGenBase biome) {
 		this.biome = biome;
-		this.temperature = biome.temperature;
 		this.metaWorldRainfall = biome.rainfall;
 	}
 

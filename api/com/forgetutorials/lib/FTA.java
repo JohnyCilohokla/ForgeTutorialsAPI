@@ -9,22 +9,18 @@ import com.forgetutorials.multientity.InfernosMultiBlockOpaque;
 import com.forgetutorials.multientity.InfernosMultiBlockTranslucent;
 
 import net.minecraft.item.ItemStack;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
 @Mod(modid = ModInfo.MOD_ID, name = ModInfo.MOD_NAME, version = ModInfo.VERSION)
-//@NetworkMod(channels = { ModInfo.CHANNEL_ID }, clientSideRequired = true, serverSideRequired = false, packetHandler = FTA.class)
-public class FTA /*extends FMLEmbeddedChannel*/ {
-/*
-	public FTA(ModContainer container, String channelName, Side source, ChannelHandler[] handlers) {
-		super(container, channelName, source, handlers);
-		// TODO Auto-generated constructor stub
-	}
-*/
+public class FTA{
 	@SidedProxy(clientSide = ModInfo.CLIENT_PROXY_CLASS, serverSide = ModInfo.SERVER_PROXY_CLASS)
 	public static CommonProxy proxy;
 	
@@ -36,20 +32,30 @@ public class FTA /*extends FMLEmbeddedChannel*/ {
 	public static InfernosMultiBlockOpaque infernosMultiBlockOpaque;
 
 	public static ForgeRegistryUtilities registry = new ForgeRegistryUtilities("mes", ModInfo.MOD_ID);
-
-	/*@Override
-	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
-		InfernosPacket infernosPacket = PacketType.buildPacket(packet.data);
-		infernosPacket.execute(manager, player);
-	}*/
+	
+	public static FTAHandler serverHandler = null;
+	
+	public FTAEventHandler eventHandeler = new FTAEventHandler();
+	
+	@Instance
+	public static FTA INSTANCE;
+	
+	
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		System.out.println(">> MES_API: preInit");
+		FMLCommonHandler.instance().bus().register(FTA.INSTANCE.eventHandeler);
 		FTA.infernosMultiBlockTranslucent = new InfernosMultiBlockTranslucent(FTA.infernosMultiBlockID, MetaMaterial.metaMaterial);
 		FTA.infernosMultiBlockOpaque = new InfernosMultiBlockOpaque(FTA.infernosMultiBlockOpaqueID, MetaMaterial.metaMaterial);
 		new DescriptorBlock().setTool("metaHammer", 1).registerBlock("forgetutorials.MultiEntityBlock", FTA.infernosMultiBlockTranslucent.getLocalizedName(),
 				new ItemStack(FTA.infernosMultiBlockTranslucent));
+	}
+	
+	@EventHandler
+	public void serverStarting(FMLServerStartingEvent event) {
+		System.out.println(">> MES_API: serverStarting");
+		serverHandler = new FTAHandler();
 	}
 
 	@EventHandler
@@ -68,4 +74,10 @@ public class FTA /*extends FMLEmbeddedChannel*/ {
 	public static void out(String string) {
 		System.out.println(string);
 	}
+
+	public static FTAHandler getServerHandler() {
+		return serverHandler!=null?serverHandler:(serverHandler=new FTAHandler());
+	}
+	
+	
 }

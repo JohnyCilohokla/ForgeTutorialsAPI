@@ -17,7 +17,8 @@ import io.netty.buffer.ByteBuf;
 
 public enum SubPacketTileEntityType {
 	ITEM_UPDATE(SubPacketTileEntitySimpleItemUpdate.class), FLUID_UPDATE(SubPacketTileEntityFluidUpdate.class), BLOCK_UPDATE(
-			SubPacketTileEntityBlockUpdate.class);
+			SubPacketTileEntityBlockUpdate.class), CUSTOM(
+					SubPacketTileEntityCustom.class);
 
 	private Class<? extends SubPacketTileEntityChild> _class;
 

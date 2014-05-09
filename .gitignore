@@ -4,3 +4,4 @@ buildConfig.properties
 /gradle/
 /eclipse/
 setup.bat
+*.bat

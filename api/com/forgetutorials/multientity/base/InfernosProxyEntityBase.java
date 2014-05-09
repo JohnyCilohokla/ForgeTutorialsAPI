@@ -1,5 +1,7 @@
 package com.forgetutorials.multientity.base;
 
+import io.netty.buffer.ByteBuf;
+
 import java.util.ArrayList;
 
 import com.forgetutorials.lib.FTA;
@@ -255,4 +257,6 @@ abstract public class InfernosProxyEntityBase {
 	public int getComparatorInputOverride(int side) {
 		return 0;
 	}
+
+	public void onDataReceived(ByteBuf data) {	}
 }

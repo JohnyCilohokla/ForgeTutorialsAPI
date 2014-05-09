@@ -59,6 +59,7 @@ public class InfernosMultiItemRenderer implements IItemRenderer {
 			}
 			entity.renderItem(type, itemStack, data);
 			GL11.glPopMatrix();
+			GL11.glEnable(GL11.GL_LIGHTING);
 		}
 	}
 

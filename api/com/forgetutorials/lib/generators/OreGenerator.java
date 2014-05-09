@@ -13,18 +13,21 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class OreGenerator implements IWorldGenerator {
 	public static boolean isInitiated = false;
 
+
 	/**
 	 * Add your ore data to this list of ores for it to automatically generate!
 	 * No hassle indeed!
 	 */
 	private static final List<OreGenBase> ORES_TO_GENERATE = new ArrayList<OreGenBase>();
-
+	
 	/**
 	 * Adds an ore to the ore generate list. Do this in pre-init.
 	 */
 	public static void addOre(OreGenBase data) {
 		if (!OreGenerator.isInitiated) {
 			GameRegistry.registerWorldGenerator(new OreGenerator(), 100);
+			GameRegistry.registerWorldGenerator(ChunkScanner.INSTANCE, Integer.MAX_VALUE);
+			OreGenerator.isInitiated=true;
 		}
 
 		OreGenerator.ORES_TO_GENERATE.add(data);

@@ -11,7 +11,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.1-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
 }
 
@@ -28,17 +28,23 @@ buildProps.withReader {
 
 version = "${config.build.version.number}.${config.build.patch.number}.${config.build.revision.number}"
 group= "FTA" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "ForgeTutorialsAPI"
+archivesBaseName = "ForgeTutorialsAPI-universal-1.7.2"
 
 sourceSets.main{
     java{
-		srcDirs 'S:/minecraft/sources/ForgeTutorialsAPI/common'//set the source folder as the /src subfolder
+		srcDirs  'S:/minecraft/sources/ForgeTutorialsAPI/api', 'S:/minecraft/sources/ForgeTutorialsAPI/utils'//set the source folder as the /src subfolder
 	}
 	resources{
 		srcDirs 'S:/minecraft/sources/ForgeTutorialsAPI/resources'//set the resources folder as the /resources subfolder
 	}
 }
 
+jar {
+	manifest {
+		attributes FMLCorePlugin: "com.forgetutorials.core.ASMInjector"
+		attributes FMLCorePluginContainsFMLMod: "true"
+	}
+}
 
 ext.buildProps = file ("build.properties")
 
@@ -50,11 +56,11 @@ buildProps.withReader {
 version = "${config.build.version.number}.${config.build.patch.number}.${config.build.revision.number}"
 
 minecraft {
-    version = "1.7.2-10.12.0.1029"
+    version = "1.7.2-10.12.1.1060"
     assetDir = "eclipse/assets"
 	
     versionMC = "1.7.2"
-    versionForge = "10.12.0.1029"
+    versionForge = "10.12.1.1060"
 	
     replaceIn "com/forgetutorials/lib/FTA.java"
 	replace "@MCVERSION@", minecraft.versionMC

@@ -25,6 +25,7 @@ public class DescriptorBlock extends DescriptorItem {
 			this.block = ((ItemBlock)item).field_150939_a;
 			if (this.harvestTool != null) {
 				// TODO FIXME
+				
 				//MinecraftForge.setBlockHarvestLevel(this.block, this.itemStack.getItemDamage(), this.harvestTool, this.harvestLevel);
 			}
 			System.out.println(">>Registery(FTA)<< Register Block: " + this.block.getClass().getCanonicalName() + " [" + this.itemStack.getItemDamage()

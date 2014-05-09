@@ -1,11 +1,14 @@
 package com.forgetutorials.multientity;
 
+import io.netty.buffer.ByteBuf;
+
 import java.util.ArrayList;
 
 import com.forgetutorials.lib.FTA;
 import com.forgetutorials.lib.network.PacketMultiTileEntity;
 import com.forgetutorials.lib.network.SubPacketTileEntityBlockUpdate;
 import com.forgetutorials.lib.registry.InfernosRegisteryProxyEntity;
+import com.forgetutorials.lib.utilities.ICustomDataReceiver;
 import com.forgetutorials.multientity.base.InfernosProxyEntityBase;
 import com.forgetutorials.multientity.base.InfernosProxyEntityDummy;
 
@@ -22,7 +25,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class InfernosMultiEntityStatic extends TileEntity {
+public class InfernosMultiEntityStatic extends TileEntity implements ICustomDataReceiver {
 	private InfernosProxyEntityBase proxyEntity;
 	private int side = -1;
 	private boolean requestBlockUpdate = true;
@@ -248,5 +251,15 @@ public class InfernosMultiEntityStatic extends TileEntity {
 
 	public int getLightValue() {
 		return 0;
+	}
+
+
+	public int getRawSide() {
+		return this.side;
+	}
+
+	@Override
+	public void onDataReceived(ByteBuf data) {
+		getProxyEntity().onDataReceived(data);
 	}
 }

@@ -630,7 +630,6 @@ public class VertexRenderer {
 			--trueZ;
 		}
 
-		// TODO fix rest!!!
 		blockRenderer.aoLightValueScratchXYNN = blockRenderer.blockAccess.getBlock(trueX - 1, trueZ, trueY).getAmbientOcclusionLightValue();
 		blockRenderer.aoLightValueScratchYZNN = blockRenderer.blockAccess.getBlock(trueX, trueZ, trueY - 1).getAmbientOcclusionLightValue();
 		blockRenderer.aoLightValueScratchYZNP = blockRenderer.blockAccess.getBlock(trueX, trueZ, trueY + 1).getAmbientOcclusionLightValue();

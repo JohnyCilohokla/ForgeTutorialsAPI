@@ -3,7 +3,6 @@ package com.forgetutorials.multientity;
 import com.forgetutorials.lib.FTA;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -15,7 +14,6 @@ public class InfernosMultiBlockTranslucent extends InfernosMultiBlock {
 		super(par1, material);
 		setBlockName("MES.Translucent");
 		GameRegistry.registerBlock(this, InfernosMultiItemTranslucent.class, "MES.Translucent");
-		LanguageRegistry.addName(this, "MES.Translucent");
 		setCreativeTab(CreativeTabs.tabBlock);
 	}
 

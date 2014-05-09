@@ -12,7 +12,6 @@ public class ItemBlockWithInfo extends ItemBlock{
 
 	public ItemBlockWithInfo(Block p_i45328_1_) {
 		super(p_i45328_1_);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
