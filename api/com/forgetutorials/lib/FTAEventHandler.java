@@ -10,10 +10,10 @@ public class FTAEventHandler {
 
 	public static void onWorldRenderBlocks() {
 		// TODO Auto-generated method stub
-		FTA.out("FTAEventHandler >> onWorldRenderBlocks()");
+		//FTA.out("FTAEventHandler >> onWorldRenderBlocks()");
 
 		if (Minecraft.getMinecraft().thePlayer != null) {
-			if (i1%1000==0){
+			if (i1%10000==0){
 			Minecraft.getMinecraft().thePlayer.sendChatMessage("FTAEventHandler >> onWorldRenderBlocks()");
 			}
 			i1++;
@@ -21,9 +21,9 @@ public class FTAEventHandler {
 	}
 
 	public static void onChunkDLPostRender() {
-		FTA.out("FTAEventHandler >> onChunkDLPostRender()!");
+		//FTA.out("FTAEventHandler >> onChunkDLPostRender()!");
 		if (Minecraft.getMinecraft().thePlayer != null) {
-			if (i2%1000==0){
+			if (i2%10000==0){
 			Minecraft.getMinecraft().thePlayer.sendChatMessage("FTAEventHandler >> onChunkDLPostRender()");
 			}
 			i2++;
@@ -31,8 +31,9 @@ public class FTAEventHandler {
 	}
 
 	public static void onChunkDLPreRender() {
+		//FTA.out("FTAEventHandler >> onChunkDLPreRender()!");
 		if (Minecraft.getMinecraft().thePlayer != null) {
-			if (i3%1000==0){
+			if (i3%10000==0){
 			Minecraft.getMinecraft().thePlayer.sendChatMessage("FTAEventHandler >> onChunkDLPreRender()");
 			}
 			i3++;
