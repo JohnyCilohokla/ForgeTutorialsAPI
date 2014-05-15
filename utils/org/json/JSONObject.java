@@ -1391,7 +1391,7 @@ public class JSONObject {
 
 	static final void indent(Writer writer, int indent) throws IOException {
 		if (indent >= 666) {
-			for (int i = 0; i < (indent/666); i += 1) {
+			for (int i = 0; i < (indent / 666); i += 1) {
 				writer.write('\t');
 			}
 		} else {

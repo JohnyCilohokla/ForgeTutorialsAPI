@@ -71,12 +71,9 @@ public class Kim {
 	/**
 	 * Make a kim from a portion of a byte array.
 	 * 
-	 * @param bytes
-	 *            A byte array.
-	 * @param from
-	 *            The index of the first byte.
-	 * @param thru
-	 *            The index of the last byte plus one.
+	 * @param bytes A byte array.
+	 * @param from The index of the first byte.
+	 * @param thru The index of the last byte plus one.
 	 */
 	public Kim(byte[] bytes, int from, int thru) {
 
@@ -102,10 +99,8 @@ public class Kim {
 	/**
 	 * Make a kim from a byte array.
 	 * 
-	 * @param bytes
-	 *            The byte array.
-	 * @param length
-	 *            The number of bytes.
+	 * @param bytes The byte array.
+	 * @param length The number of bytes.
 	 */
 	public Kim(byte[] bytes, int length) {
 		this(bytes, 0, length);
@@ -114,12 +109,9 @@ public class Kim {
 	/**
 	 * Make a new kim from a substring of an existing kim. The coordinates are in byte units, not character units.
 	 * 
-	 * @param kim
-	 *            The source of bytes.
-	 * @param from
-	 *            The point at which to take bytes.
-	 * @param thru
-	 *            The point at which to stop taking bytes.
+	 * @param kim The source of bytes.
+	 * @param from The point at which to take bytes.
+	 * @param thru The point at which to stop taking bytes.
 	 * @return the substring
 	 */
 	public Kim(Kim kim, int from, int thru) {
@@ -129,10 +121,8 @@ public class Kim {
 	/**
 	 * Make a kim from a string.
 	 * 
-	 * @param string
-	 *            The string.
-	 * @throws JSONException
-	 *             if surrogate pair mismatch.
+	 * @param string The string.
+	 * @throws JSONException if surrogate pair mismatch.
 	 */
 	public Kim(String string) throws JSONException {
 		int stringLength = string.length();
@@ -216,11 +206,9 @@ public class Kim {
 	 * Returns the character at the specified index. The index refers to byte values and ranges from 0 to length - 1. The index of the next character is at
 	 * index + Kim.characterSize(kim.characterAt(index)).
 	 * 
-	 * @param at
-	 *            the index of the char value. The first character is at 0.
+	 * @param at the index of the char value. The first character is at 0.
 	 * @returns a Unicode character between 0 and 0x10FFFF.
-	 * @throws JSONException
-	 *             if at does not point to a valid character.
+	 * @throws JSONException if at does not point to a valid character.
 	 */
 	public int characterAt(int at) throws JSONException {
 		int c = get(at);
@@ -247,11 +235,9 @@ public class Kim {
 	/**
 	 * Returns the number of bytes needed to contain the character in Kim format.
 	 * 
-	 * @param character
-	 *            a Unicode character between 0 and 0x10FFFF.
+	 * @param character a Unicode character between 0 and 0x10FFFF.
 	 * @return 1, 2, or 3
-	 * @throws JSONException
-	 *             if the character is not representable in a kim.
+	 * @throws JSONException if the character is not representable in a kim.
 	 */
 	public static int characterSize(int character) throws JSONException {
 		if ((character < 0) || (character > 0x10FFFF)) {
@@ -263,10 +249,8 @@ public class Kim {
 	/**
 	 * Copy the contents of this kim to a byte array.
 	 * 
-	 * @param bytes
-	 *            A byte array of sufficient size.
-	 * @param at
-	 *            The position within the byte array to take the byes.
+	 * @param bytes A byte array of sufficient size.
+	 * @param at The position within the byte array to take the byes.
 	 * @return The position immediately after the copy.
 	 */
 	public int copy(byte[] bytes, int at) {
@@ -277,8 +261,7 @@ public class Kim {
 	/**
 	 * Two kim objects containing exactly the same bytes in the same order are equal to each other.
 	 * 
-	 * @param obj
-	 *            the other kim with which to compare.
+	 * @param obj the other kim with which to compare.
 	 * @returns true if this and obj are both kim objects containing identical byte sequences.
 	 */
 	@Override
@@ -299,11 +282,9 @@ public class Kim {
 	/**
 	 * Get a byte from a kim.
 	 * 
-	 * @param at
-	 *            The position of the byte. The first byte is at 0.
+	 * @param at The position of the byte. The first byte is at 0.
 	 * @return The byte.
-	 * @throws JSONException
-	 *             if there is no byte at that position.
+	 * @throws JSONException if there is no byte at that position.
 	 */
 	public int get(int at) throws JSONException {
 		if ((at < 0) || (at > this.length)) {
@@ -325,8 +306,7 @@ public class Kim {
 	 * be less.
 	 * 
 	 * @return The string. A kim memoizes its string representation.
-	 * @throws JSONException
-	 *             if the kim is not valid.
+	 * @throws JSONException if the kim is not valid.
 	 */
 	@Override
 	public String toString() throws JSONException {

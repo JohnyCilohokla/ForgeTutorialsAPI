@@ -2,10 +2,9 @@ package com.infernosstudio.johny.files;
 
 import java.io.File;
 
-
 public abstract class InfernosFileParser {
-	
-	public String parse(String in){
+
+	public String parse(String in) {
 		return this.parse(in, "");
 	}
 

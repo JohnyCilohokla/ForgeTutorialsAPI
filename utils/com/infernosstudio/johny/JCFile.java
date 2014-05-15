@@ -46,7 +46,7 @@ public class JCFile {
 	}
 
 	public static boolean stringToFile(String name, String string) {
-		return stringToFile(new File(name), string);
+		return JCFile.stringToFile(new File(name), string);
 	}
 
 	public static boolean stringToFile(File file, String string) {
@@ -142,10 +142,10 @@ public class JCFile {
 			}
 		}
 	}
-	
+
 	public static boolean copyFileOrDir(File source, File targetFolder) {
 
-		if (source == null || targetFolder==null) {
+		if ((source == null) || (targetFolder == null)) {
 			return false;
 		}
 
@@ -158,7 +158,7 @@ public class JCFile {
 			return true;
 		}
 
-		if (!source.isDirectory()|| (!targetFolder.isDirectory() && targetFolder.exists())) {
+		if (!source.isDirectory() || (!targetFolder.isDirectory() && targetFolder.exists())) {
 			return false;
 		}
 		targetFolder.mkdirs();
@@ -166,7 +166,7 @@ public class JCFile {
 		String[] fileList = source.list();
 		if ((fileList != null) && (fileList.length > 0)) {
 			for (String f : fileList) {
-				if (!JCFile.copyFileOrDir(new File(source,f),new File(targetFolder, f))) {
+				if (!JCFile.copyFileOrDir(new File(source, f), new File(targetFolder, f))) {
 					return false;
 				}
 			}
@@ -174,28 +174,28 @@ public class JCFile {
 
 		return true;
 	}
-	
+
 	public static void copyFile(File sourceFile, File destFile, InfernosFileParser parser) throws IOException {
 		destFile.getParentFile().mkdirs();
 		if (!destFile.exists()) {
 			destFile.createNewFile();
 		}
 
-		if (parser.shouldParse(sourceFile)){
+		if (parser.shouldParse(sourceFile)) {
 			String s = JCFile.fileToRawString(sourceFile);
-			String parsed = parser.parse(s, " location >> "+sourceFile.getAbsolutePath());
-			if (!s.equals(parsed)){
-				JC.out("Parsed "+sourceFile.getAbsolutePath());
+			String parsed = parser.parse(s, " location >> " + sourceFile.getAbsolutePath());
+			if (!s.equals(parsed)) {
+				JC.out("Parsed " + sourceFile.getAbsolutePath());
 			}
 			JCFile.stringToRawFile(destFile, parsed);
-		}else{
+		} else {
 			JCFile.copyFile(sourceFile, destFile);
 		}
 	}
-	
+
 	public static boolean copyFileOrDir(File source, File targetFolder, InfernosFileParser parser) {
 
-		if (source == null || targetFolder==null) {
+		if ((source == null) || (targetFolder == null)) {
 			return false;
 		}
 
@@ -208,7 +208,7 @@ public class JCFile {
 			return true;
 		}
 
-		if (!source.isDirectory()|| (!targetFolder.isDirectory() && targetFolder.exists())) {
+		if (!source.isDirectory() || (!targetFolder.isDirectory() && targetFolder.exists())) {
 			return false;
 		}
 		targetFolder.mkdirs();
@@ -216,7 +216,7 @@ public class JCFile {
 		String[] fileList = source.list();
 		if ((fileList != null) && (fileList.length > 0)) {
 			for (String f : fileList) {
-				if (!JCFile.copyFileOrDir(new File(source,f),new File(targetFolder, f), parser)) {
+				if (!JCFile.copyFileOrDir(new File(source, f), new File(targetFolder, f), parser)) {
 					return false;
 				}
 			}
@@ -244,7 +244,7 @@ public class JCFile {
 		try {
 			FileOutputStream fos = new FileOutputStream(file);
 			ByteBuffer buf = JC.utf8.encode(string);
-			fos.write(buf.array(),buf.arrayOffset(),buf.limit());
+			fos.write(buf.array(), buf.arrayOffset(), buf.limit());
 			fos.close();
 			return true;
 		} catch (IOException e1) {

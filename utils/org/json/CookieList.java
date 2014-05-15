@@ -40,8 +40,7 @@ public class CookieList {
 	 * 
 	 * To add a cookie to a cooklist, cookielistJSONObject.put(cookieJSONObject.getString("name"), cookieJSONObject.getString("value"));
 	 * 
-	 * @param string
-	 *            A cookie list string
+	 * @param string A cookie list string
 	 * @return A JSONObject
 	 * @throws JSONException
 	 */
@@ -61,8 +60,7 @@ public class CookieList {
 	 * Convert a JSONObject into a cookie list. A cookie list is a sequence of name/value pairs. The names are separated from the values by '='. The pairs are
 	 * separated by ';'. The characters '%', '+', '=', and ';' in the names and values are replaced by "%hh".
 	 * 
-	 * @param jo
-	 *            A JSONObject
+	 * @param jo A JSONObject
 	 * @return A cookie list string
 	 * @throws JSONException
 	 */

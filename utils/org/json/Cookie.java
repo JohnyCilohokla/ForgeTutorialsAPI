@@ -38,8 +38,7 @@ public class Cookie {
 	 * they are escaped using the URL-encoding. This is only a convention, not a standard. Often, cookies are expected to have encoded values. We encode '=' and
 	 * ';' because we must. We encode '%' and '+' because they are meta characters in URL encoding.
 	 * 
-	 * @param string
-	 *            The source string.
+	 * @param string The source string.
 	 * @return The escaped result.
 	 */
 	public static String escape(String string) {
@@ -66,8 +65,7 @@ public class Cookie {
 	 * secure property, which does not have a value). The name will be stored under the key "name", and the value will be stored under the key "value". This
 	 * method does not do checking or validation of the parameters. It only converts the cookie string into a JSONObject.
 	 * 
-	 * @param string
-	 *            The cookie specification string.
+	 * @param string The cookie specification string.
 	 * @return A JSONObject containing "name", "value", and possibly other members.
 	 * @throws JSONException
 	 */
@@ -101,8 +99,7 @@ public class Cookie {
 	 * Convert a JSONObject into a cookie specification string. The JSONObject must contain "name" and "value" members. If the JSONObject contains "expires",
 	 * "domain", "path", or "secure" members, they will be appended to the cookie specification string. All other members are ignored.
 	 * 
-	 * @param jo
-	 *            A JSONObject
+	 * @param jo A JSONObject
 	 * @return A cookie specification string
 	 * @throws JSONException
 	 */
@@ -133,8 +130,7 @@ public class Cookie {
 	/**
 	 * Convert <code>%</code><i>hh</i> sequences to single characters, and convert plus to space.
 	 * 
-	 * @param string
-	 *            A string that may contain <code>+</code>&nbsp;<small>(plus)</small> and <code>%</code><i>hh</i> sequences.
+	 * @param string A string that may contain <code>+</code>&nbsp;<small>(plus)</small> and <code>%</code><i>hh</i> sequences.
 	 * @return The unescaped string.
 	 */
 	public static String unescape(String string) {

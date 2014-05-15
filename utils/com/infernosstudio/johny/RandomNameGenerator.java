@@ -36,12 +36,9 @@ public class RandomNameGenerator {
 	 * 
 	 * The names will look like this (v=vocal,c=startConsonsonant,d=endConsonants): vd, cvdvd, cvd, vdvd
 	 * 
-	 * @param vocals
-	 *            pass something like {"a","e","ou",..}
-	 * @param startConsonants
-	 *            pass something like {"s","f","kl",..}
-	 * @param endConsonants
-	 *            pass something like {"th","sh","f",..}
+	 * @param vocals pass something like {"a","e","ou",..}
+	 * @param startConsonants pass something like {"s","f","kl",..}
+	 * @param endConsonants pass something like {"th","sh","f",..}
 	 */
 	public RandomNameGenerator(String[] vocals, String[] startConsonants, String[] endConsonants) {
 		this.vocals.addAll(Arrays.asList(vocals));
@@ -55,8 +52,7 @@ public class RandomNameGenerator {
 	 * @param vocals
 	 * @param startConsonants
 	 * @param endConsonants
-	 * @param nameInstructions
-	 *            Use only the following letters: (v=vocal,c=startConsonsonant,d=endConsonants)! Pass something like {"vd", "cvdvd", "cvd", "vdvd"}
+	 * @param nameInstructions Use only the following letters: (v=vocal,c=startConsonsonant,d=endConsonants)! Pass something like {"vd", "cvdvd", "cvd", "vdvd"}
 	 */
 	public RandomNameGenerator(String[] vocals, String[] startConsonants, String[] endConsonants, String[] nameInstructions) {
 		this(vocals, startConsonants, endConsonants);
