@@ -53,7 +53,7 @@ public class PacketMultiTileEntity extends InfernosPacket {
 		for (SubPacketTileEntityChild packet : this.children) {
 			ByteBuf bytes = packet.populate();
 			buffer.writeInt(bytes.writerIndex());
-			buffer.writeBytes(bytes,0,bytes.writerIndex());
+			buffer.writeBytes(bytes, 0, bytes.writerIndex());
 		}
 	}
 
@@ -70,7 +70,7 @@ public class PacketMultiTileEntity extends InfernosPacket {
 		int childrenCount = buffer.readInt();
 		for (int i = 0; i < childrenCount; i++) {
 			int childLenght = buffer.readInt();
-			
+
 			ByteBuf buf = Unpooled.buffer(childLenght);
 			buffer.readBytes(buf, childLenght);
 			SubPacketTileEntityChild child = SubPacketTileEntityType.buildPacket(buf);

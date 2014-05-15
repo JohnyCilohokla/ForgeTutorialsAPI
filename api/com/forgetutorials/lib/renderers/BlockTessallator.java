@@ -15,8 +15,8 @@ import net.minecraft.util.IIcon;
 import net.minecraftforge.client.IItemRenderer.ItemRenderType;
 
 public class BlockTessallator {
-	public static void addToTessallator(Tessellator tessellator, double x, double y, double z, IIcon topIcon, IIcon bottomIcon, IIcon side1Icon, IIcon side2Icom,
-			IIcon side3Icom, IIcon side4Icon) {
+	public static void addToTessallator(Tessellator tessellator, double x, double y, double z, IIcon topIcon, IIcon bottomIcon, IIcon side1Icon,
+			IIcon side2Icom, IIcon side3Icom, IIcon side4Icon) {
 
 		// top
 		tessellator.addVertexWithUV(x, y + 1, z, topIcon.getMinU(), topIcon.getMaxV());
@@ -56,10 +56,11 @@ public class BlockTessallator {
 		BlockTessallator.addToTessallator(tessellator, x, y, z, icon, icon, icon, icon, icon, icon);
 	}
 
-	public static void addToRenderer(Block block, VertexRenderer v, RenderBlocks blockRenderer, double x, double y, double z, IIcon icon, IIcon icon2, int trueX,
-			int trueY, int trueZ) {
+	public static void addToRenderer(Block block, VertexRenderer v, RenderBlocks blockRenderer, double x, double y, double z, IIcon icon, IIcon icon2,
+			int trueX, int trueY, int trueZ) {
 		v.renderBlockInWorld(block, blockRenderer, trueX, trueY, trueZ, icon, icon2, x, y, z, 1, 1, 1);
 	}
+
 	public static void renderBlockAsItem(Block block, VertexRenderer v, IIcon icon, IIcon icon2, float r, float g, float b, int brightness) {
 		v.renderBlockAsItem(block, icon, icon2, r, g, b, brightness);
 	}
@@ -106,7 +107,7 @@ public class BlockTessallator {
 
 		OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
 	}
-	
+
 	public static void renderDualTextureBlockAsItem(VertexRenderer vertexRenderer, Block block, ItemRenderType type, IIcon icon, IIcon icon2, Object[] data) {
 
 		GL11.glPushMatrix();
@@ -117,16 +118,13 @@ public class BlockTessallator {
 		switch (type) {
 		case ENTITY:
 			EntityItem entityItem = (EntityItem) data[1];
-			BlockTessallator.renderBlockAsItem(block, vertexRenderer, icon, icon2, 1, 1, 1,
-					(int) (entityItem.getBrightnessForRender(1)));
+			BlockTessallator.renderBlockAsItem(block, vertexRenderer, icon, icon2, 1, 1, 1, (entityItem.getBrightnessForRender(1)));
 			break;
 		case EQUIPPED:
-			BlockTessallator.renderBlockAsItem(block, vertexRenderer, icon, icon2, 1, 1, 1,
-					(int) (((EntityLivingBase)data[1]).getBrightnessForRender(1)));
+			BlockTessallator.renderBlockAsItem(block, vertexRenderer, icon, icon2, 1, 1, 1, (((EntityLivingBase) data[1]).getBrightnessForRender(1)));
 			break;
 		case EQUIPPED_FIRST_PERSON:
-			BlockTessallator.renderBlockAsItem(block, vertexRenderer, icon, icon2, 1, 1, 1,
-					(int) (Minecraft.getMinecraft().thePlayer.getBrightnessForRender(1)));
+			BlockTessallator.renderBlockAsItem(block, vertexRenderer, icon, icon2, 1, 1, 1, (Minecraft.getMinecraft().thePlayer.getBrightnessForRender(1)));
 			break;
 		case INVENTORY:
 			BlockTessallator.addToRenderer(block, vertexRenderer, null, 0.1, 0, 0.1, icon, icon2, 0, 0, 0);
@@ -135,7 +133,7 @@ public class BlockTessallator {
 			BlockTessallator.renderBlockAsItem(block, vertexRenderer, icon, icon2, 1, 1, 1, 240);
 			break;
 		}
-		
+
 		vertexRenderer.render();
 
 		BlockTessallator.disableOverlay();

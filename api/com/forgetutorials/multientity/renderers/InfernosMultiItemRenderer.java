@@ -16,7 +16,7 @@ import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 public class InfernosMultiItemRenderer implements IItemRenderer {
-	
+
 	private static EntityRenderer entityRenderer = null;
 
 	public static void initizeRenderer() {
@@ -43,9 +43,9 @@ public class InfernosMultiItemRenderer implements IItemRenderer {
 	 * Enable lightmap in secondary texture unit
 	 */
 	public static void enableLightmap() {
-        OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit);
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
-        OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
+		OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class InfernosMultiItemRenderer implements IItemRenderer {
 				.getProxyEntity(itemStack));
 		if (entity != null) {
 			GL11.glPushMatrix();
-			if (type.equals(ItemRenderType.ENTITY)){
+			if (type.equals(ItemRenderType.ENTITY)) {
 				GL11.glTranslated(-0.5, 0.0, -0.5);
 			}
 			entity.renderItem(type, itemStack, data);

@@ -6,9 +6,9 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 
 public class FTAConatiner extends Container {
-	
+
 	public FTAConatiner() {
-		
+
 	}
 
 	@Override

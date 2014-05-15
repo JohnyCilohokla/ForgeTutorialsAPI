@@ -21,9 +21,9 @@ public class ASMCallbackTarget {
 		if ((this.position.needsTarget)) {
 			throw new UnsupportedOperationException("Target method is needed!");
 		}
-		targetMethodName = null;
-		targetMethodDesc = null;
-		targetMethodOwner = null;
+		this.targetMethodName = null;
+		this.targetMethodDesc = null;
+		this.targetMethodOwner = null;
 	}
 
 	public ASMCallbackTarget(String methodName, String methodDesc, ASMCallbackPosition position, String targetMethodName, String targetMethodDesc,
@@ -39,11 +39,11 @@ public class ASMCallbackTarget {
 
 	public boolean compareToMethodName(MethodNode node) {
 
-		return (methodName.equalsIgnoreCase(node.name) && (methodDesc == null || methodDesc.equalsIgnoreCase(node.desc)));
+		return (this.methodName.equalsIgnoreCase(node.name) && ((this.methodDesc == null) || this.methodDesc.equalsIgnoreCase(node.desc)));
 	}
 
 	public boolean compareTargetMethodName(MethodInsnNode node) {
-		return ((targetMethodName.equalsIgnoreCase(node.name)) && (targetMethodDesc == null || targetMethodDesc.equalsIgnoreCase(node.desc)) && (targetMethodOwner == null || targetMethodOwner
+		return ((this.targetMethodName.equalsIgnoreCase(node.name)) && ((this.targetMethodDesc == null) || this.targetMethodDesc.equalsIgnoreCase(node.desc)) && ((this.targetMethodOwner == null) || this.targetMethodOwner
 				.equalsIgnoreCase(node.owner)));
 	}
 
@@ -53,11 +53,11 @@ public class ASMCallbackTarget {
 
 	@Override
 	public String toString() {
-		return "[position=" + position + ", methodName=" + methodName + ", methodDesc=" + methodDesc + ", targetMethodName="
-				+ targetMethodName + ", targetMethodDesc=" + targetMethodDesc + ", targetMethodOwner=" + targetMethodOwner + "]";
+		return "[position=" + this.position + ", methodName=" + this.methodName + ", methodDesc=" + this.methodDesc + ", targetMethodName="
+				+ this.targetMethodName + ", targetMethodDesc=" + this.targetMethodDesc + ", targetMethodOwner=" + this.targetMethodOwner + "]";
 	}
 
 	public ASMCallbackTarget copy(String name, String desc) {
-		return new ASMCallbackTarget(name, desc, position, targetMethodName, targetMethodDesc, targetMethodOwner);
+		return new ASMCallbackTarget(name, desc, this.position, this.targetMethodName, this.targetMethodDesc, this.targetMethodOwner);
 	}
 }

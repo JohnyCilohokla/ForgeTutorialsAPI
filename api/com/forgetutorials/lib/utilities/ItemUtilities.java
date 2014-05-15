@@ -10,8 +10,8 @@ import net.minecraftforge.common.util.FakePlayer;
 
 public class ItemUtilities {
 
-	public static void damageItemOrDestroy(ItemStack itemStack, int damage, EntityLivingBase entity, World world, int x, int y, int z,
-			Item onDestroyItem, int itemCount, int itemMeta) {
+	public static void damageItemOrDestroy(ItemStack itemStack, int damage, EntityLivingBase entity, World world, int x, int y, int z, Item onDestroyItem,
+			int itemCount, int itemMeta) {
 		if ((onDestroyItem == null) || (((itemStack.getMaxDamage() - itemStack.getItemDamage()) + 1) > (damage))) {
 			itemStack.damageItem((damage), entity);
 		} else {

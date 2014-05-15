@@ -36,27 +36,27 @@ class ChunkScanner implements IWorldGenerator {
 		IncrementalMap<IncrementalBlock> blocksMap = FTA.serverHandler.getWorldGlobals(world).getBlocksMap();
 		IncrementalMap<IncrementalItemStack> pickMap = FTA.serverHandler.getWorldGlobals(world).getPickMap();
 		for (int cY = 0; cY < world.getHeight(); cY++) {
-			for (int cX = sX * 16; cX < eX * 16; cX++) {
-				for (int cZ = sZ * 16; cZ < eZ * 16; cZ++) {
+			for (int cX = sX * 16; cX < (eX * 16); cX++) {
+				for (int cZ = sZ * 16; cZ < (eZ * 16); cZ++) {
 					block = world.getBlock(cX, cY, cZ);
 					metadata = world.getBlockMetadata(cX, cY, cZ);
 
-		            
-					if (block != null && !block.equals(Blocks.air)) {
+					if ((block != null) && !block.equals(Blocks.air)) {
 						blocksMap.add(new IncrementalBlock(new BlockWithMetadata(block, metadata)));
-			            ItemStack itemstack = this.createStackedBlock(block, metadata);
+						ItemStack itemstack = createStackedBlock(block, metadata);
 						if (itemstack != null) {
-							// FIXME
-						//pickMap.add(new IncrementalItemStack(itemstack, 1));
+							// TODO CHECKME
+							ItemStack drop =block.getPickBlock(null, world, cX, cY, cZ);
+							pickMap.add(new IncrementalItemStack(drop, drop.stackSize));
+							// pickMap.add(new IncrementalItemStack(itemstack, 1));
 						}
 					}
-					
-					
+
 					// if (world.getBlock(cX, cY, cZ).getHarvestLevel(metadata)
 					// != -1) {
 					ArrayList<ItemStack> drops = block.getDrops(world, cX, cY, cZ, metadata, 0);
 
-					if (drops != null && drops.size() > 0) {
+					if ((drops != null) && (drops.size() > 0)) {
 						for (ItemStack drop : drops) {
 							if (drop != null) {
 								dropsMap.add(new IncrementalItemStack(drop, drop.stackSize));
@@ -70,16 +70,14 @@ class ChunkScanner implements IWorldGenerator {
 		worldGlobals.save();
 	}
 
-    protected ItemStack createStackedBlock(Block block, int metadata)
-    {
-        int j = 0;
-        Item item = Item.getItemFromBlock(block);
+	protected ItemStack createStackedBlock(Block block, int metadata) {
+		int j = 0;
+		Item item = Item.getItemFromBlock(block);
 
-        if (item != null && item.getHasSubtypes())
-        {
-            j = metadata;
-        }
+		if ((item != null) && item.getHasSubtypes()) {
+			j = metadata;
+		}
 
-        return new ItemStack(item, 1, j);
-    }
+		return new ItemStack(item, 1, j);
+	}
 }

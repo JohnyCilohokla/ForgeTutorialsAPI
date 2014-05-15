@@ -13,7 +13,6 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public class InfernosMultiEntityStaticInvLiq extends InfernosMultiEntityStatic implements ISidedInventory, IFluidHandler, IFluidStackProxy {
 
-
 	@Override
 	public int getSizeInventory() {
 

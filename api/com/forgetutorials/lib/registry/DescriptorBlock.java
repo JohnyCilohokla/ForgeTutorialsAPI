@@ -21,12 +21,12 @@ public class DescriptorBlock extends DescriptorItem {
 	protected void register(String unlocalizedName, String name, ItemStack itemStack) {
 		super.register(unlocalizedName, name, itemStack);
 		Item item = itemStack.getItem();
-		if (item instanceof ItemBlock){
-			this.block = ((ItemBlock)item).field_150939_a;
+		if (item instanceof ItemBlock) {
+			this.block = ((ItemBlock) item).field_150939_a;
 			if (this.harvestTool != null) {
 				// TODO FIXME
-				
-				//MinecraftForge.setBlockHarvestLevel(this.block, this.itemStack.getItemDamage(), this.harvestTool, this.harvestLevel);
+
+				// MinecraftForge.setBlockHarvestLevel(this.block, this.itemStack.getItemDamage(), this.harvestTool, this.harvestLevel);
 			}
 			System.out.println(">>Registery(FTA)<< Register Block: " + this.block.getClass().getCanonicalName() + " [" + this.itemStack.getItemDamage()
 					+ "] + tool(" + this.harvestTool + "@" + this.harvestLevel + ")");

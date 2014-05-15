@@ -6,12 +6,12 @@ public class DescriptorObject {
 	protected boolean registered;
 	private String unlocalizedName;
 	private String name;
-	
+
 	private HashMap<String, Object> custom;
 
 	public DescriptorObject() {
 		this.registered = false;
-		custom = new HashMap<String, Object>();
+		this.custom = new HashMap<String, Object>();
 	}
 
 	public String getName() {
@@ -35,17 +35,18 @@ public class DescriptorObject {
 	}
 
 	public void setCustom(String string, Object object) {
-		custom.put(string, object);
+		this.custom.put(string, object);
 	}
 
 	public Object getCustom(String string) {
-		return custom.get(string);
+		return this.custom.get(string);
 	}
 
 	public int getCustomInt(String string, int def) {
-		return custom.containsKey(string)?(Integer) getCustom(string):def;
+		return this.custom.containsKey(string) ? (Integer) getCustom(string) : def;
 	}
+
 	public int getCustomInt(String string) {
-		return custom.containsKey(string)?(Integer) getCustom(string):-1;
+		return this.custom.containsKey(string) ? (Integer) getCustom(string) : -1;
 	}
 }

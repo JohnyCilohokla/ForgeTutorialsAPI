@@ -22,8 +22,8 @@ public class FakeBlockAccess implements IBlockAccess {
 		this.block = block;
 	}
 
-	public Block blockOrAir(int x,int y,int z) {
-		return (this.x==x&&this.y==y&&this.z==z)?block:Blocks.air;
+	public Block blockOrAir(int x, int y, int z) {
+		return ((this.x == x) && (this.y == y) && (this.z == z)) ? this.block : Blocks.air;
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class FakeBlockAccess implements IBlockAccess {
 
 	@Override
 	public boolean isAirBlock(int i, int j, int k) {
-		return blockOrAir(i,j,k)==Blocks.air;
+		return blockOrAir(i, j, k) == Blocks.air;
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class FakeBlockAccess implements IBlockAccess {
 
 	@Override
 	public Block getBlock(int var1, int var2, int var3) {
-		return blockOrAir(var1,var2,var3);
+		return blockOrAir(var1, var2, var3);
 	}
 
 	@Override
@@ -78,6 +78,6 @@ public class FakeBlockAccess implements IBlockAccess {
 
 	@Override
 	public boolean isSideSolid(int x, int y, int z, ForgeDirection side, boolean _default) {
-		return blockOrAir(x,y,z).isSideSolid(this, x, y, z, side);
+		return blockOrAir(x, y, z).isSideSolid(this, x, y, z, side);
 	}
 }

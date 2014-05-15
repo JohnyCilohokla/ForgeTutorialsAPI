@@ -198,7 +198,7 @@ public class VertexRenderer {
 			blockRenderer = VertexRenderer.blankRenderBlocks;
 		}
 		if (blockRenderer.blockAccess == null) {
-		blockRenderer.blockAccess = new FakeBlockAccess(x, y, z, block);
+			blockRenderer.blockAccess = new FakeBlockAccess(x, y, z, block);
 		}
 		return blockRenderer;
 	}

@@ -14,17 +14,17 @@ public class ItemTessallator {
 	private static CustomItemRenderer customItemRenderer;
 
 	public static void renderItemStack(World world, ItemStack ghostStack, double x, double y, double z) {
-		if (RenderManager.instance.renderEngine==null){
+		if (RenderManager.instance.renderEngine == null) {
 			return; // rendering engine is still not initized!
 		}
-		if (customItemRenderer==null){
-			customItemRenderer = new CustomItemRenderer();
+		if (ItemTessallator.customItemRenderer == null) {
+			ItemTessallator.customItemRenderer = new CustomItemRenderer();
 		}
 		if (ghostStack != null) {
-			if (world==null){
+			if (world == null) {
 				world = Minecraft.getMinecraft().theWorld;
 			}
-			EntityItem ghostEntityItem = new EntityItem(world,x,y,z);
+			EntityItem ghostEntityItem = new EntityItem(world, x, y, z);
 			ghostEntityItem.hoverStart = 0.0F;
 			ghostEntityItem.setEntityItemStack(ghostStack);
 			float scale = 1.0f;
@@ -39,11 +39,12 @@ public class ItemTessallator {
 	}
 
 	public static void renderEntityItem(EntityItem ghostEntityItem) {
-		//if (gui){
-		//	ItemTessallator.customItemRenderer.renderItemIntoGUI(Minecraft.getMinecraft().fontRenderer, Minecraft.getMinecraft().renderEngine, ghostEntityItem.getEntityItem(), 0, 0);
-		//}else{
-			ItemTessallator.customItemRenderer.doRender(ghostEntityItem, 0, 0, 0, 0, 0);
-		//}
+		// if (gui){
+		// ItemTessallator.customItemRenderer.renderItemIntoGUI(Minecraft.getMinecraft().fontRenderer, Minecraft.getMinecraft().renderEngine,
+		// ghostEntityItem.getEntityItem(), 0, 0);
+		// }else{
+		ItemTessallator.customItemRenderer.doRender(ghostEntityItem, 0, 0, 0, 0, 0);
+		// }
 		GL11.glColor4f(1, 1, 1, 1);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glDisable(GL11.GL_BLEND);

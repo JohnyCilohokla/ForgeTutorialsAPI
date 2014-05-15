@@ -17,7 +17,7 @@ public enum FluidTessallator {
 
 	final double distS, distL;
 	final double spaceS, spaceL;
-	//centered x,z
+	// centered x,z
 	final double distCS, distCL;
 	final double spaceCS, spaceCL;
 	//
@@ -32,7 +32,7 @@ public enum FluidTessallator {
 
 		this.yStart = yStart;
 		this.yEnd = yEnd;
-		
+
 		this.distCS = -0.5 + distance;
 		this.distCL = 0.5 - distance;
 
@@ -86,9 +86,10 @@ public enum FluidTessallator {
 		tessellator.addVertexWithUV(x + this.distS, y + amount, z + this.spaceS, icon.getMaxU(), FluidTessallator.interpolateV(icon, size));
 		tessellator.addVertexWithUV(x + this.distS, y + this.yStart, z + this.spaceS, icon.getMaxU(), icon.getMinV());
 	}
-	
+
 	/**
 	 * Centered x,z!
+	 * 
 	 * @param tessellator
 	 * @param icon
 	 * @param amount
@@ -160,9 +161,11 @@ public enum FluidTessallator {
 		}
 		return icon;
 	}
+
 	public void renderFluidStack(Tessellator tessellator, FluidStack fluidstack, double x, double y, double z) {
 		renderFluidStack(tessellator, fluidstack, x, y, z, null);
 	}
+
 	public void renderFluidStack(Tessellator tessellator, FluidStack fluidstack, double x, double y, double z, int facing) {
 		renderFluidStack(tessellator, fluidstack, x, y, z, EnumFacing.getFront(facing));
 	}

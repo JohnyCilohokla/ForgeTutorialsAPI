@@ -52,28 +52,28 @@ public class WorldGlobals {
 					e.printStackTrace();
 				}
 			}
-			FTA.out("Loading 0 "+file.getAbsolutePath());
+			FTA.out("Loading 0 " + file.getAbsolutePath());
 			if (data.writerIndex() > 4) {
 				int length = data.readInt();
-				FTA.out("Loading 1 ("+data.writerIndex()+","+(length + 4)+")");
-				if (data.writerIndex() >= length + 4) {
+				FTA.out("Loading 1 (" + data.writerIndex() + "," + (length + 4) + ")");
+				if (data.writerIndex() >= (length + 4)) {
 					FTA.out("Loading 2");
-					dropsMap.counter.clear();
-					blocksMap.counter.clear();
+					this.dropsMap.counter.clear();
+					this.blocksMap.counter.clear();
 					int count = data.readInt();
 					for (int i = 0; i < count; i++) {
 						long amount = data.readLong();
 						ItemStack stack = ByteBufUtils.readItemStack(data);
-						dropsMap.add(new IncrementalItemStack(stack, amount));
+						this.dropsMap.add(new IncrementalItemStack(stack, amount));
 					}
 					count = data.readInt();
 					for (int i = 0; i < count; i++) {
 						long amount = data.readLong();
-						
+
 						Block block = Block.getBlockById(data.readInt());
 						int metadata = data.readInt();
-						
-						blocksMap.add(new IncrementalBlock(new BlockWithMetadata(block, metadata),amount));
+
+						this.blocksMap.add(new IncrementalBlock(new BlockWithMetadata(block, metadata), amount));
 					}
 				}
 			}
@@ -87,13 +87,13 @@ public class WorldGlobals {
 			file.delete();
 		}
 		ByteBuf data = Unpooled.buffer();
-		data.writeInt(dropsMap.getList().size());
-		for (IncrementalItemStack b : dropsMap.getList()) {
+		data.writeInt(this.dropsMap.getList().size());
+		for (IncrementalItemStack b : this.dropsMap.getList()) {
 			data.writeLong(b.current);
 			ByteBufUtils.writeItemStack(data, b.stack);
 		}
-		data.writeInt(blocksMap.getList().size());
-		for (IncrementalBlock b : blocksMap.getList()) {
+		data.writeInt(this.blocksMap.getList().size());
+		for (IncrementalBlock b : this.blocksMap.getList()) {
 			data.writeLong(b.current);
 			data.writeInt(Block.getIdFromBlock(b.block.block));
 			data.writeInt(b.block.metadata);
@@ -115,16 +115,15 @@ public class WorldGlobals {
 	}
 
 	public IncrementalMap<IncrementalItemStack> getDropsMap() {
-		return dropsMap;
+		return this.dropsMap;
 	}
 
 	public IncrementalMap<IncrementalBlock> getBlocksMap() {
-		return blocksMap;
+		return this.blocksMap;
 	}
 
 	public IncrementalMap<IncrementalItemStack> getPickMap() {
-		return pickMap;
+		return this.pickMap;
 	}
-
 
 }

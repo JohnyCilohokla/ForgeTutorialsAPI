@@ -1,0 +1,89 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+    }
+}
+
+apply plugin: 'forge'
+
+
+ext.buildProps = file ("S:/minecraft/sources/ForgeTutorialsAPI/build.properties")
+
+buildProps.withReader {
+    def prop = new Properties()
+    prop.load(it)
+    ext.config = new ConfigSlurper().parse prop
+}
+
+version = "${config.build.version.number}.${config.build.patch.number}.${config.build.revision.number}"
+group= "FTA" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "ForgeTutorialsAPI-universal-1.7.2"
+
+sourceSets.main{
+    java{
+		srcDirs  'S:/minecraft/sources/ForgeTutorialsAPI/tmp'//set the source folder as the /src subfolder
+	}
+	resources{
+		srcDirs 'S:/minecraft/sources/ForgeTutorialsAPI/resources'//set the resources folder as the /resources subfolder
+	}
+}
+
+jar {
+	manifest {
+		attributes FMLCorePlugin: "com.forgetutorials.core.ASMInjector"
+		attributes FMLCorePluginContainsFMLMod: "true"
+	}
+}
+
+ext.buildProps = file ("build.properties")
+
+buildProps.withReader {
+    def prop = new Properties()
+    prop.load(it)
+    ext.config = new ConfigSlurper().parse prop
+}
+version = "${config.build.version.number}.${config.build.patch.number}.${config.build.revision.number}"
+versionMC = "1.7.2"
+versionForge = "10.12.1.1060"
+
+minecraft {
+    version = "1.7.2-10.12.1.1060"
+    assetDir = "eclipse/assets"
+	
+    replaceIn "FTA.java"
+	replace "@MCVERSION@", extraConfig.versionMC
+	replace "@FORGEVERSION@", extraConfig.versionForge
+	replace "@VERSION@", ext.config.build.version.number
+	replace "@PATCH@", ext.config.build.patch.number
+	replace "@REVISION@", ext.config.build.revision.number
+}
+
+processResources
+{
+    from(sourceSets.main.resources.srcDirs) {
+		include '**/*.lang'
+        include '**/*.info'
+		filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: [
+		MCVERSION: extraConfig.versionMC,
+		FORGEVERSION: extraConfig.versionForge,
+		VERSION: ext.config.build.version.number,
+		PATCH: ext.config.build.patch.number,
+		REVISION: ext.config.build.revision.number
+		])
+	}
+	from(sourceSets.main.resources.srcDirs) {
+        exclude '**/*.lang'
+        exclude '**/*.info'
+    }
+}

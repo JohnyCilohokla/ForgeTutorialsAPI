@@ -10,9 +10,8 @@ import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.FMLLog;
 
 /**
- * This class is used for storing ore generation data. If you are too lazy to
- * generate your own ores, you can do {@link #OreGenerator.addOre()} to add your
- * ore to the list of ores to generate.
+ * This class is used for storing ore generation data. If you are too lazy to generate your own ores, you can do {@link #OreGenerator.addOre()} to add your ore
+ * to the list of ores to generate.
  * 
  * 
  * 
@@ -42,8 +41,7 @@ public abstract class OreGenBase {
 	}
 
 	/**
-	 * Checks the config file and see if Universal Electricity should generate
-	 * this ore
+	 * Checks the config file and see if Universal Electricity should generate this ore
 	 */
 	private static boolean shouldGenerateOre(Configuration configuration, String oreName) {
 		configuration.load();

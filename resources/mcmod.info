@@ -3,7 +3,7 @@
   "modid": "ForgeTutorialsAPI",
   "name": "ForgeTutorialsAPI",
   "description": "MultiEntitySystem API",
-  "version": "@VERSION@.@PATCH@.@REVISION@",
+  "version": "@VERSION@.@RELEASE@.@REVISION@",
   "url": "forgetutorials.com",
   "updateUrl": "",
   "authorList": [

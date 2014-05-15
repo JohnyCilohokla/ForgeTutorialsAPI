@@ -182,4 +182,8 @@ public class JC {
 		return string == null ? true : (string.equalsIgnoreCase("false") || string.equalsIgnoreCase("no") || string.equalsIgnoreCase("-1")
 				|| string.equalsIgnoreCase("nope") || string.equalsIgnoreCase("off"));
 	}
+
+	public static void out(InfernosTimer timer) {
+		JC.out(timer.toString());
+	}
 }

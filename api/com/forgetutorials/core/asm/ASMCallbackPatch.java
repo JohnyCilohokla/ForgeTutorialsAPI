@@ -22,9 +22,7 @@ public class ASMCallbackPatch {
 			ASMClass classMapping = ASMInjector.classMap.get(name);
 			this.methodsNames.add(classMapping.name);
 			System.out.println(classMapping.name);
-			
-			
-			
+
 			if (classMapping.methodMap.containsKey(target.methodName + target.methodDesc)) {
 				ASMMethod methodMapping = classMapping.methodMap.get(target.methodName + target.methodDesc);
 				System.out.println(methodMapping.name);
@@ -32,8 +30,7 @@ public class ASMCallbackPatch {
 			} else {
 				System.out.println("FTA >> ASM >> Couldn't find obf " + target.methodName + target.methodDesc + " method name");
 			}
-			
-			
+
 		} else {
 			System.out.println("FTA >> ASM >> Couldn't find obf " + name + " name");
 		}
@@ -51,20 +48,20 @@ public class ASMCallbackPatch {
 			FTA.out("FTA >> ASM >> Couldn't find obf " + target.targetMethodOwner + " method class name");
 		}*/
 	}
-	
+
 	@Override
 	public String toString() {
 		String out = "ASMCallbackPatch {";
-		
+
 		out += "METHODS: ";
-		for (String methodsName:methodsNames){
-			out += "["+methodsName+"]";
+		for (String methodsName : this.methodsNames) {
+			out += "[" + methodsName + "]";
 		}
 		out += "TARGETS: ";
-		for (ASMCallbackTarget targetMethodsNode:targetMethodsNodes){
-			out += "["+targetMethodsNode+"]";
+		for (ASMCallbackTarget targetMethodsNode : this.targetMethodsNodes) {
+			out += "[" + targetMethodsNode + "]";
 		}
-		
+
 		out += "}";
 		return out;
 	}

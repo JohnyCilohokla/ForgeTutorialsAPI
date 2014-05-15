@@ -7,13 +7,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
-public class ItemWithInfo extends Item{
-	
+public class ItemWithInfo extends Item {
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List list, boolean par4) {
-		if (StatCollector.canTranslate(par1ItemStack.getUnlocalizedName()+".tooltip")){
-		list.add(StatCollector.translateToLocal(par1ItemStack.getUnlocalizedName()+".tooltip"));
+		if (StatCollector.canTranslate(par1ItemStack.getUnlocalizedName() + ".tooltip")) {
+			list.add(StatCollector.translateToLocal(par1ItemStack.getUnlocalizedName() + ".tooltip"));
 		}
 	}
 

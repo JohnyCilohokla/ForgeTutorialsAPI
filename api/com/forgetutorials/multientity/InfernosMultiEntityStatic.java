@@ -105,8 +105,7 @@ public class InfernosMultiEntityStatic extends TileEntity implements ICustomData
 	}
 
 	/**
-	 * Drops the block items with a specified chance of dropping the specified
-	 * items
+	 * Drops the block items with a specified chance of dropping the specified items
 	 */
 	public void dropBlockAsItemWithChance(int fortune) {
 		ArrayList<ItemStack> items = getBlockDropped(fortune);
@@ -176,10 +175,11 @@ public class InfernosMultiEntityStatic extends TileEntity implements ICustomData
 
 	@Override
 	public Packet getDescriptionPacket() {
-		FTA.packetHandler.sendToAllAround(newPacket(true, true), new TargetPoint(this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, 1000));
+		FTA.packetHandler.sendToAllAround(newPacket(true, true), new TargetPoint(this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord,
+				1000));
 		return null /*PacketType.populatePacket(packet)*/;
 	}
-	
+
 	/**
 	 * 
 	 * @param def = true will generate the default packet for the block (including block update), otherwise just the location/side/type packet
@@ -188,11 +188,11 @@ public class InfernosMultiEntityStatic extends TileEntity implements ICustomData
 	 */
 	public PacketMultiTileEntity newPacket(boolean def, boolean proxy) {
 		PacketMultiTileEntity packet = new PacketMultiTileEntity(this.xCoord, this.yCoord, this.zCoord, this.side, getProxyEntity().getTypeName());
-		if (this.requestBlockUpdate == true && def) {
+		if ((this.requestBlockUpdate == true) && def) {
 			packet.addPacket(new SubPacketTileEntityBlockUpdate());
 			this.requestBlockUpdate = false;
 		}
-		if (proxy){
+		if (proxy) {
 			getProxyEntity().addToDescriptionPacket(packet);
 		}
 		return packet;
@@ -252,7 +252,6 @@ public class InfernosMultiEntityStatic extends TileEntity implements ICustomData
 	public int getLightValue() {
 		return 0;
 	}
-
 
 	public int getRawSide() {
 		return this.side;

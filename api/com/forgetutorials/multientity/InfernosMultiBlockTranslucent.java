@@ -18,10 +18,10 @@ public class InfernosMultiBlockTranslucent extends InfernosMultiBlock {
 	}
 
 	@Override
-	Block getBlockType(){
+	Block getBlockType() {
 		return FTA.infernosMultiBlockTranslucent;
 	}
-	
+
 	@Override
 	public boolean isOpaqueCube() {
 		return false;

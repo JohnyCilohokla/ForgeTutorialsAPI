@@ -8,23 +8,23 @@ public class IncrementalMap<Type extends IncrementalObject> {
 	protected HashMap<Type, Type> counter = new HashMap<Type, Type>();
 
 	public void add(Type item) {
-		if (counter.containsKey(item)) {
-			counter.get(item).increment(item.current);
+		if (this.counter.containsKey(item)) {
+			this.counter.get(item).increment(item.current);
 		} else {
-			counter.put(item,item);
+			this.counter.put(item, item);
 		}
 	}
 
 	public Type get(Type item) {
-		if (counter.containsKey(item)) {
-			return counter.get(item);
+		if (this.counter.containsKey(item)) {
+			return this.counter.get(item);
 		} else {
 			return item;
 		}
 	}
 
 	public Set<Type> getList() {
-		return counter.keySet();
+		return this.counter.keySet();
 	}
 
 }

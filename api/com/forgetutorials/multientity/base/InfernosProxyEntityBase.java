@@ -40,10 +40,9 @@ abstract public class InfernosProxyEntityBase {
 	abstract public boolean isDynamiclyRendered();
 
 	abstract public boolean isOpaque();
-	
-	
-	public InfernosMultiBlock getBlock(){
-		return this.isOpaque()?FTA.infernosMultiBlockOpaque:FTA.infernosMultiBlockTranslucent;
+
+	public InfernosMultiBlock getBlock() {
+		return isOpaque() ? FTA.infernosMultiBlockOpaque : FTA.infernosMultiBlockTranslucent;
 	}
 
 	public int getSizeInventory() {
@@ -68,7 +67,7 @@ abstract public class InfernosProxyEntityBase {
 	public String getInventoryName() {
 		return "multientity." + getTypeName();
 	}
-	
+
 	public String getItemStackDisplayName(ItemStack itemStack) {
 		return itemStack.getTagCompound().toString();
 	}
@@ -258,5 +257,6 @@ abstract public class InfernosProxyEntityBase {
 		return 0;
 	}
 
-	public void onDataReceived(ByteBuf data) {	}
+	public void onDataReceived(ByteBuf data) {
+	}
 }

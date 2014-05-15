@@ -18,15 +18,15 @@ public class SingleBiomeChunkManager extends WorldChunkManager {
 		this.metaWorldRainfall = biome.rainfall;
 	}
 
-/*	@Override
-	public float[] getTemperatures(float[] temperatureArray, int x, int y, int width, int height) {
-		if ((temperatureArray == null) || (temperatureArray.length < (width * height))) {
-			temperatureArray = new float[width * height];
-		}
+	/*	@Override
+		public float[] getTemperatures(float[] temperatureArray, int x, int y, int width, int height) {
+			if ((temperatureArray == null) || (temperatureArray.length < (width * height))) {
+				temperatureArray = new float[width * height];
+			}
 
-		Arrays.fill(temperatureArray, 0, width * height, this.temperature);
-		return temperatureArray;
-	}*/
+			Arrays.fill(temperatureArray, 0, width * height, this.temperature);
+			return temperatureArray;
+		}*/
 
 	@Override
 	public float[] getRainfall(float[] rainfallArray, int x, int y, int width, int height) {

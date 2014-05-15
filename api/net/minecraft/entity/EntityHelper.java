@@ -1,16 +1,9 @@
 package net.minecraft.entity;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLClassLoader;
-
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityXPOrb;
 
 public class EntityHelper {
-	
-	private static Method methodIsPlayer = null;
 
 	static public void dropFewItems(EntityLiving living, boolean killedByPlayer, int looting, boolean dropXp) {
 		if (living.isPlayer()) {

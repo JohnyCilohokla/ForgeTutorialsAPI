@@ -6,8 +6,8 @@ public class IncrementalObject {
 	public IncrementalObject(long start) {
 		this.current = start;
 	}
-	
+
 	public void increment(long i) {
-		current += i;
+		this.current += i;
 	}
 }

@@ -9,7 +9,6 @@ import com.forgetutorials.multientity.InfernosMultiEntityStatic;
 
 public class InfernosProxyEntityDummy extends InfernosProxyEntityBase {
 
-
 	public InfernosProxyEntityDummy(InfernosMultiEntityStatic entity) {
 		super(entity);
 	}

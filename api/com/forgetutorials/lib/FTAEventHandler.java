@@ -3,40 +3,40 @@ package com.forgetutorials.lib;
 import net.minecraft.client.Minecraft;
 
 public class FTAEventHandler {
-	
-	static int i1=0;
-	static int i2=0;
-	static int i3=0;
+
+	static int i1 = 0;
+	static int i2 = 0;
+	static int i3 = 0;
 
 	public static void onWorldRenderBlocks() {
 		// TODO Auto-generated method stub
-		//FTA.out("FTAEventHandler >> onWorldRenderBlocks()");
+		// FTA.out("FTAEventHandler >> onWorldRenderBlocks()");
 
 		if (Minecraft.getMinecraft().thePlayer != null) {
-			if (i1%10000==0){
-			Minecraft.getMinecraft().thePlayer.sendChatMessage("FTAEventHandler >> onWorldRenderBlocks()");
+			if ((FTAEventHandler.i1 % 10000) == 0) {
+				Minecraft.getMinecraft().thePlayer.sendChatMessage("FTAEventHandler >> onWorldRenderBlocks()");
 			}
-			i1++;
+			FTAEventHandler.i1++;
 		}
 	}
 
 	public static void onChunkDLPostRender() {
-		//FTA.out("FTAEventHandler >> onChunkDLPostRender()!");
+		// FTA.out("FTAEventHandler >> onChunkDLPostRender()!");
 		if (Minecraft.getMinecraft().thePlayer != null) {
-			if (i2%10000==0){
-			Minecraft.getMinecraft().thePlayer.sendChatMessage("FTAEventHandler >> onChunkDLPostRender()");
+			if ((FTAEventHandler.i2 % 10000) == 0) {
+				Minecraft.getMinecraft().thePlayer.sendChatMessage("FTAEventHandler >> onChunkDLPostRender()");
 			}
-			i2++;
+			FTAEventHandler.i2++;
 		}
 	}
 
 	public static void onChunkDLPreRender() {
-		//FTA.out("FTAEventHandler >> onChunkDLPreRender()!");
+		// FTA.out("FTAEventHandler >> onChunkDLPreRender()!");
 		if (Minecraft.getMinecraft().thePlayer != null) {
-			if (i3%10000==0){
-			Minecraft.getMinecraft().thePlayer.sendChatMessage("FTAEventHandler >> onChunkDLPreRender()");
+			if ((FTAEventHandler.i3 % 10000) == 0) {
+				Minecraft.getMinecraft().thePlayer.sendChatMessage("FTAEventHandler >> onChunkDLPreRender()");
 			}
-			i3++;
+			FTAEventHandler.i3++;
 		}
 	}
 	/*

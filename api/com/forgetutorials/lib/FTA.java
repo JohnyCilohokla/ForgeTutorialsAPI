@@ -20,10 +20,10 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
 @Mod(modid = ModInfo.MOD_ID, name = ModInfo.MOD_NAME, version = ModInfo.VERSION)
-public class FTA{
+public class FTA {
 	@SidedProxy(clientSide = ModInfo.CLIENT_PROXY_CLASS, serverSide = ModInfo.SERVER_PROXY_CLASS)
 	public static CommonProxy proxy;
-	
+
 	public static InfernosPacketHandler packetHandler = new InfernosPacketHandler();
 
 	private static int infernosMultiBlockID = 2888;
@@ -32,15 +32,13 @@ public class FTA{
 	public static InfernosMultiBlockOpaque infernosMultiBlockOpaque;
 
 	public static ForgeRegistryUtilities registry = new ForgeRegistryUtilities("mes", ModInfo.MOD_ID);
-	
+
 	public static FTAHandler serverHandler = null;
-	
+
 	public FTAEventHandler eventHandeler = new FTAEventHandler();
-	
+
 	@Instance
 	public static FTA INSTANCE;
-	
-	
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -51,11 +49,11 @@ public class FTA{
 		new DescriptorBlock().setTool("metaHammer", 1).registerBlock("forgetutorials.MultiEntityBlock", FTA.infernosMultiBlockTranslucent.getLocalizedName(),
 				new ItemStack(FTA.infernosMultiBlockTranslucent));
 	}
-	
+
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event) {
 		System.out.println(">> MES_API: serverStarting");
-		serverHandler = new FTAHandler();
+		FTA.serverHandler = new FTAHandler();
 	}
 
 	@EventHandler
@@ -76,8 +74,7 @@ public class FTA{
 	}
 
 	public static FTAHandler getServerHandler() {
-		return serverHandler!=null?serverHandler:(serverHandler=new FTAHandler());
+		return FTA.serverHandler != null ? FTA.serverHandler : (FTA.serverHandler = new FTAHandler());
 	}
-	
-	
+
 }

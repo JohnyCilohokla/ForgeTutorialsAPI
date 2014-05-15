@@ -15,10 +15,8 @@ import net.minecraft.world.gen.ChunkProviderGenerate;
 import net.minecraft.world.gen.ChunkProviderHell;
 
 /**
- * This class is used for storing ore generation data. If you are too lazy to
- * generate your own ores, you can do
- * {@link #OreGenerator.ORES_TO_GENERATE.add()} to add your ore to the list of
- * ores to generate.
+ * This class is used for storing ore generation data. If you are too lazy to generate your own ores, you can do {@link #OreGenerator.ORES_TO_GENERATE.add()} to
+ * add your ore to the list of ores to generate.
  * 
  * @author Calclavia
  * 

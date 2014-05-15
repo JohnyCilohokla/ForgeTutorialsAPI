@@ -30,7 +30,7 @@ abstract public class InfernosMultiBlock extends Block {
 		super(material);
 	}
 
-	Block getBlockType(){
+	Block getBlockType() {
 		return null;
 	}
 
@@ -96,7 +96,7 @@ abstract public class InfernosMultiBlock extends Block {
 		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) world.getTileEntity(x, y, z);
 		return (entity != null) ? entity.getSilkTouchItemStack() : null;
 	}
-	
+
 	@Override
 	public int getLightValue(IBlockAccess world, int x, int y, int z) {
 		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) world.getTileEntity(x, y, z);
@@ -124,7 +124,7 @@ abstract public class InfernosMultiBlock extends Block {
 			}
 		}
 	}
-	
+
 	@Override
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
 		InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) world.getTileEntity(x, y, z);

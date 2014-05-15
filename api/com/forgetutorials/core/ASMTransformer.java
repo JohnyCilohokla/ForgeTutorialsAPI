@@ -1,7 +1,6 @@
 package com.forgetutorials.core;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 
 import org.objectweb.asm.ClassReader;
@@ -20,22 +19,22 @@ import com.forgetutorials.lib.FTA;
 import net.minecraft.launchwrapper.IClassTransformer;
 
 public class ASMTransformer implements IClassTransformer {
-	
+
 	ArrayList<ASMCallbackPatch> patches = new ArrayList<ASMCallbackPatch>();
 
 	public ASMTransformer() {
 		// @formatter:off
-		patches.add(new ASMCallbackPatch("net.minecraft.client.renderer.WorldRenderer",//"blg",
+		this.patches.add(new ASMCallbackPatch("net.minecraft.client.renderer.WorldRenderer",//"blg",
 				ASMHelper.createNewStaticCallback("com.forgetutorials.lib.FTAEventHandler", "onChunkDLPostRender"),
 				new ASMCallbackTarget("postRenderBlocks", "(ILnet/minecraft/entity/EntityLivingBase;)V", ASMCallbackPosition.BEFORE_METHOD, "glEndList",null,null)//,
 				//new ASMCallbackTarget("a", "(ILrh;)V", ASMCallbackPosition.BEFORE_METHOD, "glEndList",null,null)
 		));
-		patches.add(new ASMCallbackPatch("net.minecraft.client.renderer.WorldRenderer",//"blg",
+		this.patches.add(new ASMCallbackPatch("net.minecraft.client.renderer.WorldRenderer",//"blg",
 				ASMHelper.createNewStaticCallback("com.forgetutorials.lib.FTAEventHandler", "onChunkDLPreRender"),
 				new ASMCallbackTarget("preRenderBlocks", "(I)V", ASMCallbackPosition.FIRST_AUTO)//,
 				//new ASMCallbackTarget("b", "(I)V", ASMCallbackPosition.FIRST)
 		));
-		patches.add(new ASMCallbackPatch("net.minecraft.client.renderer.RenderGlobal",//"bls",
+		this.patches.add(new ASMCallbackPatch("net.minecraft.client.renderer.RenderGlobal",//"bls",
 				ASMHelper.createNewStaticCallback("com.forgetutorials.lib.FTAEventHandler", "onWorldRenderBlocks"),
 				new ASMCallbackTarget("renderAllRenderLists", "(ID)V", ASMCallbackPosition.LAST)//,
 				//new ASMCallbackTarget("a", "(ID)V", ASMCallbackPosition.LAST)
@@ -46,7 +45,7 @@ public class ASMTransformer implements IClassTransformer {
 
 	@Override
 	public byte[] transform(String arg0, String arg1, byte[] arg2) {
-		for (ASMCallbackPatch patch : patches) {
+		for (ASMCallbackPatch patch : this.patches) {
 			for (String patchName : patch.methodsNames) {
 				if (arg0.equalsIgnoreCase(patchName)) {
 					FTA.out("FTA >> ASM >> AMS TRANSFORMER >> " + arg0);
@@ -111,8 +110,8 @@ public class ASMTransformer implements IClassTransformer {
 					}
 				}
 
-				if (targetNode != null || !target.needsTarget()) {
-					if (ASMHelper.injectCode(m, target, targetNode, patch)){
+				if ((targetNode != null) || !target.needsTarget()) {
+					if (ASMHelper.injectCode(m, target, targetNode, patch)) {
 						FTA.out("FTA >> ASM >> Injection Complete!");
 						currentNode = null;
 						iter = m.instructions.iterator();
@@ -124,7 +123,7 @@ public class ASMTransformer implements IClassTransformer {
 								FTA.out("FTA >> ASM >> " + methodNode.desc + " " + methodNode.name + " " + methodNode.owner);
 							}
 						}
-					}else{
+					} else {
 						FTA.out("FTA >> ASM >> Injection Failed " + target + "!");
 					}
 				} else {
@@ -132,7 +131,7 @@ public class ASMTransformer implements IClassTransformer {
 					currentNode = null;
 					iter = m.instructions.iterator();
 					for (ASMCallbackTarget dTarget : patch.targetMethodsNodes) {
-					FTA.out("FTA >> ASM >> Failed to find target " + dTarget + "!");
+						FTA.out("FTA >> ASM >> Failed to find target " + dTarget + "!");
 					}
 					FTA.out("FTA >> ASM >> Listing all possible targets:");
 					while (iter.hasNext()) {

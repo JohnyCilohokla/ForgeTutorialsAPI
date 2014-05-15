@@ -141,7 +141,7 @@ public enum InfernosRegisteryProxyEntity {
 
 	public void addMultiEntity(String typeName, Class<? extends InfernosProxyEntityBase> entity, InfernosMultiEntityType type, CreativeTabs tab) {
 		InfernosRegisteryProxyEntity.INSTANCE.addMultiEntity(typeName, entity, type);
-		
+
 		InfernosProxyEntityBase staticEntity = InfernosRegisteryProxyEntity.INSTANCE.getStaticMultiEntity(typeName);
 
 		ItemStack strangeFrameItemStack;

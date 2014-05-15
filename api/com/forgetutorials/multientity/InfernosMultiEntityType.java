@@ -1,8 +1,7 @@
 package com.forgetutorials.multientity;
 
 /**
- * Static and dynamic refers to the renderer type Static - use only
- * renderStaticBlockAt Dynamic - use renderStaticBlockAt and renderTileEntityAt
+ * Static and dynamic refers to the renderer type Static - use only renderStaticBlockAt Dynamic - use renderStaticBlockAt and renderTileEntityAt
  * 
  * @author Johny
  * 

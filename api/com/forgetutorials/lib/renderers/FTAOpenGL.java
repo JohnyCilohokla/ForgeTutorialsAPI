@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 public class FTAOpenGL {
 
 	static public void glRotate(EnumFacing facing, boolean center) {
-		if (center){
+		if (center) {
 			GL11.glTranslated(0.5, 0.0, 0.5);
 		}
 		if (facing != null) {
@@ -32,19 +32,22 @@ public class FTAOpenGL {
 				break;
 			default:
 				break;
-	
+
 			}
 			GL11.glTranslated(0.0, -0.5, 0.0);
 		}
 	}
+
 	static public void glRotate(int facing) {
-		glRotate(EnumFacing.getFront(facing), true);
+		FTAOpenGL.glRotate(EnumFacing.getFront(facing), true);
 	}
+
 	static public void glRotate(EnumFacing facing) {
-		glRotate(facing, true);
+		FTAOpenGL.glRotate(facing, true);
 	}
+
 	static public void glRotate(int facing, boolean center) {
-		glRotate(EnumFacing.getFront(facing), center);
+		FTAOpenGL.glRotate(EnumFacing.getFront(facing), center);
 	}
 
 }

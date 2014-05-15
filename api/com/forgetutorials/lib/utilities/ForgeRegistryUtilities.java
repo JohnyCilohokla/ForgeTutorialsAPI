@@ -19,6 +19,7 @@ public class ForgeRegistryUtilities {
 		block.setBlockName(this.prefix + "." + unlocalizedName);
 		GameRegistry.registerBlock(block, ItemBlockWithInfo.class, this.prefix + "." + unlocalizedName, this.modID);
 	}
+
 	public void registerBlock(Block block, String unlocalizedName, String name, Class<? extends ItemBlock> itemClass) {
 		block.setBlockName(this.prefix + "." + unlocalizedName);
 		GameRegistry.registerBlock(block, itemClass, this.prefix + "." + unlocalizedName, this.modID);

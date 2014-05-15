@@ -20,21 +20,21 @@ public class InfernosMultiItemTranslucent extends InfernosMultiItem {
 	}
 
 	@Override
-	public InfernosMultiEntityStatic placeBlock(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8,
-			float par9, float par10) {
-			Block block = this.field_150939_a;
-			int j1 = getMetadata(par1ItemStack.getItemDamage());
-			int k1 = this.field_150939_a.onBlockPlaced(par3World, par4, par5, par6, par7, par8, par9, par10, j1);
+	public InfernosMultiEntityStatic placeBlock(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6,
+			int par7, float par8, float par9, float par10) {
+		Block block = this.field_150939_a;
+		int j1 = getMetadata(par1ItemStack.getItemDamage());
+		int k1 = this.field_150939_a.onBlockPlaced(par3World, par4, par5, par6, par7, par8, par9, par10, j1);
 
-			if (placeBlockAt(par1ItemStack, par2EntityPlayer, par3World, par4, par5, par6, par7, par8, par9, par10, k1)) {
-				par3World.playSoundEffect(par4 + 0.5F, par5 + 0.5F, par6 + 0.5F, block.stepSound.soundName, (block.stepSound.getVolume() + 1.0F) / 2.0F,
-						block.stepSound.getPitch() * 0.8F);
-				--par1ItemStack.stackSize;
-				InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) par3World.getTileEntity(par4, par5, par6);
-				entity.onBlockPlaced(par3World, par2EntityPlayer, par7, par4, par5, par6, par8, par9, par10, k1);
-				return entity;
-			}
-			return null;
+		if (placeBlockAt(par1ItemStack, par2EntityPlayer, par3World, par4, par5, par6, par7, par8, par9, par10, k1)) {
+			par3World.playSoundEffect(par4 + 0.5F, par5 + 0.5F, par6 + 0.5F, block.stepSound.soundName, (block.stepSound.getVolume() + 1.0F) / 2.0F,
+					block.stepSound.getPitch() * 0.8F);
+			--par1ItemStack.stackSize;
+			InfernosMultiEntityStatic entity = (InfernosMultiEntityStatic) par3World.getTileEntity(par4, par5, par6);
+			entity.onBlockPlaced(par3World, par2EntityPlayer, par7, par4, par5, par6, par8, par9, par10, k1);
+			return entity;
+		}
+		return null;
 	}
 
 	@SuppressWarnings("rawtypes")

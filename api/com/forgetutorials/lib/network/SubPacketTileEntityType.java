@@ -5,10 +5,8 @@ import io.netty.buffer.ByteBuf;
 /**
  * MetaTech Craft
  * 
- * As the packet system was based on Pahimar's EE3 packet system it is licensed
- * by LGPL v3 I have modified it greatly splitting the Tile Entity packet into
- * Main packet (x,y,z) Simple Item Update subpacket (pos, item) Fluid Update
- * subpacket (pos, fluidTag) more to come
+ * As the packet system was based on Pahimar's EE3 packet system it is licensed by LGPL v3 I have modified it greatly splitting the Tile Entity packet into Main
+ * packet (x,y,z) Simple Item Update subpacket (pos, item) Fluid Update subpacket (pos, fluidTag) more to come
  * 
  * @author johnycilohokla
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
@@ -17,8 +15,7 @@ import io.netty.buffer.ByteBuf;
 
 public enum SubPacketTileEntityType {
 	ITEM_UPDATE(SubPacketTileEntitySimpleItemUpdate.class), FLUID_UPDATE(SubPacketTileEntityFluidUpdate.class), BLOCK_UPDATE(
-			SubPacketTileEntityBlockUpdate.class), CUSTOM(
-					SubPacketTileEntityCustom.class);
+			SubPacketTileEntityBlockUpdate.class), CUSTOM(SubPacketTileEntityCustom.class);
 
 	private Class<? extends SubPacketTileEntityChild> _class;
 

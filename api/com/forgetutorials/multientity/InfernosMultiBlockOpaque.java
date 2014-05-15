@@ -17,7 +17,7 @@ public class InfernosMultiBlockOpaque extends InfernosMultiBlock {
 	}
 
 	@Override
-	Block getBlockType(){
+	Block getBlockType() {
 		return FTA.infernosMultiBlockOpaque;
 	}
 

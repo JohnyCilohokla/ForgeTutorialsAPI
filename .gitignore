@@ -2,6 +2,11 @@ buildConfig.properties
 /build/
 /.gradle/
 /gradle/
+/src/
 /eclipse/
 setup.bat
+log-err
+log-ext
+log-out
+hs_*.log
 *.bat
