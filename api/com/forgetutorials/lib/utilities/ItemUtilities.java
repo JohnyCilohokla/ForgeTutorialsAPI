@@ -10,19 +10,23 @@ import net.minecraftforge.common.util.FakePlayer;
 
 public class ItemUtilities {
 
-	public static void damageItemOrDestroy(ItemStack itemStack, int damage, EntityLivingBase entity, World world, int x, int y, int z, Item onDestroyItem,
-			int itemCount, int itemMeta) {
-		if ((onDestroyItem == null) || (((itemStack.getMaxDamage() - itemStack.getItemDamage()) + 1) > (damage))) {
+	public static void damageItemOrDestroy(ItemStack itemStack, int damage, EntityLivingBase entity, World world, int x, int y, int z, ItemStack onDestroyStack) {
+		if ((onDestroyStack == null) || (((itemStack.getMaxDamage() - itemStack.getItemDamage()) + 1) > (damage))) {
 			itemStack.damageItem((damage), entity);
 		} else {
 			// destroy item!!!
 			itemStack.damageItem(damage * 100, entity);
 			// !client
 			if (!world.isRemote) {
-				EntityItem entityitem = new EntityItem(world, x, y, z, new ItemStack(onDestroyItem, itemCount, itemMeta));
+				EntityItem entityitem = new EntityItem(world, x, y, z, onDestroyStack);
 				world.spawnEntityInWorld(entityitem);
 			}
 		}
+	}
+
+	public static void damageItemOrDestroy(ItemStack itemStack, int damage, EntityLivingBase entity, World world, int x, int y, int z, Item onDestroyItem,
+			int itemCount, int itemMeta) {
+		damageItemOrDestroy(itemStack, damage, entity, world, x, y, z, onDestroyItem!=null?new ItemStack(onDestroyItem, itemCount, itemMeta):null);
 	}
 
 	public static void damageItemOrDestroy(ItemStack itemStack, int damage, EntityLivingBase entity, World world, int x, int y, int z, Item onDestroyItem) {

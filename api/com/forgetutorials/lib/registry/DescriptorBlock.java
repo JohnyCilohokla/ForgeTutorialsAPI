@@ -24,6 +24,7 @@ public class DescriptorBlock extends DescriptorItem {
 		if (item instanceof ItemBlock) {
 			this.block = ((ItemBlock) item).field_150939_a;
 			if (this.harvestTool != null) {
+				this.block.setHarvestLevel(harvestTool, harvestLevel);
 				// TODO FIXME
 
 				// MinecraftForge.setBlockHarvestLevel(this.block, this.itemStack.getItemDamage(), this.harvestTool, this.harvestLevel);

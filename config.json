@@ -8,7 +8,7 @@
 		"VERSION": {
 			"1-VERSION": "0",
 			"2-RELEASE": "2",
-			"3-REVISION": "13",
+			"3-REVISION": "14",
 			"FORGEGRADLE": "net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT",
 			"FORGEVERSION": "1.7.2-10.12.1.1060",
 			"MCVERSION": "1.7.2"
